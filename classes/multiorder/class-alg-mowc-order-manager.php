@@ -37,6 +37,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
+			if ( filter_var( get_post_meta( $post_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}
+
 			$this->create_suborders( $post_id );
 		}
 
@@ -49,10 +53,12 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @param $main_order_metadata
 		 * @param $suborder_id
 		 */
-		public function clone_order_postmetas( $main_order_metadata, $suborder_id ) {
+		public function clone_order_postmetas( $main_order_metadata, $suborder_id, $exclude = array() ) {
 			foreach ( $main_order_metadata as $index => $meta_value ) {
 				foreach ( $meta_value as $value ) {
-					add_post_meta( $suborder_id, $index, $value );
+					if ( ! in_array( $index, $exclude ) ) {
+						add_post_meta( $suborder_id, $index, $value );
+					}
 				}
 			}
 		}
@@ -125,13 +131,18 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					'ping_status'   => 'closed',
 					'post_author'   => $currentUser->ID,
 					'post_password' => $main_order_post->post_password,
+					'meta_input'    => array(
+						Alg_MOWC_Order_Metas::IS_SUB_ORDER => true,
+						Alg_MOWC_Order_Metas::PARENT_ORDER => $main_order_id,
+					),
 				);
 
 				// Create sub order
 				$suborder_id = wp_insert_post( $order_data, true );
 
 				// Clone order post metas into suborder
-				$this->clone_order_postmetas( $main_order_metadata, $suborder_id );
+				$exclude_post_metas = apply_filters( 'alg_mowc_exclude_cloned_order_postmetas', array( Alg_MOWC_Order_Metas::SUB_ORDERS ) );
+				$this->clone_order_postmetas( $main_order_metadata, $suborder_id, $exclude_post_metas );
 
 				// Updates suborder price
 				update_post_meta( $suborder_id, '_order_total', $main_order_item->get_total() );
@@ -148,10 +159,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				$this->clone_order_itemmetas( $item_id, $suborder_item_id );
 
 				// Updates main order meta regarding suborder
-				add_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id );
+				add_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id, false );
 
-				// Updates suborder meta regarding the parent order
-				update_post_meta( $suborder_id, Alg_MOWC_Order_Metas::PARENT_ORDER, $main_order_id );
 			}
 		}
 

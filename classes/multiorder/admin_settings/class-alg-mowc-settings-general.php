@@ -40,13 +40,13 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		function get_settings( $settings = null ) {
 			$new_settings = array(
 				array(
-					'title' => __( 'Multi order options', 'multi-order-for-woocommerce' ),
+					'title' => __( 'Multi Order options', 'multi-order-for-woocommerce' ),
 					'type'  => 'title',
 					'desc'  => __( 'Multi order general options', 'multi-order-for-woocommerce' ),
 					'id'    => 'alg_mowc_opt',
 				),
 				array(
-					'title'   => __( 'Enable Multi order', 'multi-order-for-woocommerce' ),
+					'title'   => __( 'Enable Multi Order', 'multi-order-for-woocommerce' ),
 					'desc'    => sprintf( __( 'Enables <strong>"%s"</strong> plugin', 'multi-order-for-woocommerce' ), __( 'Multi order for WooCommerce' ) ),
 					'id'      => self::OPTION_ENABLE_PLUGIN,
 					'default' => 'yes',

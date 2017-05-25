@@ -17,16 +17,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     <table>
         <thead>
         <tr>
-            <th>Suborder ID</th>
-            <th>Order ID</th>
+            <th><?php echo __( 'Suborder ID', 'multi-order-for-woocommerce' ) ?></th>
+            <th><?php echo __( 'Order ID', 'multi-order-for-woocommerce' ) ?></th>
         </tr>
         </thead>
         <tbody>
 		<?php $counter = 1; ?>
 		<?php foreach ( $suborders as $suborder_id ): ?>
-            <?php $suborder = wc_get_order($suborder_id); ?>
+			<?php $suborder = wc_get_order( $suborder_id ); ?>
             <tr>
-                <td><a href="<?php echo $suborder->get_view_order_url(); ?>"><?php echo $order_id; ?>-<?php echo $counter;?></a></td>
+                <td><a href="<?php echo $suborder->get_view_order_url(); ?>"><?php echo $order_id; ?>
+                        -<?php echo $counter; ?></a></td>
                 <td><a href="<?php echo $suborder->get_view_order_url(); ?>">#<?php echo $suborder_id; ?></a></td>
             </tr>
 			<?php $counter ++; ?>

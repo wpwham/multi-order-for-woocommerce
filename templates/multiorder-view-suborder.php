@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     <table>
         <thead>
         <tr>
-            <th>Sub Order ID</th>
-            <th>Parent Order ID</th>
+            <th><?php echo __( 'Sub Order ID', 'multi-order-for-woocommerce' ) ?></th>
+            <th><?php echo __( 'Parent Order ID', 'multi-order-for-woocommerce' ) ?></th>
         </tr>
         </thead>
         <tbody>

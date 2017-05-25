@@ -51,8 +51,10 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		 * @since   1.0.0
 		 */
 		public function setup_plugin() {
-			new Alg_MOWC_Order_CMB();
+			new Alg_MOWC_Multiorder_CMB();
 			new Alg_MOWC_Order_Manager();
+			new Alg_MOWC_Order_Columns();
+			new Alg_MOWC_Suborders_View();
 		}
 
 		/**
@@ -64,22 +66,6 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		 */
 		public static function on_plugin_activation() {
 			parent::on_plugin_activation();
-		}
-
-		/**
-		 * Gets the template
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 */
-		public static function get_template( $template_name = '', $default_path = '', $template_path = 'woocommerce' ) {
-			if ( ! $default_path ) {
-				if ( strpos( $template_name, 'multi-order' ) !== false ) {
-					$marketplace  = alg_multiorder_for_wc();
-					$default_path = $marketplace->dir . 'templates' . DIRECTORY_SEPARATOR;
-				}
-			}
-			return wc_locate_template( $template_name, $template_path, $default_path );
 		}
 
 	}

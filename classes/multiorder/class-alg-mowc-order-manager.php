@@ -1,6 +1,8 @@
 <?php
 /**
- * Multi order for WooCommerce - Order custom meta box
+ * Multi order for WooCommerce - Order manager
+ *
+ * Creates and deletes suborders
  *
  * @version 1.0.0
  * @since   1.0.0
@@ -122,6 +124,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				$this->delete_previous_suborders( $main_order_id );
 			}
 
+			$order_counter = 1;
+
 			/* @var WC_Order_Item_Product $main_order_item */
 			foreach ( $main_order->get_items() as $item_id => $main_order_item ) {
 				$order_data = array(
@@ -132,8 +136,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					'post_author'   => $currentUser->ID,
 					'post_password' => $main_order_post->post_password,
 					'meta_input'    => array(
-						Alg_MOWC_Order_Metas::IS_SUB_ORDER => true,
-						Alg_MOWC_Order_Metas::PARENT_ORDER => $main_order_id,
+						Alg_MOWC_Order_Metas::IS_SUB_ORDER      => true,
+						Alg_MOWC_Order_Metas::PARENT_ORDER      => $main_order_id,
+						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order_id . '-' . $order_counter,
 					),
 				);
 
@@ -161,6 +166,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				// Updates main order meta regarding suborder
 				add_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id, false );
 
+				$order_counter ++;
 			}
 		}
 

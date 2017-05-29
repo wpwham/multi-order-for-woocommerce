@@ -19,14 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     <table>
         <thead>
         <tr>
-            <th><?php echo __( 'Sub Order ID', 'multi-order-for-woocommerce' ) ?></th>
             <th><?php echo __( 'Parent Order ID', 'multi-order-for-woocommerce' ) ?></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td><?php echo $fake_suborder_id; ?></td>
-            <td><a href="<?php echo $parent_order->get_view_order_url(); ?>">#<?php echo $parent_order_id; ?></a></td>
+            <td><a href="<?php echo $parent_order->get_view_order_url(); ?>"><?php echo $parent_order->get_order_number(); ?></a></td>
         </tr>
         </tbody>
     </table>

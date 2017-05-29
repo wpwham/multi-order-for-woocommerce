@@ -15,6 +15,7 @@ return array(
     'Alg_MOWC_Settings_General' => $baseDir . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php',
     'Alg_MOWC_Settings_Page' => $baseDir . '/classes/multiorder/admin_settings/class-alg-mowc-settings-page.php',
     'Alg_MOWC_Settings_Section' => $baseDir . '/classes/multiorder/admin_settings/class-alg-mowc-settings-section.php',
+    'Alg_MOWC_Suborders_Search' => $baseDir . '/classes/multiorder/class-alg-mowc-suborders-search.php',
     'Alg_MOWC_Suborders_View' => $baseDir . '/classes/multiorder/class-alg-mowc-suborders-view.php',
     'Alg_MOWC_WP_Plugin' => $baseDir . '/classes/wordpress/class-alg-mowc-wp-plugin.php',
     'Composer\\Installers\\AglInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/AglInstaller.php',

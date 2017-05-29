@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order manager
  *
- * Creates and deletes suborders
+ * Creates, deletes suborders and sync them with their parent
  *
  * @version 1.0.0
  * @since   1.0.0
@@ -176,7 +176,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					'meta_input'    => array(
 						Alg_MOWC_Order_Metas::IS_SUB_ORDER      => true,
 						Alg_MOWC_Order_Metas::PARENT_ORDER      => $main_order_id,
-						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order_id . '-' . $order_counter,
+						Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID  => $order_counter,
+						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order->get_order_number().'-'.$order_counter,
 					),
 				);
 

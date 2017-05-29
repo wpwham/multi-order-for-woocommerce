@@ -143,11 +143,9 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
                     <ul style="list-style:inside;">
 
 						<?php foreach ( $orders as $order_id ): ?>
-							<?php if ( ! $is_suborder ) { ?>
-								<?php $suborder_id_str = $field->object_id() . '-' . $counter . ' / '; ?>
-							<?php } ?>
+                            <?php $order = wc_get_order($order_id); ?>
                             <li>
-                                <a href="<?php echo get_edit_post_link( $order_id ) ?>"><?php echo $suborder_id_str; ?> #<?php echo $order_id; ?></a>
+                                <a href="<?php echo get_edit_post_link( $order_id ) ?>"><?php echo $order->get_order_number(); ?></a>
                             </li>
 							<?php $counter ++; ?>
 						<?php endforeach; ?>

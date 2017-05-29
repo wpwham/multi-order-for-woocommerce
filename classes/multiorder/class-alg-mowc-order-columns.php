@@ -23,7 +23,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			$post_type = 'shop_order';
 
 			// Setups admin columns
-			add_action( "manage_{$post_type}_posts_custom_column", array( $this, 'setup_admin_order_columns' ), 1, 2 );
+			add_action( "manage_{$post_type}_posts_custom_column", array( $this, 'setup_admin_order_columns' ), 20, 2 );
 			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'add_admin_suborders_column' ), 20 );
 
 			// Setups frontend columns
@@ -47,16 +47,13 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @param WC_Order $order
 		 */
 		public function setup_frontend_order_number_column( WC_Order $order ) {
-			$suborder_fake_id = get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, true );
-			if ( $suborder_fake_id ) {
-				echo '<div style="margin-bottom:5px"><a href="' . $order->get_view_order_url() . '" class="row-title"><strong>' . esc_attr( $suborder_fake_id ) . '</strong> (suborder)</a></div>';
-			} else {
-				?>
-                <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
-					<?php echo _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number(); ?>
-                </a>
-				<?php
-			}
+			$is_suborder  = filter_var( get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+			$suborder_str = $is_suborder ? __( '(Suborder)', 'multi-order-for-woocommerce' ) : '';
+			?>
+            <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
+				<?php echo _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() . ' '. $suborder_str; ?>
+            </a>
+			<?php
 		}
 
 		/**
@@ -75,7 +72,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 				echo '<ul style="margin:0;padding:0;list-style:none">';
 				foreach ( $suborders as $suborder_id ) {
 					$suborder = wc_get_order( $suborder_id );
-					echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . $suborder->get_view_order_url() . '" class="row-title"><strong>' . $order->get_id() . '-' . $counter . ' / <span style="color:#999">#' . esc_attr( $suborder_id ) . '</span></strong></a></li>';
+					echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . $suborder->get_view_order_url() . '" class="row-title"><strong>' . $suborder->get_order_number().'</strong></a></li>';
 					$counter ++;
 				}
 				echo '<ul>';
@@ -138,10 +135,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 */
 		public function setup_admin_order_columns( $column, $post_id ) {
 			if ( $column == 'order_title' ) {
-				$suborder_fake_id = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, true );
-				if ( $suborder_fake_id ) {
-					echo '<div style="margin-bottom:5px"><a href="' . admin_url( 'post.php?post=' . absint( $post_id ) . '&action=edit' ) . '" class="row-title"><strong>' . esc_attr( $suborder_fake_id ) . '</strong> (suborder)</a></div>';
-				}
+				$is_suborder  = filter_var( get_post_meta( $post_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+				$suborder_str = $is_suborder ? '<strong>'.__( '(Suborder)', 'multi-order-for-woocommerce' ) .'</strong>' : '';
+				echo $suborder_str;
 			}
 			if ( $column == $this->suborders_column_id ) {
 				$suborders = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
@@ -149,7 +145,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 				if ( is_array( $suborders ) && count( $suborders ) > 0 ) {
 					echo '<ul style="margin:0;padding:0;list-style:none">';
 					foreach ( $suborders as $suborder_id ) {
-						echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>' . $post_id . '-' . $counter . ' / <span style="color:#999">#' . esc_attr( $suborder_id ) . '</span></strong></a></li>';
+                        $suborder = wc_get_order($suborder_id);
+						echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>' . $suborder->get_order_number() . '</strong></a></li>';
 						$counter ++;
 					}
 					echo '</ul>';

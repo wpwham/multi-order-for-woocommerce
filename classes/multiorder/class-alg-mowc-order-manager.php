@@ -20,7 +20,45 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @since   1.0.0
 		 */
 		function __construct() {
-			add_action( 'save_post', array( $this, 'on_create_suborders_button_click' ) );
+			add_action( 'save_post', array( $this, 'create_suborders_call' ) );
+			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_call' ),10, 3 );
+		}
+
+		/**
+		 * Changes suborder when parent order changes status
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 */
+		public function sync_suborders_call( $order_id, $transition_from, $transition_to ) {
+			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}
+
+			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+
+			if ( ! is_array( $suborders ) || count( $suborders ) < 1 ) {
+				return;
+			}
+
+			$this->sync_suborders_status_from_parent( $order_id, $transition_from, $transition_to );
+		}
+
+		/**
+		 * Saves suborders status from parent order
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 * @param $parent_order_id
+		 */
+		public function sync_suborders_status_from_parent( $parent_order_id, $transition_from, $transition_to ) {
+			$suborders = get_post_meta( $parent_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+			foreach ( $suborders as $suborder_id ) {
+				wp_update_post( array(
+					'ID'          => $suborder_id,
+					'post_status' => $transition_to,
+				) );
+			}
 		}
 
 		/**
@@ -29,7 +67,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 */
-		public function on_create_suborders_button_click( $post_id ) {
+		public function create_suborders_call( $post_id ) {
 			$post = get_post( $post_id );
 			if ( $post->post_type != 'shop_order' ) {
 				return;

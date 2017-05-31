@@ -33,6 +33,12 @@ if ( ! class_exists( 'Alg_MOWC_Suborders_View' ) ) {
 
 			// Changes the suborder number
 			add_filter('woocommerce_order_number',array($this,'woocommerce_suborder_number'),PHP_INT_MAX,2);
+
+			// Todo: Try to change order url
+			/*add_filter('woocommerce_get_view_order_url',function($url, WC_Order $order){
+				return wc_get_endpoint_url( 'view-order', apply_filters('woocommerce_order_number',$order->get_id(),$order), wc_get_page_permalink( 'myaccount' ) );
+				//return apply_filters('woocommerce_order_number',$order->get_id(),$order);
+			},10,2);*/
 		}
 
 		/**

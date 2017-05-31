@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order manager
  *
- * Creates, deletes suborders and sync them with their parent
+ * Creates, deletes suborders and sync them with their parent orders
  *
  * @version 1.0.0
  * @since   1.0.0
@@ -21,7 +21,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 */
 		function __construct() {
 			add_action( 'save_post', array( $this, 'create_suborders_call' ) );
-			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_call' ),10, 3 );
+			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_call' ), 10, 3 );
 		}
 
 		/**
@@ -49,6 +49,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 *
 		 * @version 1.0.0
 		 * @since   1.0.0
+		 *
 		 * @param $parent_order_id
 		 */
 		public function sync_suborders_status_from_parent( $parent_order_id, $transition_from, $transition_to ) {
@@ -140,6 +141,83 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		}
 
 		/**
+		 * Adds line item in suborder
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $main_order_item
+		 * @param $item_id
+		 * @param $suborder_id
+		 */
+		public function add_line_item_in_suborder( $main_order_item, $item_id, $suborder_id ) {
+			$item_name        = $main_order_item['name'];
+			$item_type        = $main_order_item->get_type();
+			$suborder_item_id = wc_add_order_item( $suborder_id, array(
+				'order_item_name' => $item_name,
+				'order_item_type' => $item_type,
+			) );
+
+			// Clone order item metas
+			$this->clone_order_itemmetas( $item_id, $suborder_item_id );
+		}
+
+		/**
+		 * Adds fees in suborder
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $fees
+		 * @param $suborder_id
+		 * @param $main_order
+		 *
+		 * @return float|int
+		 */
+		public function add_fees_in_suborder( $fees, $suborder_id, $main_order ) {
+			$fee_value_count = 0;
+			/* @var WC_Order_Item_Fee $fee */
+			foreach ( $fees as $fee ) {
+				$item_name           = $fee->get_name();
+				$item_type           = $fee->get_type();
+				$suborder_new_fee_id = wc_add_order_item( $suborder_id, array(
+					'order_item_name' => $item_name,
+					'order_item_type' => $item_type,
+				) );
+				$this->clone_order_itemmetas( $fee->get_id(), $suborder_new_fee_id );
+				$fee_value       = $fee->get_total() / $main_order->get_item_count();
+				$fee_value_count += $fee_value;
+				wc_update_order_item_meta( $suborder_new_fee_id, '_line_total', $fee_value );
+				wc_update_order_item_meta( $suborder_new_fee_id, '_line_tax', 0 );
+				wc_update_order_item_meta( $suborder_new_fee_id, '_line_tax_data', 0 );
+			}
+			return $fee_value_count;
+		}
+
+		/**
+		 * Adds taxes in suborder
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $taxes
+		 * @param $suborder_id
+		 */
+		public function add_taxes_in_suborder( $taxes, $suborder_id, $main_order_item ) {
+			/* @var WC_Order_Item_Tax $tax */
+			foreach ( $taxes as $tax ) {
+				$item_name           = $tax->get_name();
+				$item_type           = $tax->get_type();
+				$suborder_new_tax_id = wc_add_order_item( $suborder_id, array(
+					'order_item_name' => $item_name,
+					'order_item_type' => $item_type,
+				) );
+				$this->clone_order_itemmetas( $tax->get_id(), $suborder_new_tax_id );
+				wc_update_order_item_meta( $suborder_new_tax_id, 'tax_amount', $main_order_item->get_total_tax() );
+			}
+		}
+
+		/**
 		 * Creates suborders from a main order
 		 *
 		 * @version 1.0.0
@@ -162,10 +240,17 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				$this->delete_previous_suborders( $main_order_id );
 			}
 
+			// Gets fees and taxes
+			$fees  = $main_order->get_fees();
+			$taxes = $main_order->get_taxes();
+
+			// Counter for creating fake suborders ids
 			$order_counter = 1;
 
 			/* @var WC_Order_Item_Product $main_order_item */
 			foreach ( $main_order->get_items() as $item_id => $main_order_item ) {
+				$fee_value = 0;
+
 				$order_data = array(
 					'post_type'     => 'shop_order',
 					'post_title'    => $main_order_post->post_title,
@@ -177,7 +262,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 						Alg_MOWC_Order_Metas::IS_SUB_ORDER      => true,
 						Alg_MOWC_Order_Metas::PARENT_ORDER      => $main_order_id,
 						Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID  => $order_counter,
-						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order->get_order_number().'-'.$order_counter,
+						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order->get_order_number() . '-' . $order_counter,
 					),
 				);
 
@@ -188,19 +273,18 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				$exclude_post_metas = apply_filters( 'alg_mowc_exclude_cloned_order_postmetas', array( Alg_MOWC_Order_Metas::SUB_ORDERS ) );
 				$this->clone_order_postmetas( $main_order_metadata, $suborder_id, $exclude_post_metas );
 
+				// Adds line item in suborder
+				$this->add_line_item_in_suborder( $main_order_item, $item_id, $suborder_id );
+
+				// Adds fees in suborder
+				$fee_value = $this->add_fees_in_suborder( $fees, $suborder_id, $main_order );
+
+				// Adds taxes in suborder
+				$this->add_taxes_in_suborder( $taxes, $suborder_id, $main_order_item );
+
 				// Updates suborder price
-				update_post_meta( $suborder_id, '_order_total', $main_order_item->get_total() );
-
-				// Add item in suborder
-				$item_name        = $main_order_item['name'];
-				$item_type        = $main_order_item->get_type();
-				$suborder_item_id = wc_add_order_item( $suborder_id, array(
-					'order_item_name' => $item_name,
-					'order_item_type' => $item_type,
-				) );
-
-				// Clone order item metas
-				$this->clone_order_itemmetas( $item_id, $suborder_item_id );
+				update_post_meta( $suborder_id, '_order_total', $main_order_item->get_total_tax() + $main_order_item->get_total() + $fee_value );
+				update_post_meta( $suborder_id, '_order_tax', $main_order_item->get_total_tax() );
 
 				// Updates main order meta regarding suborder
 				add_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id, false );

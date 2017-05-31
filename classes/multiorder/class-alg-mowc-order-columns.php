@@ -27,6 +27,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'add_admin_suborders_column' ), 20 );
 
 			// Setups frontend columns
+
+			add_filter( "woocommerce_my_account_my_orders_columns", array( $this, 'add_frontend_order_columns' ) );
 			add_filter( "woocommerce_account_orders_columns", array( $this, 'add_frontend_order_columns' ) );
 			add_action( "woocommerce_my_account_my_orders_column_{$this->suborders_column_id}", array(
 				$this,

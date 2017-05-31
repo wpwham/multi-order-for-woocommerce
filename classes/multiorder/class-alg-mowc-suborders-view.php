@@ -26,6 +26,10 @@ if ( ! class_exists( 'Alg_MOWC_Suborders_View' ) ) {
 				$this,
 				'show_or_hide_frontend_suborders_list_view',
 			) );
+			add_filter( 'woocommerce_my_account_my_orders_query', array(
+				$this,
+				'show_or_hide_frontend_suborders_list_view',
+			) );
 
 			// Manages frontend order view template on my account
 			add_action( 'woocommerce_view_order', array( $this, 'woocommerce_frontend_suborder_view' ), 1 );

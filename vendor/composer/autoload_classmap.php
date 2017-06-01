@@ -10,6 +10,8 @@ return array(
     'Alg_MOWC_Core' => $baseDir . '/classes/multiorder/class-alg-mowc-core.php',
     'Alg_MOWC_Multiorder_CMB' => $baseDir . '/classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php',
     'Alg_MOWC_Order_Columns' => $baseDir . '/classes/multiorder/class-alg-mowc-order-columns.php',
+    'Alg_MOWC_Order_Item' => $baseDir . '/classes/multiorder/class-alg-mowc-order-item.php',
+    'Alg_MOWC_Order_Item_Metas' => $baseDir . '/classes/multiorder/class-alg-mowc-order-item-metas.php',
     'Alg_MOWC_Order_Manager' => $baseDir . '/classes/multiorder/class-alg-mowc-order-manager.php',
     'Alg_MOWC_Order_Metas' => $baseDir . '/classes/multiorder/class-alg-mowc-order-metas.php',
     'Alg_MOWC_Settings_General' => $baseDir . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php',

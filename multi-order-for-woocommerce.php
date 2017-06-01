@@ -82,3 +82,6 @@ if ( ! function_exists( 'alg_mowc_register_hooks' ) ) {
 
 // Handles activation, installation and uninstall hooks
 alg_mowc_register_hooks();
+
+
+

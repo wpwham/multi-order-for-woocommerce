@@ -1,6 +1,6 @@
 <?php
 /**
- * Multi order for WooCommerce - Core Class
+ * Multi order for WooCommerce - Order metas
  *
  * @version 1.0.0
  * @since   1.0.0
@@ -15,5 +15,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Metas' ) ) {
 		const SUB_ORDER_SUB_ID  = '_alg_mowc_suborder_sub_id';
 		const IS_SUB_ORDER      = '_alg_mowc_is_suborder';
 		const PARENT_ORDER      = '_alg_mowc_parentorder';
+		const PARENT_ORDER_ITEM = '_alg_mowc_parentorderitem';
 	}
 }

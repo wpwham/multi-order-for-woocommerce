@@ -15,9 +15,10 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 
 	class Alg_MOWC_Settings_General extends Alg_MOWC_Settings_Section {
 
-		const OPTION_ENABLE_PLUGIN        = 'alg_mowc_opt_enable';
-		const OPTION_SUBORDERS_ADMIN_SHOW = 'alg_mowc_suborders_admin_show';
-		const OPTION_SUBORDERS_FRONTEND_SHOW = 'alg_mowc_suborders_frontend_show';
+		const OPTION_ENABLE_PLUGIN                = 'alg_mowc_opt_enable';
+		const OPTION_SUBORDERS_ADMIN_SHOW         = 'alg_mowc_suborders_admin_show';
+		const OPTION_SUBORDERS_FRONTEND_SHOW      = 'alg_mowc_suborders_frontend_show';
+		const OPTION_SUBORDERS_SUBTRACTION_STATUS = 'alg_mowc_suborders_subtraction_status';
 
 		/**
 		 * Constructor.
@@ -64,17 +65,26 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				),
 				array(
 					'title'   => __( 'Show on admin', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Displays suborders as table rows on admin', 'multi-order-for-woocommerce' ).' <strong>'.__( '(WooCommerce > orders)', 'multi-order-for-woocommerce' ).'</strong>',
+					'desc'    => __( 'Displays suborders as table rows on admin', 'multi-order-for-woocommerce' ) . ' <strong>' . __( '(WooCommerce > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
 					'id'      => self::OPTION_SUBORDERS_ADMIN_SHOW,
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),
 				array(
 					'title'   => __( 'Show on frontend', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Displays suborders as table rows on frontend', 'multi-order-for-woocommerce' ).' <strong>'.__( '(My Account > orders)', 'multi-order-for-woocommerce' ).'</strong>',
+					'desc'    => __( 'Displays suborders as table rows on frontend', 'multi-order-for-woocommerce' ) . ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
 					'id'      => self::OPTION_SUBORDERS_FRONTEND_SHOW,
 					'default' => 'no',
 					'type'    => 'checkbox',
+				),
+				array(
+					'title'   => __( 'Subtraction status', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Status that will make suborders values be deducted from main order', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_SUBORDERS_SUBTRACTION_STATUS,
+					'type'    => 'multiselect',
+					'class'   => 'chosen_select',
+					'options' => wc_get_order_statuses(),
+					'default' => array('wc-cancelled','wc-processing')
 				),
 				array(
 					'type' => 'sectionend',

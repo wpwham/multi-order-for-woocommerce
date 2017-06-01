@@ -29,6 +29,8 @@ class ComposerStaticInit344e3e6fe8e72c0e58fb4f56d4cec3ba
         'Alg_MOWC_Core' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-core.php',
         'Alg_MOWC_Multiorder_CMB' => __DIR__ . '/../..' . '/classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php',
         'Alg_MOWC_Order_Columns' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-columns.php',
+        'Alg_MOWC_Order_Item' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-item.php',
+        'Alg_MOWC_Order_Item_Metas' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-item-metas.php',
         'Alg_MOWC_Order_Manager' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-manager.php',
         'Alg_MOWC_Order_Metas' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-metas.php',
         'Alg_MOWC_Settings_General' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php',

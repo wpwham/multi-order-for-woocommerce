@@ -23,6 +23,43 @@ if ( ! class_exists( 'Alg_MOWC_Suborders_Search' ) ) {
 
 			// Finds suborders
 			add_action( 'pre_get_posts', array( $this, 'find_suborder_by_custom_number' ), 11 );
+
+			// Find suborders using [woocommerce_order_tracking]
+			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array(
+				$this,
+				'allow_suborders_to_be_tracked',
+			) );
+		}
+
+		/**
+		 * Allows suborders to be tracked.
+		 *
+		 * It tries to get the order id by the post meta Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID.
+		 * It also allows to track an order using # or not.
+		 *
+		 * @version  1.0.0
+		 * @since    1.0.0
+		 *
+		 * @param $order_id
+		 *
+		 * @return mixed|null|string
+		 */
+		public function allow_suborders_to_be_tracked( $order_id ) {
+			$order_id = filter_var( $order_id, FILTER_SANITIZE_NUMBER_INT );
+
+			global $wpdb;
+			$meta_value = Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID;
+
+			$query = $wpdb->prepare( "SELECT post_id
+				FROM $wpdb->postmeta
+				WHERE meta_value = %s AND meta_key = %s", $order_id, $meta_value );
+			$var   = $wpdb->get_var( $query );
+
+			if ( ! empty( $var ) ) {
+				$order_id = $var;
+			}
+
+			return $order_id;
 		}
 
 		/**

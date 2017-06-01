@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php foreach ( $suborders as $suborder_id ): ?>
 			<?php $suborder = wc_get_order( $suborder_id ); ?>
             <tr>
-                <td><a href="<?php echo $suborder->get_view_order_url(); ?>"><?php echo $suborder->get_order_number(); ?></a></td>
+                <td><a href="<?php echo $suborder->get_view_order_url(); ?>">#<?php echo $suborder->get_order_number(); ?></a></td>
             </tr>
 		<?php endforeach; ?>
         </tbody>

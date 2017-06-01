@@ -270,7 +270,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				$suborder_id = wp_insert_post( $order_data, true );
 
 				// Clone order post metas into suborder
-				$exclude_post_metas = apply_filters( 'alg_mowc_exclude_cloned_order_postmetas', array( Alg_MOWC_Order_Metas::SUB_ORDERS ) );
+				$exclude_post_metas = apply_filters( 'alg_mowc_exclude_cloned_order_postmetas', array(
+					Alg_MOWC_Order_Metas::SUB_ORDERS,
+					'_wcj_order_number',
+				) );
 				$this->clone_order_postmetas( $main_order_metadata, $suborder_id, $exclude_post_metas );
 
 				// Adds line item in suborder

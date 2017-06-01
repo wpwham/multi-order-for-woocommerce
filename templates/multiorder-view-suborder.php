@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </thead>
         <tbody>
         <tr>
-            <td><a href="<?php echo $parent_order->get_view_order_url(); ?>"><?php echo $parent_order->get_order_number(); ?></a></td>
+            <td><a href="<?php echo $parent_order->get_view_order_url(); ?>">#<?php echo $parent_order->get_order_number(); ?></a></td>
         </tr>
         </tbody>
     </table>

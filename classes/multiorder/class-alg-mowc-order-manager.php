@@ -27,6 +27,27 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			), 10, 4 );
 			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 4 );
 			add_action( 'recalculate_main_order_price_event', array( $this, 'recalculate_main_order' ), 10, 1 );
+
+			add_action( 'woocommerce_before_delete_order_item', array(
+				$this,
+				'remove_suborder_on_main_order_item_removal',
+			) );
+			//wc_delete_order_item();
+		}
+
+		/**
+		 * Deletes suborder if correspondent item id is removed from main order
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $item_id
+		 */
+		public function remove_suborder_on_main_order_item_removal( $item_id ) {
+			$suborder_id = wc_get_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, true );
+			if ( $suborder_id ) {
+				wp_delete_post( $suborder_id, true );
+			}
 		}
 
 		/**
@@ -96,7 +117,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
-			$this->deduct_suborder_from_order( $order_id, $transition_from, $transition_to, $order);
+			$this->deduct_suborder_from_order( $order_id, $transition_from, $transition_to, $order );
 		}
 
 		/**

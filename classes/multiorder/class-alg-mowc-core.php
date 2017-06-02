@@ -51,7 +51,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		 * @since   1.0.0
 		 */
 		public function setup_plugin() {
-			new Alg_MOWC_Multiorder_CMB();
+			//new Alg_MOWC_Multiorder_CMB();
 			new Alg_MOWC_Order_Manager();
 			new Alg_MOWC_Order_Columns();
 			new Alg_MOWC_Suborders_View();

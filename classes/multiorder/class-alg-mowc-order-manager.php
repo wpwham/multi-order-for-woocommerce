@@ -21,7 +21,82 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 */
 		function __construct() {
 			add_action( 'save_post', array( $this, 'create_suborders_call' ) );
-			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_call' ), 10, 4 );
+			add_action( 'woocommerce_order_status_changed', array(
+				$this,
+				'sync_suborders_status_from_parent_call',
+			), 10, 4 );
+			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 4 );
+			add_action( 'recalculate_main_order_price_event', array( $this, 'recalculate_main_order' ), 10, 1 );
+		}
+
+		/**
+		 * Recalculate order total price
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $order_id
+		 */
+		public function recalculate_main_order( $order_id ) {
+			$order = wc_get_order( $order_id );
+			//$order->calculate_taxes();
+			$order->calculate_totals();
+		}
+
+		/**
+		 * Deducts suborder from main order
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param          $order_id
+		 * @param          $transition_from
+		 * @param          $transition_to
+		 * @param WC_Order $order
+		 */
+		public function deduct_suborder_from_order( $order_id, $transition_from, $transition_to, WC_Order $order ) {
+			// Get parent order item id
+			$parent_order_item = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM, true );
+
+			// Remove price from main order
+			wc_update_order_item_meta( $parent_order_item, '_line_total', 0 );
+			wc_update_order_item_meta( $parent_order_item, '_line_tax', 0 );
+
+			// Update _line_tax_data
+			$line_tax_data = wc_get_order_item_meta( $parent_order_item, '_line_tax_data', true );
+			foreach ( $line_tax_data['total'] as $data_key => $data_value ) {
+				$line_tax_data['total'][ $data_key ] = 0;
+			}
+			wc_update_order_item_meta( $parent_order_item, '_line_tax_data', $line_tax_data );
+
+			// Create event to recalculate main order
+			$main_order_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
+			wp_schedule_single_event( time() + 1, 'recalculate_main_order_price_event', array( $main_order_id ) );
+		}
+
+		/**
+		 * Call the function that deducts suborder from main order
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param          $order_id
+		 * @param          $transition_from
+		 * @param          $transition_to
+		 * @param WC_Order $order
+		 */
+		public function deduct_suborder_from_order_call( $order_id, $transition_from, $transition_to, WC_Order $order ) {
+			if ( ! filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}
+
+			// Check deduct status
+			$deduct_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_SUBTRACTION_STATUS, true );
+			if ( ! in_array( 'wc-' . $transition_to, $deduct_status ) ) {
+				return;
+			}
+
+			$this->deduct_suborder_from_order( $order_id, $transition_from, $transition_to, $order);
 		}
 
 		/**
@@ -30,7 +105,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 */
-		public function sync_suborders_call( $order_id, $transition_from, $transition_to, WC_Order $order ) {
+		public function sync_suborders_status_from_parent_call( $order_id, $transition_from, $transition_to, WC_Order $order ) {
 			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
@@ -262,7 +337,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 						Alg_MOWC_Order_Metas::PARENT_ORDER      => $main_order_id,
 						Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID  => $order_counter,
 						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order->get_order_number() . '-' . $order_counter,
-						Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM => $item_id
+						Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM => $item_id,
 					),
 				);
 
@@ -296,7 +371,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				add_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id, false );
 
 				// Associate main order item with suborder id
-				wc_add_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, $suborder_id,true );
+				wc_add_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, $suborder_id, true );
 
 				$order_counter ++;
 			}

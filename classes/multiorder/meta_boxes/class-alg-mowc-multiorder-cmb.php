@@ -144,9 +144,11 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 
 						<?php foreach ( $orders as $order_id ): ?>
                             <?php $order = wc_get_order($order_id); ?>
+                            <?php if($order){?>
                             <li>
                                 <a href="<?php echo get_edit_post_link( $order_id ) ?>">#<?php echo $order->get_order_number(); ?></a>
                             </li>
+                            <?php }?>
 							<?php $counter ++; ?>
 						<?php endforeach; ?>
 

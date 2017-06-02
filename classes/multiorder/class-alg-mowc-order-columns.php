@@ -147,8 +147,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 					echo '<ul style="margin:0;padding:0;list-style:none">';
 					foreach ( $suborders as $suborder_id ) {
                         $suborder = wc_get_order($suborder_id);
-						echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>#' . $suborder->get_order_number() . '</strong></a></li>';
-						$counter ++;
+                        if($suborder){
+	                        echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>#' . $suborder->get_order_number() . '</strong></a></li>';
+	                        $counter ++;
+                        }
+
 					}
 					echo '</ul>';
 				}

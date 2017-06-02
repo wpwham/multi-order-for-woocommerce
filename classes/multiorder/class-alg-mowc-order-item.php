@@ -43,9 +43,12 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 			$key = key( $formatted_meta );
 			if ( $formatted_meta[ $key ]->key == Alg_MOWC_Order_Item_Metas::SUB_ORDER ) {
 				$order                                 = wc_get_order( (int) $formatted_meta[ $key ]->value );
-				$formatted_meta[ $key ]->display_key   = __( 'Suborder', 'multi-order-for-woocommerce' );
-				$order_number                          = apply_filters( 'woocommerce_order_number', $order->get_id(), $order );
-				$formatted_meta[ $key ]->display_value = '<a href="' . admin_url( 'post.php?post=' . absint( $order->get_id() ) . '&action=edit' ) . '">#' . $order_number . '</a>';
+				if($order){
+					$formatted_meta[ $key ]->display_key   = __( 'Suborder', 'multi-order-for-woocommerce' );
+					$order_number                          = apply_filters( 'woocommerce_order_number', $order->get_id(), $order );
+					$formatted_meta[ $key ]->display_value = '<a href="' . admin_url( 'post.php?post=' . absint( $order->get_id() ) . '&action=edit' ) . '">#' . $order_number . '</a>';
+				}
+
 			}
 			return $formatted_meta;
 		}

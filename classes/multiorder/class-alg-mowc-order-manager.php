@@ -167,7 +167,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					'post_status' => 'wc-' . $transition_to,
 				) );
 
-				do_action( 'woocommerce_order_status_changed', $suborder_id, $transition_from, $transition_to);
+				do_action( 'woocommerce_order_status_changed', $suborder_id, $transition_from, $transition_to );
 
 			}
 		}
@@ -344,6 +344,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$main_order          = new WC_Order( $main_order_id );
 			$main_order_metadata = get_metadata( 'post', $main_order_id );
 			$currentUser         = wp_get_current_user();
+
+			// Just create suborders if there is more than 1 item in order
+			if ( $main_order->get_item_count() <= 1 ) {
+				return;
+			}
 
 			// Delete previous suborders
 			if ( $args['delete_prev_suborders'] ) {

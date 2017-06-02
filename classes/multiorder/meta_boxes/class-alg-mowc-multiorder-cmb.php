@@ -72,7 +72,7 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 				'context'      => 'side',
 			) );
 
-			/*$cmb_demo->add_field( array(
+			$cmb_demo->add_field( array(
 				//'name'       => esc_html__( 'Test Text', 'cmb2' ),
 				//'desc'       => esc_html__( 'field description (optional)', 'cmb2' ),
 				'id'         => '_alg_mowc_cmb_create_suborders_btn',
@@ -86,7 +86,7 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 					'style' => 'text-align:center;',
 					'name'  => 'alg_mpwc_cmb_create_suborders',
 				),
-			) );*/
+			) );
 
 			$cmb_demo->add_field( array(
 				'name'          => __( 'Sub orders', 'multi-order-for-woocommerce' ),

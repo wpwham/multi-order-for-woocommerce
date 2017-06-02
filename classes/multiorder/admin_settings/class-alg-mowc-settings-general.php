@@ -20,8 +20,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		const OPTION_SUBORDERS_FRONTEND_SHOW                 = 'alg_mowc_suborders_frontend_show';
 		const OPTION_SUBORDERS_SUBTRACTION_STATUS            = 'alg_mowc_suborders_subtraction_status';
 		const OPTION_SUBORDERS_CHANGE_ON_ORDER_STATUS_CHANGE = 'alg_mowc_suborders_change_on_osc';
-
-
+		const OPTION_SUBORDERS_CREATE_AUTOMATICALLY          = 'alg_mowc_suborders_autocreate';
 
 		/**
 		 * Constructor.
@@ -67,6 +66,13 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'id'    => 'alg_mowc_suborders_opt',
 				),
 				array(
+					'title'   => __( 'Automatic creation', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Creates suborders automatically when new orders are created', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_SUBORDERS_CREATE_AUTOMATICALLY,
+					'type'    => 'checkbox',
+					'default' => 'yes'
+				),
+				array(
 					'title'   => __( 'Show on admin', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'Displays suborders as table rows on admin', 'multi-order-for-woocommerce' ) . ' <strong>' . __( '(WooCommerce > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
 					'id'      => self::OPTION_SUBORDERS_ADMIN_SHOW,
@@ -90,7 +96,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'default' => array('wc-cancelled','wc-processing')
 				),
 				array(
-					'title'   => __( 'Apply status from main order', 'multi-order-for-woocommerce' ),
+					'title'   => __( 'Applies status from main order', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'Suborders get the same status of main order when it changes', 'multi-order-for-woocommerce' ),
 					'id'      => self::OPTION_SUBORDERS_CHANGE_ON_ORDER_STATUS_CHANGE,
 					'type'    => 'checkbox',

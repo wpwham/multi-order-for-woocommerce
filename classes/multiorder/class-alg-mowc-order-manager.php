@@ -22,7 +22,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		function __construct() {
 
 			// Detects "create suborders" button click
-			add_action( 'save_post', array( $this, 'create_suborders_call' ) );
+			add_action( 'save_post', array( $this, 'create_suborders_call_on_btn_click' ) );
+
+			// Create suborders call automatically on new order creation
+			add_action('woocommerce_create_order',array( $this, 'create_suborders_call_on_new_order' ) );
 
 			// Changes suborder status when parent order changes status
 			add_action( 'woocommerce_order_status_changed', array(
@@ -173,12 +176,30 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		}
 
 		/**
+		 * Create suborders call automatically on new order creation
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $order_id
+		 */
+		public function create_suborders_call_on_new_order( $order_id ){
+			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}
+			if ( ! filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_CREATE_AUTOMATICALLY ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}
+			$this->create_suborders( $order_id );
+		}
+
+		/**
 		 * Detects "create suborders" button click
 		 *
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 */
-		public function create_suborders_call( $post_id ) {
+		public function create_suborders_call_on_btn_click( $post_id ) {
 			$post = get_post( $post_id );
 			if ( $post->post_type != 'shop_order' ) {
 				return;
@@ -229,24 +250,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				foreach ( $meta_value as $value ) {
 					wc_add_order_item_meta( $suborder_item_id, $index, $value );
 				}
-			}
-		}
-
-		/**
-		 * Deletes previous suborders
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $main_order_id
-		 */
-		public function delete_previous_suborders( $main_order_id ) {
-			$prev_suborders = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-			if ( is_array( $prev_suborders ) && count( $prev_suborders ) > 0 ) {
-				foreach ( $prev_suborders as $prev_suborder_id ) {
-					wp_delete_post( $prev_suborder_id, true );
-				}
-				delete_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
 			}
 		}
 
@@ -337,13 +340,15 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 */
 		public function create_suborders( $main_order_id, $args = array() ) {
 			$args = wp_parse_args( $args, array(
-				'delete_prev_suborders' => true,
+				'delete_prev_suborders' => false,
 			) );
 
 			$main_order_post     = get_post( $main_order_id );
 			$main_order          = new WC_Order( $main_order_id );
 			$main_order_metadata = get_metadata( 'post', $main_order_id );
 			$currentUser         = wp_get_current_user();
+
+			error_log($main_order->get_item_count());
 
 			// Just create suborders if there is more than 1 item in order
 			if ( $main_order->get_item_count() <= 1 ) {
@@ -360,11 +365,19 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$taxes = $main_order->get_taxes();
 
 			// Counter for creating fake suborders ids
-			$order_counter = 1;
+			$last_suborder_id = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, true );
+			$order_counter    = $last_suborder_id ? $last_suborder_id + 1 : 1;
+
+			error_log($main_order->get_item_count());
 
 			/* @var WC_Order_Item_Product $main_order_item */
 			foreach ( $main_order->get_items() as $item_id => $main_order_item ) {
-				$fee_value = 0;
+				$fee_value        = 0;
+				$prev_suborder_id = wc_get_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, true );
+				if ( $prev_suborder_id ) {
+					continue;
+				}
+				error_log($main_order_item->get_name());
 
 				$order_data = array(
 					'post_type'     => 'shop_order',
@@ -414,7 +427,28 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				// Associate main order item with suborder id
 				wc_add_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, $suborder_id, true );
 
+				// Saves last suborder sub id
+				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, $order_counter );
+
 				$order_counter ++;
+			}
+		}
+
+		/**
+		 * Deletes previous suborders
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $main_order_id
+		 */
+		public function delete_previous_suborders( $main_order_id ) {
+			$prev_suborders = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+			if ( is_array( $prev_suborders ) && count( $prev_suborders ) > 0 ) {
+				foreach ( $prev_suborders as $prev_suborder_id ) {
+					wp_delete_post( $prev_suborder_id, true );
+				}
+				delete_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
 			}
 		}
 

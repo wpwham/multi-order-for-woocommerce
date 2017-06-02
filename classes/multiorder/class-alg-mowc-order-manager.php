@@ -57,6 +57,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		public function remove_suborder_on_main_order_item_removal( $item_id ) {
 			$suborder_id = wc_get_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, true );
 			if ( $suborder_id ) {
+				$main_order_id = get_post_meta( $suborder_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
+				delete_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id );
 				wp_delete_post( $suborder_id, true );
 			}
 		}
@@ -348,8 +350,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$main_order_metadata = get_metadata( 'post', $main_order_id );
 			$currentUser         = wp_get_current_user();
 
-			error_log($main_order->get_item_count());
-
 			// Just create suborders if there is more than 1 item in order
 			if ( $main_order->get_item_count() <= 1 ) {
 				return;
@@ -357,7 +357,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Delete previous suborders
 			if ( $args['delete_prev_suborders'] ) {
-				$this->delete_previous_suborders( $main_order_id );
+				$this->delete_suborders_from_main_order( $main_order_id );
 			}
 
 			// Gets fees and taxes
@@ -368,8 +368,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$last_suborder_id = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, true );
 			$order_counter    = $last_suborder_id ? $last_suborder_id + 1 : 1;
 
-			error_log($main_order->get_item_count());
-
 			/* @var WC_Order_Item_Product $main_order_item */
 			foreach ( $main_order->get_items() as $item_id => $main_order_item ) {
 				$fee_value        = 0;
@@ -377,7 +375,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				if ( $prev_suborder_id ) {
 					continue;
 				}
-				error_log($main_order_item->get_name());
 
 				$order_data = array(
 					'post_type'     => 'shop_order',
@@ -442,7 +439,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 *
 		 * @param $main_order_id
 		 */
-		public function delete_previous_suborders( $main_order_id ) {
+		public function delete_suborders_from_main_order( $main_order_id ) {
 			$prev_suborders = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
 			if ( is_array( $prev_suborders ) && count( $prev_suborders ) > 0 ) {
 				foreach ( $prev_suborders as $prev_suborder_id ) {

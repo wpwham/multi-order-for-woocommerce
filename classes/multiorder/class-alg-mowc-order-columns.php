@@ -11,7 +11,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 
 	class Alg_MOWC_Order_Columns {
 
-		public $suborders_column_id = 'alg_mowc_suborders';
+		public $column_suborders_id = 'alg_mowc_suborders';
+		public $column_order_total_id = 'alg_mowc_order-total';
+		public $column_order_payment_status = 'alg_mowc_payment_status';
 
 		/**
 		 * Constructor
@@ -24,19 +26,59 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 
 			// Setups admin columns
 			add_action( "manage_{$post_type}_posts_custom_column", array( $this, 'setup_admin_order_columns' ), 20, 2 );
-			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'add_admin_suborders_column' ), 20 );
+			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'change_admin_columns' ), 20 );
+
+			// Change Total column label to Remaining
+			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'change_total_column_to_remaining_on_admin' ), 20 );
 
 			// Setups frontend columns
-			add_filter( "woocommerce_my_account_my_orders_columns", array( $this, 'add_frontend_order_columns' ) );
-			add_filter( "woocommerce_account_orders_columns", array( $this, 'add_frontend_order_columns' ) );
-			add_action( "woocommerce_my_account_my_orders_column_{$this->suborders_column_id}", array(
-				$this,
-				'setup_frontend_suborders_column',
-			) );
-			add_action( "woocommerce_my_account_my_orders_column_order-number", array(
-				$this,
-				'setup_frontend_order_number_column',
-			) );
+			add_filter( "woocommerce_my_account_my_orders_columns", array( $this, 'change_frontend_order_columns' ) );
+			add_filter( "woocommerce_account_orders_columns", array( $this, 'change_frontend_order_columns' ) );
+			add_action( "woocommerce_my_account_my_orders_column_{$this->column_suborders_id}", array( $this, 'setup_frontend_suborders_column') );
+			add_action( "woocommerce_my_account_my_orders_column_{$this->column_order_total_id}", array( $this, 'setup_frontend_total_column') );
+			add_action( "woocommerce_my_account_my_orders_column_{$this->column_order_payment_status}", array( $this, 'setup_frontend_payment_column') );
+			add_action( "woocommerce_my_account_my_orders_column_order-total", array( $this, 'setup_frontend_remaining_column') );
+			add_action( "woocommerce_my_account_my_orders_column_order-number", array( $this, 'setup_frontend_order_number_column' ) );
+
+			// Hides / Enables cancel button on my "account > orders" on actions column
+			add_filter('woocommerce_my_account_my_orders_actions', array( $this, 'hide_cancel_button_on_my_orders_page' ) );
+		}
+
+		/**
+         * Hides / Enables cancel button on my "account > orders" on actions column
+         *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $actions
+		 *
+		 * @return mixed
+		 */
+		public function hide_cancel_button_on_my_orders_page( $actions ) {
+			$hide_cancel_btn = filter_var( get_option( Alg_MOWC_Settings_General::OPTION_DISABLE_CANCEL_BUTTON ), FILTER_VALIDATE_BOOLEAN );
+			if ( ! $hide_cancel_btn ) {
+				return $actions;
+			}
+
+			if ( isset( $actions['cancel'] ) ) {
+				unset( $actions['cancel'] );
+			}
+			return $actions;
+		}
+
+		/**
+         * Convert total column label to remaining on admin
+         *
+		 * @param $columns
+         *
+		 * @version 1.0.0
+		 * @since   1.0.0
+         *
+		 * @return mixed
+		 */
+		public function change_total_column_to_remaining_on_admin( $columns ) {
+			$columns['order_total'] = __( 'Remaining', 'multi-order-for-woocommerce' );
+			return $columns;
 		}
 
 		/**
@@ -55,6 +97,43 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 				<?php echo _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() . ' '. $suborder_str; ?>
             </a>
 			<?php
+		}
+
+		/**
+		 * Setups frontend payment status column
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param WC_Order $order
+		 */
+		public function setup_frontend_payment_column( WC_Order $order ) {
+			echo $this->html_payment_status_column( $order->get_id() );
+		}
+
+		/**
+		 * Setups frontend total column (new total column)
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param WC_Order $order
+		 */
+		public function setup_frontend_total_column( WC_Order $order ) {
+			$order_total = $order->get_total()+$order->get_total_discount();
+			echo wc_price($order_total);
+        }
+
+		/**
+		 * Setups frontend remaining column (old total column)
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param WC_Order $order
+		 */
+		public function setup_frontend_remaining_column( WC_Order $order ) {
+		    echo $order->get_formatted_order_total();
 		}
 
 		/**
@@ -83,7 +162,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		}
 
 		/**
-		 * Adds frontend suborders column
+		 * Changes frontend suborders column
 		 *
 		 * @version 1.0.0
 		 * @since   1.0.0
@@ -92,38 +171,62 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 *
 		 * @return array
 		 */
-		public function add_frontend_order_columns( $columns ) {
-			//return $columns;
+		public function change_frontend_order_columns( $columns ) {
 			$new = array();
 			foreach ( $columns as $key => $title ) {
 				if ( $key == 'order-date' ) {
-					$new[ $this->suborders_column_id ] = __( 'Suborders', 'multi-order-for-woocommerce' );
+					$new[ $this->column_suborders_id ] = __( 'Suborders', 'multi-order-for-woocommerce' );
+				}
+				$new[ $key ] = $title;
+
+				if ( $key == 'order-total' ) {
+					$new[ $this->column_order_total_id ]       = __( 'Total', 'woocommerce' );
+					$new[ $this->column_order_payment_status ] = __( 'Payment', 'woocommerce' );
+				}
+				$new[ $key ] = $title;
+			}
+
+			$new['order-total'] = __( 'Remaining', 'multi-order-for-woocommerce' );
+			return $new;
+		}
+
+		/**
+		 * Changes admin columns
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $columns
+		 *
+		 * @return array
+		 */
+		public function change_admin_columns( $columns ) {
+			$new = array();
+			foreach ( $columns as $key => $title ) {
+				if ( $key == 'shipping_address' ) {
+					$new[ $this->column_suborders_id ] = __( 'Sub Orders', 'multi-order-for-woocommerce' ) . ' <span style="display:none;color:#999;font-size:11px;">' . '(Sub Order ID / Order ID)' . '</span>';
+				}
+				$new[ $key ] = $title;
+
+				if ( $key == 'order_total' ) {
+					$new[ $this->column_order_total_id ]       = __( 'Total', 'multi-order-for-woocommerce' );
+					$new[ $this->column_order_payment_status ] = __( 'Payment', 'multi-order-for-woocommerce' );
 				}
 				$new[ $key ] = $title;
 			}
 			return $new;
 		}
 
-		/**
-		 * Adds admin suborders column
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $columns
-		 *
-		 * @return array
-		 */
-		public function add_admin_suborders_column( $columns ) {
-			$new = array();
-			foreach ( $columns as $key => $title ) {
-				if ( $key == 'shipping_address' ) {
-					$new[ $this->suborders_column_id ] = __( 'Sub Orders', 'multi-order-for-woocommerce' ) . ' <span style="display:none;color:#999;font-size:11px;">' . '(Sub Order ID / Order ID)' . '</span>';
-				}
-				$new[ $key ] = $title;
+		public function html_payment_status_column($order_id){
+			$order = wc_get_order( $order_id );
+			if ( $order->get_total() == 0 ) {
+				return __( 'Paid', 'multi-order-for-woocommerce' );
+			} else if ( $order->get_total() != 0 && $order->get_total_discount() > 0 ) {
+				return __( 'Partial', 'multi-order-for-woocommerce' );
+			} else {
+				return __( 'Unpaid', 'multi-order-for-woocommerce' );
 			}
-			return $new;
-		}
+        }
 
 		/**
 		 * Setups admin order columns
@@ -137,27 +240,43 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @return mixed
 		 */
 		public function setup_admin_order_columns( $column, $post_id ) {
-			if ( $column == 'order_title' ) {
-				$is_suborder  = filter_var( get_post_meta( $post_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
-				$suborder_str = $is_suborder ? '<strong>'.__( '(Suborder)', 'multi-order-for-woocommerce' ) .'</strong>' : '';
-				echo $suborder_str;
-			}
-			if ( $column == $this->suborders_column_id ) {
-				$suborders = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-				$counter   = 1;
-				if ( is_array( $suborders ) && count( $suborders ) > 0 ) {
-					echo '<ul style="margin:0;padding:0;list-style:none">';
-					foreach ( $suborders as $suborder_id ) {
-                        $suborder = wc_get_order($suborder_id);
-                        if($suborder){
-	                        echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>#' . $suborder->get_order_number() . '</strong></a></li>';
-	                        $counter ++;
-                        }
 
-					}
-					echo '</ul>';
-				}
-			}
+		    switch($column){
+                case 'order_title':
+	                $is_suborder  = filter_var( get_post_meta( $post_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+	                $suborder_str = $is_suborder ? '<strong>'.__( '(Suborder)', 'multi-order-for-woocommerce' ) .'</strong>' : '';
+	                echo $suborder_str;
+                break;
+
+                case $this->column_order_total_id:
+	                $order       = wc_get_order( $post_id );
+	                $order_total = $order->get_total() + $order->get_total_discount();
+	                echo wc_price($order_total);
+                break;
+
+			    case $this->column_order_payment_status:
+				    echo $this->html_payment_status_column($post_id);
+			    break;
+
+                case $this->column_suborders_id:
+	                $suborders = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+	                $counter   = 1;
+	                if ( is_array( $suborders ) && count( $suborders ) > 0 ) {
+		                echo '<ul style="margin:0;padding:0;list-style:none">';
+		                foreach ( $suborders as $suborder_id ) {
+			                $suborder = wc_get_order($suborder_id);
+			                if($suborder){
+				                echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>#' . $suborder->get_order_number() . '</strong></a></li>';
+				                $counter ++;
+			                }
+
+		                }
+		                echo '</ul>';
+	                }
+                break;
+
+		    }
+
 		}
 	}
 }

@@ -16,6 +16,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 	class Alg_MOWC_Settings_General extends Alg_MOWC_Settings_Section {
 
 		const OPTION_ENABLE_PLUGIN                           = 'alg_mowc_opt_enable';
+		const OPTION_DISABLE_CANCEL_BUTTON                   = 'alg_mowc_disable_cancel_btn';
 		const OPTION_SUBORDERS_ADMIN_SHOW                    = 'alg_mowc_suborders_admin_show';
 		const OPTION_SUBORDERS_FRONTEND_SHOW                 = 'alg_mowc_suborders_frontend_show';
 		const OPTION_SUBORDERS_SUBTRACTION_STATUS            = 'alg_mowc_suborders_subtraction_status';
@@ -53,6 +54,13 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'desc'    => sprintf( __( 'Enables <strong>"%s"</strong> plugin', 'multi-order-for-woocommerce' ), __( 'Multi order for WooCommerce' ) ),
 					'id'      => self::OPTION_ENABLE_PLUGIN,
 					'default' => 'yes',
+					'type'    => 'checkbox',
+				),
+				array(
+					'title'   => __( 'Disable cancel button', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Disables the cancel button on frontend on ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
+					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
+					'default' => 'no',
 					'type'    => 'checkbox',
 				),
 				array(

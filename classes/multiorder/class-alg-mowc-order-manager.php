@@ -24,14 +24,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Detects "create suborders" button click
 			add_action( 'save_post', array( $this, 'create_suborders_call_on_btn_click' ) );
 
-			// Create suborders call automatically on new order creation
-			add_action('woocommerce_create_order',array( $this, 'create_suborders_call_on_new_order' ) );
-
 			// Changes suborder status when parent order changes status
-			add_action( 'woocommerce_order_status_changed', array(
-				$this,
-				'sync_suborders_status_from_parent_call',
-			), 10, 3 );
+			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_status_from_parent_call' ), 10, 3 );
 
 			// Call the function that deducts suborder from main order
 			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 3 );
@@ -40,10 +34,14 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'recalculate_main_order_price_event', array( $this, 'recalculate_main_order' ), 10, 1 );
 
 			// Deletes suborder if correspondent item id is removed from main order
-			add_action( 'woocommerce_before_delete_order_item', array(
-				$this,
-				'remove_suborder_on_main_order_item_removal',
-			) );
+			add_action( 'woocommerce_before_delete_order_item', array( $this, 'remove_suborder_on_main_order_item_removal' ) );
+
+			// Create suborders call automatically on new order creation
+			add_action( 'woocommerce_create_order', array( $this, 'create_suborders_call_on_new_order' ) );
+			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'create_suborders_call_on_new_order' ) );
+			add_action( 'woocommerce_new_order', array( $this, 'create_suborders_call_on_new_order' ) );
+			add_action( 'woocommerce_resume_order', array( $this, 'create_suborders_call_on_new_order' ) );
+			add_action( 'woocommerce_thankyou', array( $this, 'create_suborders_call_on_new_order' ) );
 		}
 
 		/**
@@ -185,13 +183,15 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 *
 		 * @param $order_id
 		 */
-		public function create_suborders_call_on_new_order( $order_id ){
+		public function create_suborders_call_on_new_order( $order_id ) {
 			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
+
 			if ( ! filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_CREATE_AUTOMATICALLY ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
+
 			$this->create_suborders( $order_id );
 		}
 
@@ -426,6 +426,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 				// Saves last suborder sub id
 				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, $order_counter );
+
+				// Update status
+				$status = str_replace( 'wc-', '', get_post_status( $main_order_id ) );
+				do_action( 'woocommerce_order_status_changed', $suborder_id, $status, $status );
 
 				$order_counter ++;
 			}

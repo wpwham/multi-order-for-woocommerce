@@ -1,15 +1,15 @@
 <?php
 /**
- * Multi order for WooCommerce - Setups suborders view
+ * Multi order for WooCommerce - Order searching and sorting
  *
  * @version 1.0.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
 
-if ( ! class_exists( 'Alg_MOWC_Suborders_Search' ) ) {
+if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 
-	class Alg_MOWC_Suborders_Search {
+	class Alg_MOWC_Orders_Search {
 
 		private $current_suborder_id_searched = '';
 
@@ -25,9 +25,63 @@ if ( ! class_exists( 'Alg_MOWC_Suborders_Search' ) ) {
 			add_action( 'pre_get_posts', array( $this, 'find_suborder_by_custom_number' ), 11 );
 
 			// Find suborders using [woocommerce_order_tracking]
-			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array(
-				$this,
-				'allow_suborders_to_be_tracked',
+			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'allow_suborders_to_be_tracked' ) );
+
+			// Sort orders
+			add_action( 'pre_get_posts', array( $this, 'sort_admin_orders' ), 11 );
+			add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'sort_frontend_orders' ) );
+			add_filter( 'woocommerce_my_account_my_orders_query', array( $this, 'sort_frontend_orders' ) );
+		}
+
+		/**
+		 * Sort orders on frontend
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $query
+		 */
+		public function sort_frontend_orders( $query ) {
+
+			$query['meta_query'][] =
+				array(
+					'custom_sort' => array(
+						'key'     => Alg_MOWC_Order_Metas::SORT_ID,
+						'compare' => 'EXISTS',
+					),
+				);
+			$query['orderby']      = array(
+				'custom_sort' => 'DESC',
+			);
+			return $query;
+		}
+
+		/**
+		 * Sort orders
+		 *
+		 * @version  1.0.0
+		 * @since    1.0.0
+		 *
+		 * @param $query
+		 */
+		public function sort_admin_orders( $query ) {
+			if (
+				! isset( $query->query['post_type'] ) ||
+				$query->query['post_type'] != 'shop_order' ||
+				! is_admin()
+			) {
+				return;
+			}
+
+			$query->set( 'meta_query', array(
+				'custom_sort' => array(
+					'key'     => Alg_MOWC_Order_Metas::SORT_ID,
+					'compare' => 'EXISTS',
+				),
+			) );
+
+			$query->set( 'orderby', array(
+				'custom_sort' => 'DESC',
 			) );
 		}
 

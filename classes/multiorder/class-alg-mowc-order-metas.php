@@ -18,6 +18,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Metas' ) ) {
 		const PARENT_ORDER_ITEM    = '_alg_mowc_parentorderitem';
 		const DEDUCTED             = '_alg_mowc_suborder_deducted';
 		const LAST_SUBORDER_SUB_ID = '_alg_mowc_last_suborder_sub_id';
-		const ORDER_SORT           = '_alg_mowc_order_sort';
+		const SORT_ID              = '_alg_mowc_sort_id';
 	}
 }

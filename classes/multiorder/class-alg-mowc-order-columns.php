@@ -40,31 +40,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			add_action( "woocommerce_my_account_my_orders_column_order-total", array( $this, 'setup_frontend_remaining_column') );
 			add_action( "woocommerce_my_account_my_orders_column_order-number", array( $this, 'setup_frontend_order_number_column' ) );
 
-			// Hides / Enables cancel button on my "account > orders" on actions column
-			add_filter('woocommerce_my_account_my_orders_actions', array( $this, 'hide_cancel_button_on_my_orders_page' ) );
+
 		}
 
-		/**
-         * Hides / Enables cancel button on my "account > orders" on actions column
-         *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $actions
-		 *
-		 * @return mixed
-		 */
-		public function hide_cancel_button_on_my_orders_page( $actions ) {
-			$hide_cancel_btn = filter_var( get_option( Alg_MOWC_Settings_General::OPTION_DISABLE_CANCEL_BUTTON ), FILTER_VALIDATE_BOOLEAN );
-			if ( ! $hide_cancel_btn ) {
-				return $actions;
-			}
 
-			if ( isset( $actions['cancel'] ) ) {
-				unset( $actions['cancel'] );
-			}
-			return $actions;
-		}
 
 		/**
          * Convert total column label to remaining on admin
@@ -179,7 +158,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 				}
 				$new[ $key ] = $title;
 
-				if ( $key == 'order-total' ) {
+				if ( $key == 'order-status' ) {
 					$new[ $this->column_order_total_id ]       = __( 'Total', 'woocommerce' );
 					$new[ $this->column_order_payment_status ] = __( 'Payment', 'woocommerce' );
 				}
@@ -208,7 +187,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 				}
 				$new[ $key ] = $title;
 
-				if ( $key == 'order_total' ) {
+				if ( $key == 'order_date' ) {
 					$new[ $this->column_order_total_id ]       = __( 'Total', 'multi-order-for-woocommerce' );
 					$new[ $this->column_order_payment_status ] = __( 'Payment', 'multi-order-for-woocommerce' );
 				}

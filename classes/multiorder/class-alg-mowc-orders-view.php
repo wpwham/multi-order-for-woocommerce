@@ -7,9 +7,9 @@
  * @author  Algoritmika Ltd.
  */
 
-if ( ! class_exists( 'Alg_MOWC_Suborders_View' ) ) {
+if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 
-	class Alg_MOWC_Suborders_View {
+	class Alg_MOWC_Orders_View {
 
 		/**
 		 * Constructor
@@ -22,14 +22,8 @@ if ( ! class_exists( 'Alg_MOWC_Suborders_View' ) ) {
 			add_action( 'pre_get_posts', array( $this, 'show_or_hide_admin_suborders_list_view' ) );
 
 			// Show | Hides frontend suborder list view
-			add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array(
-				$this,
-				'show_or_hide_frontend_suborders_list_view',
-			) );
-			add_filter( 'woocommerce_my_account_my_orders_query', array(
-				$this,
-				'show_or_hide_frontend_suborders_list_view',
-			) );
+			add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'show_or_hide_frontend_suborders_list_view' ) );
+			add_filter( 'woocommerce_my_account_my_orders_query', array( $this, 'show_or_hide_frontend_suborders_list_view' ) );
 
 			// Manages frontend order view template on my account
 			add_action( 'woocommerce_view_order', array( $this, 'woocommerce_frontend_suborder_view' ), 1 );
@@ -157,6 +151,10 @@ if ( ! class_exists( 'Alg_MOWC_Suborders_View' ) ) {
 		 */
 		public function show_or_hide_admin_suborders_list_view( $query ) {
 			if ( ! is_admin() ) {
+				return;
+			}
+
+			if ( ! isset( $query->query['post_type'] ) ) {
 				return;
 			}
 

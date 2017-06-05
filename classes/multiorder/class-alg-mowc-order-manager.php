@@ -45,6 +45,37 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		}
 
 		/**
+		 * Creates sort meta on orders that don't have it yet
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 */
+		public static function set_sort_order_meta() {
+			$the_query = new WP_Query( array(
+				'post_type'      => 'shop_order',
+				'post_status'    => wc_get_order_statuses(),
+				'posts_per_page' => '-1',
+				'meta_query'     => array(
+					array(
+						'key'     => Alg_MOWC_Order_Metas::SORT_ID,
+						'compare' => 'NOT EXISTS',
+					),
+				),
+			) );
+
+			if ( $the_query->have_posts() ) {
+
+				while ( $the_query->have_posts() ) {
+					$the_query->the_post();
+					update_post_meta( get_the_ID(), Alg_MOWC_Order_Metas::SORT_ID, get_the_ID() );
+				}
+
+				wp_reset_postdata();
+			}
+		}
+
+		/**
 		 * Deletes suborder if correspondent item id is removed from main order
 		 *
 		 * @version 1.0.0
@@ -365,8 +396,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$taxes = $main_order->get_taxes();
 
 			// Counter for creating fake suborders ids
-			$last_suborder_id = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, true );
-			$order_counter    = $last_suborder_id ? $last_suborder_id + 1 : 1;
+			$last_suborder_id      = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, true );
+			$order_counter         = $last_suborder_id ? $last_suborder_id + 1 : 1;
+			$order_inverse_counter = $last_suborder_id ? 999-$last_suborder_id : 999;
 
 			/* @var WC_Order_Item_Product $main_order_item */
 			foreach ( $main_order->get_items() as $item_id => $main_order_item ) {
@@ -388,6 +420,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 						Alg_MOWC_Order_Metas::PARENT_ORDER      => $main_order_id,
 						Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID  => $order_counter,
 						Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID => $main_order->get_order_number() . '-' . $order_counter,
+						Alg_MOWC_Order_Metas::SORT_ID           => $main_order->get_id() . $order_inverse_counter,
 						Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM => $item_id,
 					),
 				);
@@ -426,12 +459,14 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 				// Saves last suborder sub id
 				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, $order_counter );
+				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SORT_ID , $main_order_id.'9999' );
 
 				// Update status
 				$status = str_replace( 'wc-', '', get_post_status( $main_order_id ) );
 				do_action( 'woocommerce_order_status_changed', $suborder_id, $status, $status );
 
 				$order_counter ++;
+				$order_inverse_counter --;
 			}
 		}
 

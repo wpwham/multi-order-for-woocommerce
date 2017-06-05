@@ -54,9 +54,10 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 			new Alg_MOWC_Multiorder_CMB();
 			new Alg_MOWC_Order_Manager();
 			new Alg_MOWC_Order_Columns();
-			new Alg_MOWC_Suborders_View();
-			new Alg_MOWC_Suborders_Search();
+			new Alg_MOWC_Orders_View();
+			new Alg_MOWC_Orders_Search();
 			new Alg_MOWC_Order_Item();
+			new Alg_MOWC_Order_Actions();
 		}
 
 		/**
@@ -68,6 +69,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		 */
 		public static function on_plugin_activation() {
 			parent::on_plugin_activation();
+			Alg_MOWC_Order_Manager::set_sort_order_meta();
 		}
 
 	}

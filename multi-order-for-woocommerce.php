@@ -85,3 +85,13 @@ alg_mowc_register_hooks();
 
 
 
+/*add_action('woocommerce_init',function(){
+	if(!is_admin()){
+		return;
+	}
+
+	Alg_MOWC_Order_Manager::set_sort_order_meta();
+},999);
+*/
+
+

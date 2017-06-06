@@ -39,8 +39,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			add_action( "woocommerce_my_account_my_orders_column_{$this->column_order_payment_status}", array( $this, 'setup_frontend_payment_column') );
 			add_action( "woocommerce_my_account_my_orders_column_order-total", array( $this, 'setup_frontend_remaining_column') );
 			add_action( "woocommerce_my_account_my_orders_column_order-number", array( $this, 'setup_frontend_order_number_column' ) );
-
-
 		}
 
 
@@ -71,11 +69,13 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		public function setup_frontend_order_number_column( WC_Order $order ) {
 			$is_suborder  = filter_var( get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
 			$suborder_str = $is_suborder ? __( '(Suborder)', 'multi-order-for-woocommerce' ) : '';
-			?>
-            <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
-				<?php echo _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() . ' '. $suborder_str; ?>
-            </a>
-			<?php
+			if ( ! $is_suborder ) {
+				?>
+                <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
+					<?php echo _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() . ' ' . $suborder_str; ?>
+                </a>
+				<?php
+			}
 		}
 
 		/**
@@ -124,19 +124,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @param WC_Order $order
 		 */
 		public function setup_frontend_suborders_column( WC_Order $order ) {
-
-			$suborders = get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::SUB_ORDERS );
-			$counter   = 1;
-			if ( is_array( $suborders ) && count( $suborders ) > 0 ) {
-				echo '<ul style="margin:0;padding:0;list-style:none">';
-				foreach ( $suborders as $suborder_id ) {
-					$suborder = wc_get_order( $suborder_id );
-					if($suborder){
-						echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . $suborder->get_view_order_url() . '" class="row-title"><strong>#' . $suborder->get_order_number().'</strong></a></li>';
-						$counter ++;
-                    }
-				}
-				echo '<ul>';
+			$is_suborder = filter_var( get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+			if ( $is_suborder ) {
+				echo '<a href="' . $order->get_view_order_url() . '">#' . $order->get_order_number() . '</a>';
 			}
 		}
 
@@ -154,7 +144,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			$new = array();
 			foreach ( $columns as $key => $title ) {
 				if ( $key == 'order-date' ) {
-					$new[ $this->column_suborders_id ] = __( 'Suborders', 'multi-order-for-woocommerce' );
+					$new[ $this->column_suborders_id ] = __( 'Suborder', 'multi-order-for-woocommerce' );
 				}
 				$new[ $key ] = $title;
 

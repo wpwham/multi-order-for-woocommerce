@@ -88,7 +88,7 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 				),
 			) );
 
-			$cmb_demo->add_field( array(
+			/*$cmb_demo->add_field( array(
 				'name'          => __( 'Sub orders', 'multi-order-for-woocommerce' ),
 				//'desc'       => esc_html__( 'field description (optional)', 'cmb2' ),
 				'id'            => Alg_MOWC_Order_Metas::SUB_ORDERS,
@@ -96,7 +96,7 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 				'save_field'    => false,
 				'render_row_cb' => array( $this, 'render_field_as_list' ),
 
-			) );
+			) );*/
 
 			$cmb_demo->add_field( array(
 				'name'          => __( 'Parent order', 'multi-order-for-woocommerce' ),

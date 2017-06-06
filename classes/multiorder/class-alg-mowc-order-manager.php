@@ -68,7 +68,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 				while ( $the_query->have_posts() ) {
 					$the_query->the_post();
-					update_post_meta( get_the_ID(), Alg_MOWC_Order_Metas::SORT_ID, get_the_ID() );
+					update_post_meta( get_the_ID(), Alg_MOWC_Order_Metas::SORT_ID, get_the_ID().'9999' );
 				}
 
 				wp_reset_postdata();
@@ -383,6 +383,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Just create suborders if there is more than 1 item in order
 			if ( $main_order->get_item_count() <= 1 ) {
+
+				// Saves sort id
+				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SORT_ID, $main_order_id . '9999' );
+
 				return;
 			}
 
@@ -459,6 +463,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 				// Saves last suborder sub id
 				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, $order_counter );
+
+				// Saves sort id
 				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SORT_ID , $main_order_id.'9999' );
 
 				// Update status

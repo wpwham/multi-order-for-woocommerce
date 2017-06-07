@@ -30,7 +30,9 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 			add_action( 'woocommerce_view_order', array( $this, 'woocommerce_frontend_parent_order_view' ), 1 );
 
 			// Changes the suborder number
-			add_filter('woocommerce_order_number',array($this,'woocommerce_suborder_number'),PHP_INT_MAX,2);
+			add_filter( 'woocommerce_order_number', array( $this, 'woocommerce_suborder_number' ), PHP_INT_MAX, 2 );
+
+
 
 			// Todo: Try to change order url
 			/*add_filter('woocommerce_get_view_order_url',function($url, WC_Order $order){
@@ -38,6 +40,8 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 				//return apply_filters('woocommerce_order_number',$order->get_id(),$order);
 			},10,2);*/
 		}
+
+
 
 		/**
 		 * Setups the suborder number view

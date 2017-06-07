@@ -17,6 +17,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 
 		const OPTION_ENABLE_PLUGIN                           = 'alg_mowc_opt_enable';
 		const OPTION_DISABLE_CANCEL_BUTTON                   = 'alg_mowc_disable_cancel_btn';
+		const OPTION_DISABLE_ORDER_ITEM_QTY                  = 'alg_mowc_disable_order_item_qty';
 		const OPTION_SUBORDERS_ADMIN_SHOW                    = 'alg_mowc_suborders_admin_show';
 		const OPTION_SUBORDERS_FRONTEND_SHOW                 = 'alg_mowc_suborders_frontend_show';
 		const OPTION_SUBORDERS_SUBTRACTION_STATUS            = 'alg_mowc_suborders_subtraction_status';
@@ -58,8 +59,15 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				),
 				array(
 					'title'   => __( 'Disable cancel button', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Disables the cancel button on frontend on ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
+					'desc'    => __( 'Disables the cancel action button on frontend on ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
 					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
+					'default' => 'no',
+					'type'    => 'checkbox',
+				),
+				array(
+					'title'   => __( 'Hide quantity', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Hides order item quantity on order received / order pay pages', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_DISABLE_ORDER_ITEM_QTY,
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),

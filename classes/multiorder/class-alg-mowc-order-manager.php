@@ -309,7 +309,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 */
 		public function sync_suborders_status_from_parent_call( $order_id, $transition_from, $transition_to ) {
 			$copy_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS );
-			if ( is_array( $copy_main_order_status ) ) {
+			if ( ! is_array( $copy_main_order_status ) ) {
 				return;
 			}
 

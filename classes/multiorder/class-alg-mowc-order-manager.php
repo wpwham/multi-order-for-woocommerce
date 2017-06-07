@@ -31,7 +31,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 3 );
 
 			// Recalculates main order price
-			add_action( 'recalculate_main_order_price_event', array( $this, 'recalculate_main_order' ), 10, 1 );
+			add_action( 'recalculate_order_price_event', array( $this, 'recalculate_main_order' ), 10, 1 );
 
 			// Deletes suborder post if correspondent item id is removed from main order
 			add_action( 'woocommerce_before_delete_order_item', array( $this, 'remove_suborder_post_on_main_order_item_removal' ) );
@@ -48,6 +48,87 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Create suborders automatically on new order item creation
 			add_action('woocommerce_new_order_item',array( $this, 'create_suborders_call_on_new_order_item' ), 10, 3 );
+
+			// Updates suborder when the main order item gets updated
+			add_action( 'woocommerce_update_order_item', array( $this, 'update_suborder_on_main_order_update' ), 10, 2 );
+
+			// Updates main order item when the suborder gets updated
+			add_action( 'woocommerce_update_order_item', array( $this, 'update_main_order_item_on_suborder_update' ), 10, 2 );
+		}
+
+
+
+		/**
+		 * Updates main order item when the suborder gets updated
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 */
+		public function update_main_order_item_on_suborder_update( $item_id, $args ) {
+
+			if ( ! isset( $_POST['order_id'] ) ) {
+				return;
+			}
+			$order_id              = $_POST['order_id'];
+			$order_id_from_item_id = wc_get_order_id_by_order_item_id( $item_id );
+			if ( $order_id != $order_id_from_item_id ) {
+				return;
+			}
+
+			$suborder_id = wc_get_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, true );
+
+			if ( ! empty( $suborder_id ) ) {
+				return;
+			}
+
+			$suborder_id   = $order_id_from_item_id;
+			$main_order_id = get_post_meta( $suborder_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
+
+			if ( empty( $main_order_id ) ) {
+				return;
+			}
+
+			$parent_order_item_id   = get_post_meta( $suborder_id, Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM, true );
+
+			$suborder = wc_get_order( $suborder_id );
+			foreach ( $suborder->get_items() as $suborder_item_id => $suborder_item ) {
+				if ( $suborder_item_id == $item_id ) {
+					$this->clone_order_itemmetas( $item_id, $parent_order_item_id, array( Alg_MOWC_Order_Item_Metas::SUB_ORDER ), 'update' );
+					wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+					wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $suborder_id ) );
+				}
+			}
+		}
+
+		/**
+		 * Updates suborder when a main order item gets updated
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 */
+		public function update_suborder_on_main_order_update( $item_id, $args ) {
+			if ( ! isset( $_POST['order_id'] ) ) {
+				return;
+			}
+			$order_id              = $_POST['order_id'];
+			$order_id_from_item_id = wc_get_order_id_by_order_item_id( $item_id );
+			if ( $order_id != $order_id_from_item_id ) {
+				return;
+			}
+
+			$suborder_id = wc_get_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, true );
+
+			if ( empty( $suborder_id ) ) {
+				return;
+			}
+
+			$suborder      = wc_get_order( $suborder_id );
+			foreach ( $suborder->get_items() as $suborder_item_id => $suborder_item ) {
+				$this->clone_order_itemmetas( $item_id, $suborder_item_id, array( Alg_MOWC_Order_Item_Metas::SUB_ORDER), 'update' );
+			}
+
+			wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $suborder_id ) );
 		}
 
 		/**
@@ -134,16 +215,19 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 */
 		public function remove_suborder_post_on_main_order_item_removal( $item_id ) {
 			$suborder_id = wc_get_order_item_meta( $item_id, Alg_MOWC_Order_Item_Metas::SUB_ORDER, true );
-			if ( $suborder_id ) {
+			$suborder    = get_post( $suborder_id );
+			if ( $suborder_id && $suborder ) {
 				$main_order_id = get_post_meta( $suborder_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-				$main_order    = wc_get_order( $main_order_id );
-				$main_order->calculate_totals();
+
 				delete_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS, $suborder_id );
 				delete_post_meta( $suborder_id, Alg_MOWC_Order_Metas::PARENT_ORDER );
 				$suborder = get_post( $suborder_id );
 				if ( ! filter_var( get_post_meta( $suborder_id, Alg_MOWC_Order_Metas::DELETING, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 					wp_delete_post( $suborder_id, true );
 				}
+
+				$main_order = wc_get_order( $main_order_id );
+				$main_order->calculate_totals();
 			}
 		}
 
@@ -189,8 +273,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Create event to recalculate main order
 			$main_order_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-			wp_clear_scheduled_hook( 'recalculate_main_order_price_event' );
-			wp_schedule_single_event( time() + 1, 'recalculate_main_order_price_event', array( $main_order_id ) );
+			wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $main_order_id ) );
 		}
 
 		/**
@@ -330,14 +414,21 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 *
-		 * @param $order_item_id
-		 * @param $suborder_item_id
+		 * @param        $order_item_id
+		 * @param        $target_order_id
+		 * @param string $method 'add' | 'update'
 		 */
-		public function clone_order_itemmetas( $order_item_id, $suborder_item_id ) {
+		public function clone_order_itemmetas( $order_item_id, $target_order_id, $exclude = array(), $method = 'add' ) {
 			$order_item_metas = wc_get_order_item_meta( $order_item_id, '' );
 			foreach ( $order_item_metas as $index => $meta_value ) {
 				foreach ( $meta_value as $value ) {
-					wc_add_order_item_meta( $suborder_item_id, $index, $value );
+					if ( ! in_array( $index, $exclude ) ) {
+						if ( $method == 'add' ) {
+							wc_add_order_item_meta( $target_order_id, $index, $value );
+						} else if ( $method == 'update' ) {
+							wc_update_order_item_meta( $target_order_id, $index, $value );
+						}
+					}
 				}
 			}
 		}
@@ -361,7 +452,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			) );
 
 			// Clone order item metas
-			$this->clone_order_itemmetas( $item_id, $suborder_item_id );
+			$this->clone_order_itemmetas( $item_id, $suborder_item_id, array( Alg_MOWC_Order_Item_Metas::SUB_ORDER ) );
 		}
 
 		/**

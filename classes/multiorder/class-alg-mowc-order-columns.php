@@ -188,13 +188,14 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 
 		public function html_payment_status_column($order_id){
 			$order = wc_get_order( $order_id );
-			if ( $order->get_total() == 0 ) {
+			return '-';
+			/*if ( $order->get_total() == 0 ) {
 				return __( 'Paid', 'multi-order-for-woocommerce' );
 			} else if ( $order->get_total() != 0 && $order->get_total_discount() > 0 ) {
 				return __( 'Partial', 'multi-order-for-woocommerce' );
 			} else {
 				return __( 'Unpaid', 'multi-order-for-woocommerce' );
-			}
+			}*/
         }
 
 		/**

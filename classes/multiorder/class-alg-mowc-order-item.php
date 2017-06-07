@@ -18,10 +18,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 		 * @since   1.0.0
 		 */
 		function __construct() {
-			add_filter( 'woocommerce_order_item_get_formatted_meta_data', array(
-				$this,
-				'format_order_item_meta_data',
-			), 10, 2 );
+			add_filter( 'woocommerce_order_item_get_formatted_meta_data', array( $this, 'format_order_item_meta_data' ), 10, 2 );
 		}
 
 		/**
@@ -39,17 +36,18 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 			if ( empty( $formatted_meta ) ) {
 				return $formatted_meta;
 			}
-			reset( $formatted_meta );
-			$key = key( $formatted_meta );
-			if ( $formatted_meta[ $key ]->key == Alg_MOWC_Order_Item_Metas::SUB_ORDER ) {
-				$order                                 = wc_get_order( (int) $formatted_meta[ $key ]->value );
-				if($order){
-					$formatted_meta[ $key ]->display_key   = __( 'Suborder', 'multi-order-for-woocommerce' );
-					$order_number                          = apply_filters( 'woocommerce_order_number', $order->get_id(), $order );
-					$formatted_meta[ $key ]->display_value = '<a href="' . admin_url( 'post.php?post=' . absint( $order->get_id() ) . '&action=edit' ) . '">#' . $order_number . '</a>';
-				}
 
+			foreach ($formatted_meta as $meta){
+				if($meta->key==Alg_MOWC_Order_Item_Metas::SUB_ORDER){
+					$order                                 = wc_get_order( (int) $meta->value );
+					if($order){
+						$meta->display_key   = __( 'Suborder', 'multi-order-for-woocommerce' );
+						$order_number                          = apply_filters( 'woocommerce_order_number', $order->get_id(), $order );
+						$meta->display_value = '<a href="' . admin_url( 'post.php?post=' . absint( $order->get_id() ) . '&action=edit' ) . '">#' . $order_number . '</a>';
+					}
+				}
 			}
+
 			return $formatted_meta;
 		}
 

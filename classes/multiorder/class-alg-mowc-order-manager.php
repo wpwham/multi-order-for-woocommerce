@@ -28,7 +28,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_status_from_parent_call' ), 10, 3 );
 
 			// Call the function that deducts suborder from main order
-			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 3 );
+			//add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 3 );
 
 			// Recalculates main order price
 			add_action( 'recalculate_order_price_event', array( $this, 'recalculate_order' ), 10, 1 );
@@ -55,8 +55,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Updates main order item when the suborder gets updated
 			add_action( 'woocommerce_update_order_item', array( $this, 'update_main_order_item_on_suborder_update' ), 10, 2 );
 		}
-
-
 
 		/**
 		 * Updates main order item when the suborder gets updated
@@ -304,12 +302,27 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		}
 
 		/**
-		 * Changes suborder when parent order changes status
+		 * Changes suborder status when parent order changes status
 		 *
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 */
 		public function sync_suborders_status_from_parent_call( $order_id, $transition_from, $transition_to ) {
+			$copy_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS );
+			if ( is_array( $copy_main_order_status ) ) {
+				return;
+			}
+
+			if ( is_admin() ) {
+				if ( in_array( 'admin', $copy_main_order_status ) === false ) {
+					return;
+				}
+			} else {
+				if ( in_array( 'frontend', $copy_main_order_status ) === false ) {
+					return;
+				}
+			}
+
 			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
@@ -317,10 +330,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
 
 			if ( ! is_array( $suborders ) || count( $suborders ) < 1 ) {
-				return;
-			}
-
-			if ( ! filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_CHANGE_ON_ORDER_STATUS_CHANGE ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
 
@@ -360,9 +369,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
-			/*if ( ! filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_CREATE_AUTOMATICALLY ), FILTER_VALIDATE_BOOLEAN ) ) {
+			if ( ! filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_CREATE_AUTOMATICALLY ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
-			}*/
+			}
 
 			$this->create_suborders( $order_id );
 		}

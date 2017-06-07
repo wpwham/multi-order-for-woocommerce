@@ -15,14 +15,14 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 
 	class Alg_MOWC_Settings_General extends Alg_MOWC_Settings_Section {
 
-		const OPTION_ENABLE_PLUGIN                           = 'alg_mowc_opt_enable';
-		const OPTION_DISABLE_CANCEL_BUTTON                   = 'alg_mowc_disable_cancel_btn';
-		const OPTION_DISABLE_ORDER_ITEM_QTY                  = 'alg_mowc_disable_order_item_qty';
-		const OPTION_SUBORDERS_ADMIN_SHOW                    = 'alg_mowc_suborders_admin_show';
-		const OPTION_SUBORDERS_FRONTEND_SHOW                 = 'alg_mowc_suborders_frontend_show';
-		const OPTION_SUBORDERS_SUBTRACTION_STATUS            = 'alg_mowc_suborders_subtraction_status';
-		const OPTION_SUBORDERS_CHANGE_ON_ORDER_STATUS_CHANGE = 'alg_mowc_suborders_change_on_osc';
-		const OPTION_SUBORDERS_CREATE_AUTOMATICALLY          = 'alg_mowc_suborders_autocreate';
+		const OPTION_ENABLE_PLUGIN                             = 'alg_mowc_opt_enable';
+		const OPTION_DISABLE_CANCEL_BUTTON                     = 'alg_mowc_disable_cancel_btn';
+		const OPTION_DISABLE_ORDER_ITEM_QTY                    = 'alg_mowc_disable_order_item_qty';
+		const OPTION_SUBORDERS_ADMIN_SHOW                      = 'alg_mowc_suborders_admin_show';
+		const OPTION_SUBORDERS_FRONTEND_SHOW                   = 'alg_mowc_suborders_frontend_show';
+		const OPTION_SUBORDERS_SUBTRACTION_STATUS              = 'alg_mowc_suborders_subtraction_status';
+		const OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS          = 'alg_mowc_suborders_cmos';
+		const OPTION_SUBORDERS_CREATE_AUTOMATICALLY            = 'alg_mowc_suborders_autocreate';
 
 		/**
 		 * Constructor.
@@ -59,15 +59,15 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				),
 				array(
 					'title'   => __( 'Disable cancel button', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Disables the cancel action button on frontend on ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
+					'desc'    => __( 'Disables the cancel button on frontend on ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
 					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),
 				array(
-					'title'   => __( 'Hide quantity', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Hides order item quantity on order received / order pay pages', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_DISABLE_ORDER_ITEM_QTY,
+					'title'   => __( 'Disable quantity', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Disables order item quantity on order receiv', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),
@@ -112,11 +112,16 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'default' => array('wc-cancelled','wc-processing')
 				),
 				array(
-					'title'   => __( 'Applies status from main order', 'multi-order-for-woocommerce' ),
+					'title'   => __( 'Copy main order status', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'Suborders get the same status of main order when it changes', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_SUBORDERS_CHANGE_ON_ORDER_STATUS_CHANGE,
-					'type'    => 'checkbox',
-					'default' => 'no'
+					'id'      => self::OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS,
+					'type'    => 'multiselect',
+					'class'   => 'chosen_select',
+					'options' => array(
+						'frontend' => __( 'If customer takes an action' ),
+						'admin'    => __( 'If admin takes an action' ),
+					),
+					'default' => array( 'frontend', 'admin' ),
 				),
 				array(
 					'type' => 'sectionend',

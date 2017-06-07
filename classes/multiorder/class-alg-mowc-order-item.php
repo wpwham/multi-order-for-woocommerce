@@ -25,7 +25,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 			// Hides order item quantity
 			add_filter( 'woocommerce_order_item_quantity_html', array( $this, 'hides_order_item_quantity' ) );
 
-			Displays suborders on order received / order pay page
+			// Displays suborders on order received / order pay page
 			add_filter( 'woocommerce_display_item_meta', array( $this, 'woocommerce_display_item_meta' ), 10, 3 );
 		}
 

@@ -31,7 +31,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 3 );
 
 			// Recalculates main order price
-			add_action( 'recalculate_order_price_event', array( $this, 'recalculate_main_order' ), 10, 1 );
+			add_action( 'recalculate_order_price_event', array( $this, 'recalculate_order' ), 10, 1 );
 
 			// Deletes suborder post if correspondent item id is removed from main order
 			add_action( 'woocommerce_before_delete_order_item', array( $this, 'remove_suborder_post_on_main_order_item_removal' ) );
@@ -94,10 +94,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			foreach ( $suborder->get_items() as $suborder_item_id => $suborder_item ) {
 				if ( $suborder_item_id == $item_id ) {
 					$this->clone_order_itemmetas( $item_id, $parent_order_item_id, array( Alg_MOWC_Order_Item_Metas::SUB_ORDER ), 'update' );
-					wp_clear_scheduled_hook( 'recalculate_order_price_event' );
-					wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $suborder_id ) );
 				}
 			}
+
+			wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $main_order_id ) );
 		}
 
 		/**
@@ -239,7 +240,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 *
 		 * @param $order_id
 		 */
-		public function recalculate_main_order( $order_id ) {
+		public function recalculate_order( $order_id ) {
 			$order = wc_get_order( $order_id );
 			//$order->calculate_taxes();
 			$order->calculate_totals();

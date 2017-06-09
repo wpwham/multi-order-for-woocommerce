@@ -8,6 +8,7 @@ class ComposerStaticInit344e3e6fe8e72c0e58fb4f56d4cec3ba
 {
     public static $files = array (
         '4b1d80f4b4edf4ba0af3613e30b4b348' => __DIR__ . '/..' . '/webdevstudios/cmb2/init.php',
+        '9d69913dad100139c9222fd022dc6fe0' => __DIR__ . '/..' . '/mustardBees/cmb-field-select2/cmb-field-select2.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -34,8 +35,10 @@ class ComposerStaticInit344e3e6fe8e72c0e58fb4f56d4cec3ba
         'Alg_MOWC_Order_Item_Metas' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-item-metas.php',
         'Alg_MOWC_Order_Manager' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-manager.php',
         'Alg_MOWC_Order_Metas' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-order-metas.php',
+        'Alg_MOWC_Order_Payment_Status' => __DIR__ . '/../..' . '/classes/multiorder/taxonomies/class-alg-mowc-payment-status.php',
         'Alg_MOWC_Orders_Search' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-orders-search.php',
         'Alg_MOWC_Orders_View' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-orders-view.php',
+        'Alg_MOWC_Payment_Status_CMB' => __DIR__ . '/../..' . '/classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php',
         'Alg_MOWC_Settings_General' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php',
         'Alg_MOWC_Settings_Page' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-page.php',
         'Alg_MOWC_Settings_Section' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-section.php',

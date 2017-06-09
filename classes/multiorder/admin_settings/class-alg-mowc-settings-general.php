@@ -15,14 +15,18 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 
 	class Alg_MOWC_Settings_General extends Alg_MOWC_Settings_Section {
 
-		const OPTION_ENABLE_PLUGIN                             = 'alg_mowc_opt_enable';
-		const OPTION_DISABLE_CANCEL_BUTTON                     = 'alg_mowc_disable_cancel_btn';
-		const OPTION_DISABLE_ORDER_ITEM_QTY                    = 'alg_mowc_disable_order_item_qty';
-		const OPTION_SUBORDERS_ADMIN_SHOW                      = 'alg_mowc_suborders_admin_show';
-		const OPTION_SUBORDERS_FRONTEND_SHOW                   = 'alg_mowc_suborders_frontend_show';
-		const OPTION_SUBORDERS_SUBTRACTION_STATUS              = 'alg_mowc_suborders_subtraction_status';
-		const OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS          = 'alg_mowc_suborders_cmos';
-		const OPTION_SUBORDERS_CREATE_AUTOMATICALLY            = 'alg_mowc_suborders_autocreate';
+		const OPTION_ENABLE_PLUGIN                    = 'alg_mowc_opt_enable';
+		const OPTION_DISABLE_CANCEL_BUTTON            = 'alg_mowc_disable_cancel_btn';
+		const OPTION_DISABLE_ORDER_ITEM_QTY           = 'alg_mowc_disable_order_item_qty';
+		const OPTION_SUBORDERS_ADMIN_SHOW             = 'alg_mowc_suborders_admin_show';
+		const OPTION_SUBORDERS_FRONTEND_SHOW          = 'alg_mowc_suborders_frontend_show';
+		const OPTION_SUBORDERS_SUBTRACTION_STATUS     = 'alg_mowc_suborders_subtraction_status';
+		const OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS = 'alg_mowc_suborders_cmos';
+		const OPTION_SUBORDERS_CREATE_AUTOMATICALLY   = 'alg_mowc_suborders_autocreate';
+		const OPTION_DEFAULT_PAYMENT_STATUS           = 'alg_mowc_default_payment_status';
+		const OPTION_DEFAULT_MAIN_ORDER_STATUS        = 'alg_mowc_default_main_order_status';
+		const OPTION_DEFAULT_SUB_ORDER_STATUS         = 'alg_mowc_default_sub_order_status';
+		const OPTION_PAY_BUTTON_LABEL                 = 'alg_mowc_pay_button_label';
 
 		/**
 		 * Constructor.
@@ -37,12 +41,52 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		}
 
 		/**
+		 * Gets payment status
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 * @return array
+		 */
+		function get_payment_status_terms() {
+			$payment_status = new Alg_MOWC_Order_Payment_Status();
+			if ( taxonomy_exists( $payment_status->id ) ) {
+				$terms = get_terms( array(
+					'taxonomy'   => $payment_status->id,
+					'hide_empty' => false,
+				) );
+
+				return wp_list_pluck(
+					get_terms( array(
+						'taxonomy'   => $payment_status->id,
+						'hide_empty' => false,
+					) ),
+					'name',
+					'slug'
+				);
+			} else {
+				return array();
+			}
+		}
+
+		/**
+		 * Get default main order status
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 */
+		public function get_default_main_order_status(){
+			$status = wc_get_order_statuses();
+			return array( '' => __( 'None', 'multi-order-for-woocommerce' ) ) + $status;
+		}
+
+		/**
 		 * get_settings.
 		 *
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 */
 		function get_settings( $settings = null ) {
+			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
+
 			$new_settings = array(
 				array(
 					'title' => __( 'Multi Order options', 'multi-order-for-woocommerce' ),
@@ -65,21 +109,60 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'type'    => 'checkbox',
 				),
 				array(
-					'title'   => __( 'Disable quantity', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Disables order item quantity on order receiv', 'multi-order-for-woocommerce' ),
+					'title'   => __( 'Hide quantity', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Hides order item quantity on order received / order pay pages', 'multi-order-for-woocommerce' ),
 					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),
 				array(
+					'title'   => __( 'Pay button label', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Pay button label for the main order', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_PAY_BUTTON_LABEL,
+					'default' => __( 'Collectively Pay', 'multi-order-for-woocommerce' ),
+					'type'    => 'text',
+				),
+				array(
+					'title'   => __( 'Default payment status', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Default payment status', 'multi-order-for-woocommerce' ),
+					'desc_tip'=> __( 'New orders will have this default payment status', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_DEFAULT_PAYMENT_STATUS,
+					'default' => 'unpaid',
+					'type'    => 'select',
+					'class'   => 'chosen_select',
+					'options'=>$this->get_payment_status_terms()
+				),
+				array(
+					'title'   => __( 'Default main order status', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'New main orders will have this default status', 'multi-order-for-woocommerce' ),
+					'desc_tip'=> __( 'If no status is selected, it will be set according to "Payment Gateway" settings ', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_DEFAULT_MAIN_ORDER_STATUS,
+					'default' => '',
+					'type'    => 'select',
+					'class'   => 'chosen_select',
+					'options' => $this->get_default_main_order_status(),
+				),
+				array(
 					'type' => 'sectionend',
 					'id'   => 'alg_mowc_opt',
 				),
+
+				// Suborders section
 				array(
 					'title' => __( 'Sub Order options', 'multi-order-for-woocommerce' ),
 					'desc'  => __( 'Options regarding Sub Orders', 'multi-order-for-woocommerce' ),
 					'type'  => 'title',
 					'id'    => 'alg_mowc_suborders_opt',
+				),
+				array(
+					'title'   => __( 'Default suborder status', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'New suborders will have this default status', 'multi-order-for-woocommerce' ),
+					'desc_tip'=> __( 'If no status is selected, it will be set according to Main order settings ', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_DEFAULT_SUB_ORDER_STATUS,
+					'default' => '',
+					'type'    => 'select',
+					'class'   => 'chosen_select',
+					'options' => $this->get_default_main_order_status(),
 				),
 				array(
 					'title'   => __( 'Automatic creation', 'multi-order-for-woocommerce' ),
@@ -103,8 +186,8 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'type'    => 'checkbox',
 				),
 				array(
-					'title'   => __( 'Subtraction status', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Status that will make suborders values be deducted from main order', 'multi-order-for-woocommerce' ),
+					'title'   => __( 'Deduct status', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Status that will make suborders values be deducted from main order.', 'multi-order-for-woocommerce' ).'<br />'.sprintf(__( '<strong>NOTE:</strong> It will override other <a href="%s">payment status</a>', 'multi-order-for-woocommerce' ),admin_url("edit-tags.php?taxonomy={$payment_status_tax->id}")),
 					'id'      => self::OPTION_SUBORDERS_SUBTRACTION_STATUS,
 					'type'    => 'multiselect',
 					'class'   => 'chosen_select',

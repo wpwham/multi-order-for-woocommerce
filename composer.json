@@ -26,10 +26,17 @@
 		"optimize-autoloader": true
 	},
 	"type": "wordpress-plugin",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/mustardBees/cmb-field-select2"
+		}
+	],
 	"require": {
 		"php": ">=5.3.2",
 		"composer/installers": ">=v1.2.0",
-		"webdevstudios/cmb2": "dev-master"
+		"webdevstudios/cmb2": "dev-master",
+		"mustardBees/cmb-field-select2": "dev-master"
 	},
 	"extra": {
 		"installer-paths": {
@@ -41,7 +48,8 @@
 	},
 	"autoload": {
 		"files": [
-			"vendor/webdevstudios/cmb2/init.php"
+			"vendor/webdevstudios/cmb2/init.php",
+			"vendor/mustardBees/cmb-field-select2/cmb-field-select2.php"
 		],
 		"classmap": [
 			"classes/"

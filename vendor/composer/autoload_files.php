@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '4b1d80f4b4edf4ba0af3613e30b4b348' => $vendorDir . '/webdevstudios/cmb2/init.php',
+    '9d69913dad100139c9222fd022dc6fe0' => $vendorDir . '/mustardBees/cmb-field-select2/cmb-field-select2.php',
 );

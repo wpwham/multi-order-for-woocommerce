@@ -25,13 +25,18 @@ if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 	 * @return  Alg_MOWC_Core
 	 */
 	function alg_multiorder_for_wc() {
-		$multiorder = Alg_MOWC_Core::get_instance();
+		$multiorder         = Alg_MOWC_Core::get_instance();
+		$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
 		$multiorder->set_args( array(
 			'plugin_file_path' => __FILE__,
 			'action_links'     => array(
 				array(
 					'url'  => admin_url( 'admin.php?page=wc-settings&tab=alg_mowc' ),
 					'text' => __( 'Settings', 'woocommerce' ),
+				),
+				array(
+					'url'  => admin_url( "edit-tags.php?taxonomy={$payment_status_tax->id}" ),
+					'text' => __( 'Payment status', 'multi-order-for-woocommerce' ),
 				),
 			),
 			'translation'      => array(
@@ -82,3 +87,7 @@ if ( ! function_exists( 'alg_mowc_register_hooks' ) ) {
 
 // Handles activation, installation and uninstall hooks
 alg_mowc_register_hooks();
+
+add_action('init',function(){
+
+});

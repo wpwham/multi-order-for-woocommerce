@@ -40,11 +40,12 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'before_delete_post', array( $this, 'remove_suborder_item_on_suborder_post_removal'), 10 );
 
 			// Create suborders call automatically on new order creation
-			add_action( 'woocommerce_create_order', array( $this, 'create_suborders_call_on_new_order' ) );
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'create_suborders_call_on_new_order' ) );
-			add_action( 'woocommerce_new_order', array( $this, 'create_suborders_call_on_new_order' ) );
-			add_action( 'woocommerce_resume_order', array( $this, 'create_suborders_call_on_new_order' ) );
-			add_action( 'woocommerce_thankyou', array( $this, 'create_suborders_call_on_new_order' ) );
+			add_action( 'woocommerce_create_order', array( $this, 'create_suborders_call_on_new_order' ), 1 );
+			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'create_suborders_call_on_new_order' ), 1 );
+			add_action( 'woocommerce_new_order', array( $this, 'create_suborders_call_on_new_order' ), 1 );
+			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 1 );
+			add_action( 'woocommerce_resume_order', array( $this, 'create_suborders_call_on_new_order' ), 1 );
+			add_action( 'woocommerce_thankyou', array( $this, 'create_suborders_call_on_new_order' ), 1 );
 
 			// Create suborders automatically on new order item creation
 			add_action('woocommerce_new_order_item',array( $this, 'create_suborders_call_on_new_order_item' ), 10, 3 );
@@ -547,6 +548,18 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
+			// Change main order post status
+			$default_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_MAIN_ORDER_STATUS );
+			if ( ! empty( $default_main_order_status ) ) {
+				$suborders = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+				if ( ! is_array( $suborders ) || count( $suborders ) == 0 ) {
+					$result = wp_update_post( array(
+						'ID'          => $main_order_id,
+						'post_status' => $default_main_order_status,
+					) );
+				}
+			}
+
 			// Delete previous suborders
 			if ( $args['delete_prev_suborders'] ) {
 				$this->delete_suborders_from_main_order( $main_order_id );
@@ -569,10 +582,14 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					continue;
 				}
 
+				// Suborder default status from admin settings
+				$suborder_status_from_admin_settings = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_SUB_ORDER_STATUS );
+				$suborder_status                     = empty( $suborder_status_from_admin_settings ) ? get_post_status( $main_order_id ) : $suborder_status_from_admin_settings;
+
 				$order_data = array(
 					'post_type'     => 'shop_order',
 					'post_title'    => $main_order_post->post_title,
-					'post_status'   => get_post_status( $main_order_id ),
+					'post_status'   => $suborder_status,
 					'ping_status'   => 'closed',
 					'post_author'   => $currentUser->ID,
 					'post_password' => $main_order_post->post_password,

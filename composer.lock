@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "223b019f6a3e7d6be63b9274d498ae0e",
-    "content-hash": "4338269ee904f635679e1263150b9a8c",
+    "hash": "d67fe363e996c9560abda93d96877c7d",
+    "content-hash": "4b3cdf94664821dd9aacc86bb68cb858",
     "packages": [
         {
             "name": "composer/installers",
@@ -122,17 +122,53 @@
             "time": "2017-04-24 06:37:16"
         },
         {
+            "name": "mustardBees/cmb-field-select2",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mustardBees/cmb-field-select2.git",
+                "reference": "67358fa33f7b949de444562cd6108da122c7d15f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mustardBees/cmb-field-select2/zipball/67358fa33f7b949de444562cd6108da122c7d15f",
+                "reference": "67358fa33f7b949de444562cd6108da122c7d15f",
+                "shasum": ""
+            },
+            "type": "wordpress-plugin",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Wylie",
+                    "homepage": "http://www.philwylie.co.uk/"
+                }
+            ],
+            "description": "Select2 field type for CMB2",
+            "homepage": "https://github.com/mustardBees/cmb-field-select2",
+            "keywords": [
+                "plugin",
+                "wordpress"
+            ],
+            "support": {
+                "source": "https://github.com/mustardBees/cmb-field-select2/tree/v3.0.3",
+                "issues": "https://github.com/mustardBees/cmb-field-select2/issues"
+            },
+            "time": "2016-08-25 15:52:11"
+        },
+        {
             "name": "webdevstudios/cmb2",
             "version": "dev-trunk",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CMB2/CMB2.git",
-                "reference": "7699bdc96dc8537a673f195f875d337f91547e4f"
+                "reference": "5280af2cf0e43c24966b0a37522cdb3a0bcf4109"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/7699bdc96dc8537a673f195f875d337f91547e4f",
-                "reference": "7699bdc96dc8537a673f195f875d337f91547e4f",
+                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/5280af2cf0e43c24966b0a37522cdb3a0bcf4109",
+                "reference": "5280af2cf0e43c24966b0a37522cdb3a0bcf4109",
                 "shasum": ""
             },
             "require": {
@@ -176,14 +212,15 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2017-04-24 14:50:44"
+            "time": "2017-06-08 15:58:59"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "webdevstudios/cmb2": 20
+        "webdevstudios/cmb2": 20,
+        "mustardbees/cmb-field-select2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

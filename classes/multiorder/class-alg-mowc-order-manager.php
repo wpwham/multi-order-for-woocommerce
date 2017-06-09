@@ -39,16 +39,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Deletes suborder item from main order in case suborder post is removed
 			add_action( 'before_delete_post', array( $this, 'remove_suborder_item_on_suborder_post_removal'), 10 );
 
-			// Create suborders call automatically on new order creation
-			add_action( 'woocommerce_create_order', array( $this, 'create_suborders_call_on_new_order' ), 1 );
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'create_suborders_call_on_new_order' ), 1 );
-			add_action( 'woocommerce_new_order', array( $this, 'create_suborders_call_on_new_order' ), 1 );
-			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 1 );
-			add_action( 'woocommerce_resume_order', array( $this, 'create_suborders_call_on_new_order' ), 1 );
-			add_action( 'woocommerce_thankyou', array( $this, 'create_suborders_call_on_new_order' ), 1 );
-
 			// Create suborders automatically on new order item creation
-			add_action('woocommerce_new_order_item',array( $this, 'create_suborders_call_on_new_order_item' ), 10, 3 );
+			add_action( 'woocommerce_new_order_item', array( $this, 'create_suborders_call_on_new_order_item' ), 999, 3 );
+
+			// Create suborders call automatically on new order creation
+			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 1 );
 
 			// Updates suborder when the main order item gets updated
 			add_action( 'woocommerce_update_order_item', array( $this, 'update_suborder_on_main_order_update' ), 10, 2 );
@@ -64,7 +59,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @since   1.0.0
 		 */
 		public function update_main_order_item_on_suborder_update( $item_id, $args ) {
-
+			if ( ! is_admin() ) {
+				return;
+			}
 			if ( ! isset( $_POST['order_id'] ) ) {
 				return;
 			}
@@ -107,6 +104,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @since   1.0.0
 		 */
 		public function update_suborder_on_main_order_update( $item_id, $args ) {
+			if ( ! is_admin() ) {
+				return;
+			}
 			if ( ! isset( $_POST['order_id'] ) ) {
 				return;
 			}
@@ -142,6 +142,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @param $order_id
 		 */
 		public function create_suborders_call_on_new_order_item( $item_id, $item, $order_id ) {
+			if ( ! is_admin() ) {
+				return;
+			}
 			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
@@ -374,6 +377,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
+			$order = wc_get_order($order_id);
+			error_log(print_r($order->get_item_count(),true));
+			//error_log(print_r($order->get_items(),true));
+			//error_Log('----');
+			//error_log(print_r($order,true));
 			$this->create_suborders( $order_id );
 		}
 
@@ -534,8 +542,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				'delete_prev_suborders' => false,
 			) );
 
+			$main_order          = wc_get_order( $main_order_id );
 			$main_order_post     = get_post( $main_order_id );
-			$main_order          = new WC_Order( $main_order_id );
 			$main_order_metadata = get_metadata( 'post', $main_order_id );
 			$currentUser         = wp_get_current_user();
 

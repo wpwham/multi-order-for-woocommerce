@@ -24,9 +24,27 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 
 			// Hides order item quantity
 			add_filter( 'woocommerce_order_item_quantity_html', array( $this, 'hides_order_item_quantity' ) );
+			add_filter( 'woocommerce_email_order_item_quantity', array( $this, 'woocommerce_email_order_item_quantity' ) );
 
 			// Displays suborders on order received / order pay page
 			add_filter( 'woocommerce_display_item_meta', array( $this, 'woocommerce_display_item_meta' ), 10, 3 );
+		}
+
+		/**
+		 * Hides order item quantity in emails
+		 *
+		 * @version  1.0.0
+		 * @since    1.0.0
+		 *
+		 * @param $quantity
+		 *
+		 * @return string
+		 */
+		public function woocommerce_email_order_item_quantity( $quantity ) {
+			if ( filter_var( get_option( Alg_MOWC_Settings_General::OPTION_DISABLE_ORDER_ITEM_QTY ), FILTER_VALIDATE_BOOLEAN ) ) {
+				$quantity = '';
+			}
+			return $quantity;
 		}
 
 		/**
@@ -46,7 +64,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 				if ( $meta->key == Alg_MOWC_Order_Item_Metas::SUB_ORDER ) {
 					$order = wc_get_order( (int) $meta->value );
 					if ( $order ) {
-						$html         = '<br /><strong>' . __( 'Suborder', 'multi-order-for-woocommerce' );
+						$html         .= '<br /><strong>' . __( 'Suborder', 'multi-order-for-woocommerce' );
 						$order_number = apply_filters( 'woocommerce_order_number', $order->get_id(), $order );
 						$html         .= ' <a href="' . $order->get_view_order_url() . '">#' . $order_number . '</a></strong>';
 					}

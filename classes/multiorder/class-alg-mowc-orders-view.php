@@ -40,6 +40,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 				return wc_get_endpoint_url( 'view-order', apply_filters('woocommerce_order_number',$order->get_id(),$order), wc_get_page_permalink( 'myaccount' ) );
 				//return apply_filters('woocommerce_order_number',$order->get_id(),$order);
 			},10,2);*/
+
 		}
 
 		/**

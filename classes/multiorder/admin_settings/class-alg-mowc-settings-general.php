@@ -111,7 +111,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				array(
 					'title'   => __( 'Hide quantity', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'Hides order item quantity on order received / order pay pages', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
+					'id'      => self::OPTION_DISABLE_ORDER_ITEM_QTY,
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),

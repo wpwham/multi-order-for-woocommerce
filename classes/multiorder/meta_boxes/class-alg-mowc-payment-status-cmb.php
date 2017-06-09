@@ -127,13 +127,6 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 			) );
 
 			/*$cmb_demo->add_field( array(
-				'name'        => esc_html__( 'Multi order', 'multi-order-for-woocommerce' ),
-				'id'          => 'multi_order_title',
-				'type'        => 'title',
-				'save_fields' => false,
-			) );*/
-
-			$cmb_demo->add_field( array(
 				'name'       => esc_html__( 'Deduct from main order', 'multi-order-for-woocommerce' ),
 				'id'         => $this->meta_deduct_from_main_order,
 				'type'       => 'checkbox',
@@ -167,7 +160,7 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 					'name'     => __( 'Main orders', 'multi-order-for-woocommerce' ),
 				),
 				'display_cb' => array( $this, 'display_checkbox_column' ),
-			) );
+			) );*/
 
 			$cmb_demo->add_field( array(
 				'name'    => esc_html__( 'Status', 'multi-order-for-woocommerce' ),
@@ -179,7 +172,7 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 					'placeholder' => 'Select status'
 				),
 				'column'  => array(
-					'position' => 5,
+					'position' => 2,
 					'name'     => __( 'Status', 'multi-order-for-woocommerce' ),
 				),
 				'options' => wc_get_order_statuses(),

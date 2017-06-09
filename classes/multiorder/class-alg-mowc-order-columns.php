@@ -41,8 +41,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			add_action( "woocommerce_my_account_my_orders_column_order-number", array( $this, 'setup_frontend_order_number_column' ) );
 		}
 
-
-
 		/**
          * Convert total column label to remaining on admin
          *
@@ -186,17 +184,20 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			return $new;
 		}
 
-		public function html_payment_status_column($order_id){
-			$order = wc_get_order( $order_id );
-			return '-';
-			/*if ( $order->get_total() == 0 ) {
-				return __( 'Paid', 'multi-order-for-woocommerce' );
-			} else if ( $order->get_total() != 0 && $order->get_total_discount() > 0 ) {
-				return __( 'Partial', 'multi-order-for-woocommerce' );
-			} else {
-				return __( 'Unpaid', 'multi-order-for-woocommerce' );
-			}*/
-        }
+		/**
+		 * Displays payment status column
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $order_id
+		 *
+		 * @return string
+		 */
+		public function html_payment_status_column( $order_id ) {
+			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
+			return implode( ",", wp_get_post_terms( $order_id, $payment_status_tax->id, array( "fields" => "names" ) ) );
+		}
 
 		/**
 		 * Setups admin order columns

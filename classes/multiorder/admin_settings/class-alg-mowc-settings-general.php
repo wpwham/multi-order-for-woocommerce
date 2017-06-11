@@ -74,10 +74,10 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 */
-		public function get_default_main_order_status(){
+		/*public function get_default_main_order_status(){
 			$status = wc_get_order_statuses();
 			return array( '' => __( 'None', 'multi-order-for-woocommerce' ) ) + $status;
-		}
+		}*/
 
 		/**
 		 * get_settings.
@@ -104,7 +104,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				),
 				array(
 					'title'   => __( 'Disable cancel button', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Disables the cancel button on frontend on ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
+					'desc'    => __( 'Disables the cancel button on frontend ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
 					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
 					'default' => 'no',
 					'type'    => 'checkbox',
@@ -112,7 +112,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				array(
 					'title'   => __( 'Hide quantity', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'Hides order item quantity on some places ', 'multi-order-for-woocommerce' ),
-					'desc_tip'=> __( 'E.g order received / order pay pages / Emails ', 'multi-order-for-woocommerce' ),
+					'desc_tip'=> __( 'E.g order received page / order pay page / Emails ', 'multi-order-for-woocommerce' ),
 					'id'      => self::OPTION_DISABLE_ORDER_ITEM_QTY,
 					'default' => 'no',
 					'type'    => 'checkbox',
@@ -132,17 +132,16 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'default' => 'unpaid',
 					'type'    => 'select',
 					'class'   => 'chosen_select',
-					'options'=>$this->get_payment_status_terms()
+					'options'=> $this->get_payment_status_terms()
 				),
 				array(
 					'title'   => __( 'Default main order status', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'New main orders will have this default status', 'multi-order-for-woocommerce' ),
-					'desc_tip'=> __( 'If no status is selected, it will be set according to "Payment Gateway" settings ', 'multi-order-for-woocommerce' ),
 					'id'      => self::OPTION_DEFAULT_MAIN_ORDER_STATUS,
 					'default' => '',
 					'type'    => 'select',
 					'class'   => 'chosen_select',
-					'options' => $this->get_default_main_order_status(),
+					'options' => array( '' => __( 'Set by payment gateway', 'multi-order-for-woocommerce' ) ) + wc_get_order_statuses(),
 				),
 				array(
 					'type' => 'sectionend',
@@ -159,12 +158,14 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				array(
 					'title'   => __( 'Default suborder status', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'New suborders will have this default status', 'multi-order-for-woocommerce' ),
-					'desc_tip'=> __( 'If no status is selected, it will be set according to Main order settings ', 'multi-order-for-woocommerce' ),
 					'id'      => self::OPTION_DEFAULT_SUB_ORDER_STATUS,
 					'default' => '',
 					'type'    => 'select',
 					'class'   => 'chosen_select',
-					'options' => $this->get_default_main_order_status(),
+					'options' => array(
+						''           => __( 'Set by payment gateway', 'multi-order-for-woocommerce' ),
+						'main_order' => __( 'Same as Main order', 'multi-order-for-woocommerce' )
+		             ) + wc_get_order_statuses(),
 				),
 				array(
 					'title'   => __( 'Automatic creation', 'multi-order-for-woocommerce' ),

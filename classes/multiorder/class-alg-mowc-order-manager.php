@@ -27,11 +27,17 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Changes suborder status when parent order changes status
 			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_status_from_parent_call' ), 10, 3 );
 
+			// Sets order payment status
+			add_action( 'woocommerce_order_status_changed', array( $this, 'set_order_payment_status' ), 11, 3 );
+
 			// Call the function that deducts suborder from main order
 			//add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_suborder_from_order_call' ), 10, 3 );
 
 			// Recalculates main order price
 			add_action( 'recalculate_order_price_event', array( $this, 'recalculate_order' ), 10, 1 );
+
+			// Generates main order payment status
+			add_action( 'set_main_order_payment_status_event', array( $this, 'set_main_order_payment_status' ), 10, 1 );
 
 			// Deletes suborder post if correspondent item id is removed from main order
 			add_action( 'woocommerce_before_delete_order_item', array( $this, 'remove_suborder_post_on_main_order_item_removal' ) );
@@ -43,13 +49,134 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'woocommerce_new_order_item', array( $this, 'create_suborders_call_on_new_order_item' ), 999, 3 );
 
 			// Create suborders call automatically on new order creation
-			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 1 );
+			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 999 );
+			add_filter( 'woocommerce_payment_successful_result', array( $this, 'set_main_order_initial_status' ),10,2 );
 
 			// Updates suborder when the main order item gets updated
 			add_action( 'woocommerce_update_order_item', array( $this, 'update_suborder_on_main_order_update' ), 10, 2 );
 
 			// Updates main order item when the suborder gets updated
 			add_action( 'woocommerce_update_order_item', array( $this, 'update_main_order_item_on_suborder_update' ), 10, 2 );
+		}
+
+		/**
+		 * Generates main order payment status
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $order_id
+		 */
+		public function set_main_order_payment_status( $order_id ) {
+			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+			if ( empty( $suborders ) || ! is_array( $suborders ) || count( $suborders ) == 0 ) {
+				return;
+			}
+
+			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
+
+			$suborders_payment_status_arr = array();
+			foreach ( $suborders as $suborder_id ) {
+				$terms = wp_get_post_terms( $suborder_id, $payment_status_tax->id );
+				foreach ( $terms as $term ) {
+					$suborders_payment_status_arr[] = $term->slug;
+				}
+			}
+
+			$term_slug = 'partial-paid';
+			if (
+				in_array( 'paid', $suborders_payment_status_arr ) &&
+				! in_array( 'unpaid', $suborders_payment_status_arr )
+			) {
+				$term_slug = 'paid';
+			} else if (
+				! in_array( 'paid', $suborders_payment_status_arr ) &&
+				in_array( 'unpaid', $suborders_payment_status_arr )
+			) {
+				$term_slug = 'unpaid';
+			}
+
+			// Set payment status
+			$term = get_term_by( 'slug', $term_slug, $payment_status_tax->id );
+			wp_set_post_terms( $order_id, $term->term_id, $payment_status_tax->id, false );
+		}
+
+		/**
+		 * Sets order payment status
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $order_id
+		 * @param $transition_from
+		 * @param $transition_to
+		 */
+		public function set_order_payment_status( $order_id, $transition_from, $transition_to ) {
+			if ( ! filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}
+
+			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
+			$payment_status_cmb = new Alg_MOWC_Payment_Status_CMB();
+
+			// Gets payment status filtered by the new order status
+			$terms              = get_terms( array(
+				'taxonomy'   => $payment_status_tax->id,
+				'hide_empty' => false,
+				'fields'=>'ids',
+				'meta_query' => array(
+					array(
+						'key'     => $payment_status_cmb->meta_status,
+						'value'   => 'wc-' . $transition_to,
+						'compare' => 'LIKE',
+					),
+				),
+			) );
+
+			if (
+				empty( $terms ) ||
+				is_wp_error( $terms ) ||
+				( is_array( $terms ) && count( $terms ) == 0 )
+			) {
+				// If not finds payment status, gets the default set on admin
+				$default_payment_status = sanitize_text_field( get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_PAYMENT_STATUS ) );
+				$term                   = get_term_by( 'slug', $default_payment_status, $payment_status_tax->id );
+
+				// Set payment status
+				wp_set_post_terms( $order_id, $term->term_id, $payment_status_tax->id, false );
+			}else{
+
+				// Set payment status
+				wp_set_post_terms( $order_id, $terms, $payment_status_tax->id, false );
+			}
+
+			// Calculates main order payment status
+			$main_order = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
+			wp_clear_scheduled_hook( 'set_main_order_payment_status_event', array( $main_order ) );
+			wp_schedule_single_event( time() + 1, 'set_main_order_payment_status_event', array( $main_order ) );
+		}
+
+		/**
+		 * Set main order initial status
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $result
+		 * @param $order_id
+		 */
+		public function set_main_order_initial_status( $result, $order_id ) {
+			$default_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_MAIN_ORDER_STATUS );
+			if ( ! empty( $default_main_order_status ) ) {
+				$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+				if ( is_array( $suborders ) && count( $suborders ) > 1 ) {
+					wp_update_post( array(
+						'ID'          => $order_id,
+						'post_status' => $default_main_order_status,
+					) );
+				}
+			}
+			return $result;
 		}
 
 		/**
@@ -93,7 +220,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				}
 			}
 
-			wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $main_order_id ) );
 			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $main_order_id ) );
 		}
 
@@ -127,7 +254,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				$this->clone_order_itemmetas( $item_id, $suborder_item_id, array( Alg_MOWC_Order_Item_Metas::SUB_ORDER), 'update' );
 			}
 
-			wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $suborder_id ) );
 			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $suborder_id ) );
 		}
 
@@ -276,7 +403,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Create event to recalculate main order
 			$main_order_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-			wp_clear_scheduled_hook( 'recalculate_order_price_event' );
+			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $main_order_id ) );
 			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $main_order_id ) );
 		}
 
@@ -349,14 +476,23 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @param $parent_order_id
 		 */
 		public function sync_suborders_status_from_parent( $parent_order_id, $suborders, $transition_from, $transition_to ) {
+			$payment_status_exception_slugs = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_EXCEPTION_COPY_STATUS, true );
 			foreach ( $suborders as $suborder_id ) {
+
+				$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
+				$terms              = wp_get_post_terms( $suborder_id, $payment_status_tax->id );
+				foreach ( $terms as $term ) {
+					if ( in_array( $term->slug, $payment_status_exception_slugs ) ) {
+						continue 2;
+					}
+				}
+
 				wp_update_post( array(
 					'ID'          => $suborder_id,
 					'post_status' => 'wc-' . $transition_to,
 				) );
 
 				do_action( 'woocommerce_order_status_changed', $suborder_id, $transition_from, $transition_to );
-
 			}
 		}
 
@@ -377,11 +513,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
-			$order = wc_get_order($order_id);
-			error_log(print_r($order->get_item_count(),true));
-			//error_log(print_r($order->get_items(),true));
-			//error_Log('----');
-			//error_log(print_r($order,true));
 			$this->create_suborders( $order_id );
 		}
 
@@ -542,10 +673,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				'delete_prev_suborders' => false,
 			) );
 
-			$main_order          = wc_get_order( $main_order_id );
-			$main_order_post     = get_post( $main_order_id );
-			$main_order_metadata = get_metadata( 'post', $main_order_id );
-			$currentUser         = wp_get_current_user();
+			$main_order                 = wc_get_order( $main_order_id );
+			$main_order_post            = get_post( $main_order_id );
+			$currentUser                = wp_get_current_user();
+			$original_main_order_status = get_post_status( $main_order_id );
 
 			// Just create suborders if there is more than 1 item in order
 			if ( $main_order->get_item_count() <= 1 ) {
@@ -556,17 +687,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
-			// Change main order post status
+			// Get meta data from order
+			$main_order_metadata        = get_metadata( 'post', $main_order_id );
+
+			// Get main order post status from admin
 			$default_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_MAIN_ORDER_STATUS );
-			if ( ! empty( $default_main_order_status ) ) {
-				$suborders = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-				if ( ! is_array( $suborders ) || count( $suborders ) == 0 ) {
-					$result = wp_update_post( array(
-						'ID'          => $main_order_id,
-						'post_status' => $default_main_order_status,
-					) );
-				}
-			}
 
 			// Delete previous suborders
 			if ( $args['delete_prev_suborders'] ) {
@@ -592,7 +717,15 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 				// Suborder default status from admin settings
 				$suborder_status_from_admin_settings = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_SUB_ORDER_STATUS );
-				$suborder_status                     = empty( $suborder_status_from_admin_settings ) ? get_post_status( $main_order_id ) : $suborder_status_from_admin_settings;
+				if ( empty( $suborder_status_from_admin_settings ) ) {
+					$suborder_status = $original_main_order_status;
+				} else {
+					if ( empty( $default_main_order_status ) ) {
+						$suborder_status = $suborder_status_from_admin_settings == 'main_order' ? $original_main_order_status : $suborder_status_from_admin_settings;
+					} else {
+						$suborder_status = $suborder_status_from_admin_settings == 'main_order' ? $default_main_order_status : $suborder_status_from_admin_settings;
+					}
+				}
 
 				$order_data = array(
 					'post_type'     => 'shop_order',

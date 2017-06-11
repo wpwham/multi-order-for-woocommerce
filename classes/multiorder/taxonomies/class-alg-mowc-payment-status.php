@@ -34,7 +34,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Payment_Status' ) ) {
 		 * @since   1.0.0
 		 */
 		public function create_taxonomy() {
-			add_action( 'init', array( $this, 'add' ), 999 );
+			add_action( 'init', array( $this, 'add' ), 1 );
 		}
 
 		/**
@@ -112,7 +112,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Payment_Status' ) ) {
 					update_term_meta( $response['term_id'], $payment_status_cmb->meta_deduct_from_main_order, 'on' );
 					update_term_meta( $response['term_id'], $payment_status_cmb->meta_change_main_order, 'on' );
 					update_term_meta( $response['term_id'], $payment_status_cmb->meta_change_sub_order, 'on' );
-					update_term_meta( $response['term_id'], $payment_status_cmb->meta_set_status, array(
+					update_term_meta( $response['term_id'], $payment_status_cmb->meta_status, array(
 						'wc-processing',
 						'wc-completed',
 					) );
@@ -132,7 +132,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Payment_Status' ) ) {
 					update_term_meta( $response['term_id'], $payment_status_cmb->meta_deduct_from_main_order, 'off' );
 					update_term_meta( $response['term_id'], $payment_status_cmb->meta_change_main_order, 'on' );
 					update_term_meta( $response['term_id'], $payment_status_cmb->meta_change_sub_order, 'on' );
-					update_term_meta( $response['term_id'], $payment_status_cmb->meta_set_status, array(
+					update_term_meta( $response['term_id'], $payment_status_cmb->meta_status, array(
 						'wc-pending',
 						'wc-on-hold',
 						'wc-cancelled',

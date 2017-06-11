@@ -14,7 +14,7 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 		public $meta_deduct_from_main_order = 'alg_mowc_ps_dfmo';
 		public $meta_change_main_order = 'alg_mowc_ps_mo';
 		public $meta_change_sub_order = 'alg_mowc_ps_so';
-		public $meta_set_status = 'alg_mowc_set_status';
+		public $meta_status = 'alg_mowc_status';
 
 		/**
 		 * Initializes
@@ -29,7 +29,20 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 			$object = 'term';
 			$cmb_id = $this->cmb_id;
 			add_action( "cmb2_after_{$object}_form_{$cmb_id}", array( $this, 'cmb2_custom_style' ), 10, 2 );
+
+			//add_filter( 'cmb2_override_meta_save', array( $this, 'cmb2_override_meta_save' ),10,4 );
 		}
+
+		/*function cmb2_override_meta_save( $value, $args, $field_args, $field ) {
+		    if($args['field_id']==$this->meta_status){
+		        delete_term_meta($args['id'],$this->meta_status);
+		        foreach ($args['value'] as $status_value){
+			        add_term_meta( $args['id'], $this->meta_status, $status_value, false );
+                }
+			    return true;
+            }
+			return $value;
+		}*/
 
 		/**
 		 * Handles Cmb2 custom style
@@ -123,7 +136,6 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 				'object_types' => array( 'term' ),
 				'taxonomies'   => array( $payment_status_tax->id ),
 				'context'      => 'side',
-
 			) );
 
 			$cmb_demo->add_field( array(
@@ -165,8 +177,9 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 			$cmb_demo->add_field( array(
 				'name'    => esc_html__( 'Status', 'multi-order-for-woocommerce' ),
 				'desc'    => 'Status that will automatically set the order payment status',
-				'id'      => $this->meta_set_status,
+				'id'      => $this->meta_status,
 				'type'    => 'pw_multiselect',
+				'single'  => false,
 				'default' => '',
 				'attributes' => array(
 					'placeholder' => 'Select status'

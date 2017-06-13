@@ -27,7 +27,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 			add_filter( 'woocommerce_email_order_item_quantity', array( $this, 'woocommerce_email_order_item_quantity' ) );
 
 			// Displays suborders on order received / order pay page
-			add_filter( 'woocommerce_display_item_meta', array( $this, 'woocommerce_display_item_meta' ), 10, 3 );
+			add_action( 'woocommerce_order_item_meta_start', array( $this, 'woocommerce_display_item_meta' ), 1, 3 );
 		}
 
 		/**
@@ -59,7 +59,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 		 *
 		 * @return string
 		 */
-		public function woocommerce_display_item_meta( $html, WC_Order_Item_Product $item, $args ) {
+		public function woocommerce_display_item_meta( $item_id, WC_Order_Item_Product $item, $order ) {
+			$html='';
 			foreach ( $item->get_meta_data() as $meta ) {
 				if ( $meta->key == Alg_MOWC_Order_Item_Metas::SUB_ORDER ) {
 					$order = wc_get_order( (int) $meta->value );
@@ -70,8 +71,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 					}
 				}
 			}
-
-			return $html;
+			echo $html;
 		}
 
 		/**

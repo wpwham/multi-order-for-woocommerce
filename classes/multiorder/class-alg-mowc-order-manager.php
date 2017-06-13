@@ -12,6 +12,7 @@
 if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 	class Alg_MOWC_Order_Manager {
+		public static $is_creating_suborder=false;
 
 		/**
 		 * Constructor
@@ -57,6 +58,48 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Updates main order item when the suborder gets updated
 			add_action( 'woocommerce_update_order_item', array( $this, 'update_main_order_item_on_suborder_update' ), 10, 2 );
+
+			// Config Emails
+			add_action( 'woocommerce_email', array( $this, 'setup_emails' ) );
+		}
+
+		/**
+		 * Config emails
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param WC_Emails $emails_class
+		 */
+		public function setup_emails( WC_Emails $emails_class ) {
+
+			foreach ( $emails_class->get_emails() as $email ) {
+				$id = $email->id;
+				add_filter( "woocommerce_email_recipient_{$id}", array( $this, 'remove_new_suborders_emails' ), 10, 2 );
+			}
+		}
+
+		/**
+		 * Remove recently created suborder emails
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param          $recipient
+		 * @param WC_Order $order
+		 *
+		 * @return string
+		 */
+		function remove_new_suborders_emails( $recipient, WC_Order $order ) {
+			if ( ! self::$is_creating_suborder ) {
+				return $recipient;
+			}
+
+			if ( filter_var( get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
+				$recipient = '';
+			}
+
+			return $recipient;
 		}
 
 		/**
@@ -367,11 +410,14 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 *
-		 * @param $order_id
+		 * @param      $order_id
+		 * @param bool $calculate_taxes
 		 */
-		public function recalculate_order( $order_id ) {
+		public function recalculate_order( $order_id, $calculate_taxes = false ) {
 			$order = wc_get_order( $order_id );
-			//$order->calculate_taxes();
+			if ( $calculate_taxes ) {
+				$order->calculate_taxes();
+			}
 			$order->calculate_totals();
 		}
 
@@ -687,6 +733,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				return;
 			}
 
+			self::$is_creating_suborder = true;
+
 			// Get meta data from order
 			$main_order_metadata        = get_metadata( 'post', $main_order_id );
 
@@ -783,7 +831,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SORT_ID , $main_order_id.'9999' );
 
 				// Update status
-				$status = str_replace( 'wc-', '', get_post_status( $main_order_id ) );
+				$status = str_replace( 'wc-', '', $suborder_status );
 				do_action( 'woocommerce_order_status_changed', $suborder_id, $status, $status );
 
 				$order_counter ++;

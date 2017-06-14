@@ -447,10 +447,16 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				wc_update_order_item_meta( $item_id, '_line_tax', 0 );
 
 				$line_tax_data = wc_get_order_item_meta( $item_id, '_line_tax_data', true );
-				foreach ( $line_tax_data['total'] as $data_key => $data_value ) {
-					$line_tax_data['total'][ $data_key ] = 0;
+				if ( is_string( $line_tax_data ) ) {
+					$line_tax_data = unserialize( $line_tax_data );
 				}
-				wc_update_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
+				if ( isset( $line_tax_data['total'] ) ) {
+					foreach ( $line_tax_data['total'] as $data_key => $data_value ) {
+						$line_tax_data['total'][ $data_key ] = 0;
+					}
+					wc_update_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
+				}
+
 				$this->update_main_order_price_based_on_suborder( $order, $item_id );
 			}
 			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $suborder_id ) );
@@ -479,12 +485,17 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				wc_update_order_item_meta( $item_id, '_line_total', $line_subtotal );
 				$line_tax_data  = wc_get_order_item_meta( $item_id, '_line_tax_data', true );
 				$line_tax_count = 0;
-				foreach ( $line_tax_data['subtotal'] as $data_key => $data_value ) {
-					$line_tax_count                      += $data_value;
-					$line_tax_data['total'][ $data_key ] = $data_value;
+				if ( is_string( $line_tax_data ) ) {
+					$line_tax_data = unserialize( $line_tax_data );
 				}
-				wc_update_order_item_meta( $item_id, '_line_tax', $line_tax_count );
-				wc_update_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
+				if ( isset( $line_tax_data['subtotal'] ) ) {
+					foreach ( $line_tax_data['subtotal'] as $data_key => $data_value ) {
+						$line_tax_count                      += $data_value;
+						$line_tax_data['total'][ $data_key ] = $data_value;
+					}
+					wc_update_order_item_meta( $item_id, '_line_tax', $line_tax_count );
+					wc_update_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
+				}
 				$this->update_main_order_price_based_on_suborder( $order, $item_id );
 			}
 			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $suborder_id ) );
@@ -830,7 +841,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			self::$is_creating_suborder = true;
 
 			// Get meta data from order
-			$main_order_metadata        = get_metadata( 'post', $main_order_id );
+			$main_order_metadata = get_metadata( 'post', $main_order_id );
 
 			// Get main order post status from admin
 			$default_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_MAIN_ORDER_STATUS );

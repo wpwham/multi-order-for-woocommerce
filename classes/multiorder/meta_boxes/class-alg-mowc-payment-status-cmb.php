@@ -138,7 +138,7 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 				'context'      => 'side',
 			) );
 
-			$cmb_demo->add_field( array(
+			/*$cmb_demo->add_field( array(
 				'name'       => esc_html__( 'Deduct from main order', 'multi-order-for-woocommerce' ),
 				'id'         => $this->meta_deduct_from_main_order,
 				'type'       => 'checkbox',
@@ -148,7 +148,7 @@ if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 					'name'     => __( 'Deduct', 'multi-order-for-woocommerce' ),
 				),
 				'display_cb' => array( $this, 'display_checkbox_column' ),
-			) );
+			) );*/
 
 			/*$cmb_demo->add_field( array(
 				'name'       => esc_html__( 'Change suborders', 'multi-order-for-woocommerce' ),

@@ -21,6 +21,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		const OPTION_SUBORDERS_ADMIN_SHOW             = 'alg_mowc_suborders_admin_show';
 		const OPTION_SUBORDERS_FRONTEND_SHOW          = 'alg_mowc_suborders_frontend_show';
 		const OPTION_SUBORDERS_SUBTRACTION_STATUS     = 'alg_mowc_suborders_subtraction_status';
+		const OPTION_SUBORDERS_UNDEDUCT_STATUS        = 'alg_mowc_suborders_undeduct_status';
 		const OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS = 'alg_mowc_suborders_cmos';
 		const OPTION_SUBORDERS_EXCEPTION_COPY_STATUS  = 'alg_mowc_suborders_ecs';
 		const OPTION_SUBORDERS_CREATE_AUTOMATICALLY   = 'alg_mowc_suborders_autocreate';
@@ -188,15 +189,25 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'default' => 'no',
 					'type'    => 'checkbox',
 				),
-				/*array(
+				array(
 					'title'   => __( 'Deduct status', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Status that will make suborders values be deducted from main order.', 'multi-order-for-woocommerce' ).'<br />'.sprintf(__( '<strong>NOTE:</strong> It will override other <a href="%s">payment status</a>', 'multi-order-for-woocommerce' ),admin_url("edit-tags.php?taxonomy={$payment_status_tax->id}")),
+					'desc'    => __( 'Status that will make suborders values be deducted from main order.', 'multi-order-for-woocommerce' ),
+					//'desc'    => __( 'Status that will make suborders values be deducted from main order.', 'multi-order-for-woocommerce' ).'<br />'.sprintf(__( '<strong>NOTE:</strong> It will override other <a href="%s">payment status</a>', 'multi-order-for-woocommerce' ),admin_url("edit-tags.php?taxonomy={$payment_status_tax->id}")),
 					'id'      => self::OPTION_SUBORDERS_SUBTRACTION_STATUS,
 					'type'    => 'multiselect',
 					'class'   => 'chosen_select',
 					'options' => wc_get_order_statuses(),
-					'default' => array('wc-cancelled','wc-processing')
-				),*/
+					'default' => array('wc-completed','wc-processing','wc-pending','wc-on-hold')
+				),
+				array(
+					'title'   => __( 'Undeduct status', 'multi-order-for-woocommerce' ),
+					'desc'    => __( 'Status that will make suborders values be undeducted from main order. I.e Back to their original value.', 'multi-order-for-woocommerce' ),
+					'id'      => self::OPTION_SUBORDERS_UNDEDUCT_STATUS,
+					'type'    => 'multiselect',
+					'class'   => 'chosen_select',
+					'options' => wc_get_order_statuses(),
+					'default' => array('wc-cancelled','wc-failed','wc-refunded')
+				),
 				array(
 					'title'   => __( 'Copy main order status', 'multi-order-for-woocommerce' ),
 					'desc'    => __( 'Suborders get the same status of main order when it changes', 'multi-order-for-woocommerce' ),

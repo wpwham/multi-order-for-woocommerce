@@ -97,7 +97,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @param WC_Order $order
 		 */
 		public function setup_frontend_total_column( WC_Order $order ) {
-			$order_total = $order->get_total()+$order->get_total_discount();
+			$order_total = $order->get_subtotal() + $order->get_total_tax() + $order->get_discount_tax();
 			echo wc_price($order_total);
         }
 
@@ -221,7 +221,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 
                 case $this->column_order_total_id:
 	                $order       = wc_get_order( $post_id );
-	                $order_total = $order->get_total() + $order->get_total_discount();
+	                $order_total = $order->get_subtotal() + $order->get_total_tax() + $order->get_discount_tax();
 	                echo wc_price($order_total);
                 break;
 

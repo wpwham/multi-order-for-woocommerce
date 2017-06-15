@@ -197,7 +197,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'type'    => 'multiselect',
 					'class'   => 'chosen_select',
 					'options' => wc_get_order_statuses(),
-					'default' => array('wc-completed','wc-processing','wc-pending')
+					'default' => array('wc-completed','wc-processing')
 				),
 				array(
 					'title'   => __( 'Undeduct status', 'multi-order-for-woocommerce' ),

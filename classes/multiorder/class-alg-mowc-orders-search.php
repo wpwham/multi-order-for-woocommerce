@@ -25,7 +25,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 			add_action( 'pre_get_posts', array( $this, 'find_suborder_by_custom_number' ), 11 );
 
 			// Find suborders using [woocommerce_order_tracking]
-			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'allow_suborders_to_be_tracked' ) );
+			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'allow_suborders_to_be_tracked' ), PHP_INT_MAX );
 
 			// Sort orders
 			add_action( 'pre_get_posts', array( $this, 'sort_admin_orders' ), 11 );
@@ -99,9 +99,21 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		 * @return mixed|null|string
 		 */
 		public function allow_suborders_to_be_tracked( $order_id ) {
+			global $wpdb;
 			$order_id = filter_var( $order_id, FILTER_SANITIZE_NUMBER_INT );
 
-			global $wpdb;
+			if ( 1 !== preg_match( '/^\d.*\-\d.*$/', $order_id ) ) {
+				$meta_value = '_wcj_order_number';
+				$query      = $wpdb->prepare( "SELECT post_id
+				FROM $wpdb->postmeta
+				WHERE meta_value = %s AND meta_key = %s", $order_id, $meta_value );
+				$var        = $wpdb->get_var( $query );
+				if ( ! empty( $var ) ) {
+					$order_id;
+				}
+				return $order_id;
+			}
+
 			$meta_value = Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID;
 
 			$query = $wpdb->prepare( "SELECT post_id

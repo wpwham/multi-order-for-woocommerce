@@ -574,9 +574,11 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			}
 
 			// Check undeduct status
-			$undeduct_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_UNDEDUCT_STATUS, true );
-			if ( in_array( 'wc-' . $transition_to, $undeduct_status ) ) {
-				$this->undeduct_suborder( $order_id, $transition_from, $transition_to );
+			if ( ! self::$is_creating_suborder ) {
+				$undeduct_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_UNDEDUCT_STATUS, true );
+				if ( in_array( 'wc-' . $transition_to, $undeduct_status ) ) {
+					$this->undeduct_suborder( $order_id, $transition_from, $transition_to );
+				}
 			}
 
 
@@ -807,7 +809,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					'order_item_type' => $item_type,
 				) );
 				$this->clone_order_itemmetas( $tax->get_id(), $suborder_new_tax_id );
-				wc_update_order_item_meta( $suborder_new_tax_id, 'tax_amount', $main_order_item->get_total_tax() );
+				//wc_update_order_item_meta( $suborder_new_tax_id, 'tax_amount', $main_order_item->get_total_tax() );
 			}
 		}
 

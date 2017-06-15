@@ -1,0 +1,313 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Alg - Multi Order for WooCommerce\n"
+"POT-Creation-Date: 2017-06-15 16:04-0300\n"
+"PO-Revision-Date: 2017-06-15 16:05-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: assets\n"
+"X-Poedit-SearchPathExcluded-1: tasks\n"
+"X-Poedit-SearchPathExcluded-2: vendor\n"
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:41
+msgid "General"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:94
+msgid "Multi Order options"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:96
+msgid "Multi order general options"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:100
+msgid "Enable Multi Order"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
+#, php-format
+msgid "Enables <strong>\"%s\"</strong> plugin"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
+msgid "Multi order for WooCommerce"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:107
+msgid "Disable cancel button"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
+msgid "Disables the cancel button on frontend "
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:187
+msgid "(My Account > orders)"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:114
+msgid "Hide quantity"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:115
+msgid "Hides order item quantity on some places "
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:116
+msgid "E.g order received page / order pay page / Emails "
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:122
+msgid "Pay button label"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:123
+msgid "Pay button label for the main order"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:125
+msgid "Collectively Pay"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:129
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:130
+msgid "Default payment status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:131
+msgid "New orders will have this default payment status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:139
+msgid "Default main order status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:140
+msgid "New main orders will have this default status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:145
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:167
+msgid "Set by payment gateway"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:154
+msgid "Sub Order options"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:155
+msgid "Options regarding Sub Orders"
+msgstr "Opções relacionadas aos subpedidos"
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:160
+msgid "Default suborder status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:161
+msgid "New suborders will have this default status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:168
+msgid "Same as Main order"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:172
+msgid "Automatic creation"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:173
+msgid "Creates suborders automatically when new orders are created"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:179
+msgid "Show on admin"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:180
+msgid "Displays suborders as table rows on admin"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:180
+msgid "(WooCommerce > orders)"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:186
+msgid "Show on frontend"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:187
+msgid "Displays suborders as table rows on frontend"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:193
+msgid "Deduct status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:194
+msgid "Status that will make suborders values be deducted from main order."
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:203
+msgid "Undeduct status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:204
+msgid ""
+"Status that will make suborders values be undeducted from main order. I.e "
+"Back to their original value."
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:212
+msgid "Copy main order status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:213
+msgid "Suborders get the same status of main order when it changes"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:218
+msgid "If customer takes an action"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:219
+msgid "If admin takes an action"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:224
+msgid "Suborders status exception"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:225
+msgid ""
+"Suborders with these payment status will not be changed by <strong>Copy main "
+"order status</strong> option"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-page.php:21
+msgid "Multi Order"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:55
+#: classes/multiorder/class-alg-mowc-order-columns.php:156
+msgid "Remaining"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:69
+#: classes/multiorder/class-alg-mowc-order-columns.php:218
+msgid "(Suborder)"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:145
+#: classes/multiorder/class-alg-mowc-order-item.php:68
+#: classes/multiorder/class-alg-mowc-order-item.php:114
+msgid "Suborder"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:150
+#: classes/multiorder/class-alg-mowc-order-columns.php:179
+msgid "Total"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:151
+#: classes/multiorder/class-alg-mowc-order-columns.php:180
+msgid "Payment"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:174
+msgid "Sub Orders"
+msgstr ""
+
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:70
+#: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:135
+msgid "Multi order"
+msgstr ""
+
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:81
+msgid "Create suborders"
+msgstr ""
+
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:102
+msgid "Parent order"
+msgstr ""
+
+#: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:189
+msgid "Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:58
+#: multi-order-for-woocommerce.php:39
+msgid "Payment status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:104
+msgid "Paid"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:124
+msgid "Unpaid"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:147
+msgid "Partial paid"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:171
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:172
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:181
+msgid "Payment Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:173
+msgid "Search Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:174
+msgid "All Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:175
+msgid "Parent Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:176
+msgid "Parent Status:"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:177
+msgid "Edit Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:178
+msgid "Update Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:179
+msgid "Add New Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:180
+msgid "New Status Name"
+msgstr ""
+
+#: multi-order-for-woocommerce.php:35
+msgid "Settings"
+msgstr ""
+
+#: templates/multiorder-view-parent-order.php:20
+msgid "Suborders"
+msgstr ""
+
+#: templates/multiorder-view-suborder.php:22
+msgid "Parent Order ID"
+msgstr ""

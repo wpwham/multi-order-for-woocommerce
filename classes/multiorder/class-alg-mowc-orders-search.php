@@ -31,7 +31,15 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 			add_action( 'pre_get_posts', array( $this, 'sort_admin_orders' ), 11 );
 			add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'sort_frontend_orders' ) );
 			add_filter( 'woocommerce_my_account_my_orders_query', array( $this, 'sort_frontend_orders' ) );
+
+			//add_filter("option_{$option}",array($this,'disable_jetpack_order_tracking_search'));
 		}
+
+		/*public function disable_jetpack_order_tracking_search($value){
+			error_log($value);
+			$value='no';
+			return $value;
+		}*/
 
 		/**
 		 * Sort orders on frontend
@@ -99,33 +107,38 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		 * @return mixed|null|string
 		 */
 		public function allow_suborders_to_be_tracked( $order_id ) {
-			global $wpdb;
-			$order_id = filter_var( $order_id, FILTER_SANITIZE_NUMBER_INT );
+			$post_order_id = filter_var( $_POST['orderid'], FILTER_SANITIZE_NUMBER_INT );
 
-			if ( 1 !== preg_match( '/^\d.*\-\d.*$/', $order_id ) ) {
-				$meta_value = '_wcj_order_number';
-				$query      = $wpdb->prepare( "SELECT post_id
-				FROM $wpdb->postmeta
-				WHERE meta_value = %s AND meta_key = %s", $order_id, $meta_value );
-				$var        = $wpdb->get_var( $query );
-				if ( ! empty( $var ) ) {
-					$order_id;
-				}
-				return $order_id;
+			$new_order_id = $this->find_post_id_by_postmeta( Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, $post_order_id );
+			if ( empty( $new_order_id ) ) {
+				$new_order_id = $this->find_post_id_by_postmeta( '_wcj_order_number', $post_order_id );
 			}
+			if ( ! empty( $new_order_id ) ) {
+				$order_id = $new_order_id;
+			} else {
+				$order_id = $post_order_id;
+			}
+			return $order_id;
+		}
 
-			$meta_value = Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID;
-
+		/**
+		 * Finds post_id by postmeta
+		 *
+		 * @version  1.0.0
+		 * @since    1.0.0
+		 *
+		 * @param $meta_key
+		 * @param $meta_value
+		 *
+		 * @return null|string
+		 */
+		public function find_post_id_by_postmeta( $meta_key, $meta_value ) {
+			global $wpdb;
 			$query = $wpdb->prepare( "SELECT post_id
 				FROM $wpdb->postmeta
-				WHERE meta_value = %s AND meta_key = %s", $order_id, $meta_value );
+				WHERE meta_key = %s AND meta_value = %s", $meta_key, $meta_value );
 			$var   = $wpdb->get_var( $query );
-
-			if ( ! empty( $var ) ) {
-				$order_id = $var;
-			}
-
-			return $order_id;
+			return $var;
 		}
 
 		/**

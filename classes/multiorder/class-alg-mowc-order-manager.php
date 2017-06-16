@@ -847,6 +847,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				// Saves sort id
 				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SORT_ID, $main_order_id . '9999' );
 
+				// Creates a fake id for main order
+				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, $main_order->get_order_number() );
+
 				return;
 			}
 
@@ -908,6 +911,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 						Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM => $item_id,
 					),
 				);
+
+				// Creates a fake id for main order
+				update_post_meta( $main_order_id, Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, $main_order->get_order_number() );
 
 				// Create sub order
 				$suborder_id = wp_insert_post( $order_data, true );

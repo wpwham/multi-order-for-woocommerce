@@ -124,6 +124,8 @@ class ComposerStaticInit344e3e6fe8e72c0e58fb4f56d4cec3ba
         'Composer\\Installers\\YawikInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/YawikInstaller.php',
         'Composer\\Installers\\ZendInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/ZendInstaller.php',
         'Composer\\Installers\\ZikulaInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/ZikulaInstaller.php',
+        'WCCSO_Metabox' => __DIR__ . '/..' . '/pablo-pacheco/wc-custom-settings-options/src/class-wccso-metabox.php',
+        'WCCSO_Singleton' => __DIR__ . '/..' . '/pablo-pacheco/wc-custom-settings-options/src/class-wccso-singleton.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

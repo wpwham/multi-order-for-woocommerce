@@ -25,18 +25,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Detects "create suborders" button click
 			add_action( 'save_post', array( $this, 'create_suborders_call_on_btn_click' ) );
 
-			// Changes suborder status when parent order changes status
-			add_action( 'woocommerce_order_status_changed', array( $this, 'sync_suborders_status_from_parent_call' ), 10, 3 );
-
-			// Sets order payment status
-			add_action( 'woocommerce_order_status_changed', array( $this, 'set_order_payment_status' ), 11, 3 );
-
-			// Generates main order payment status
-			add_action( 'set_main_order_payment_status_event', array( $this, 'set_main_order_payment_status' ), 10, 1 );
-
-			// Call the function that deducts / undeducts suborder from main order
-			add_action( 'woocommerce_order_status_changed', array( $this, 'deduct_undeduct_suborder_on_status_change' ), 10, 3 );
-
 			// Recalculates main order price
 			add_action( 'recalculate_order_price_event', array( $this, 'recalculate_order' ), 10, 1 );
 
@@ -46,18 +34,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Deletes suborder item from main order in case suborder post is removed
 			add_action( 'before_delete_post', array( $this, 'remove_suborder_item_on_suborder_post_removal'), 10 );
 
-			// Create suborders automatically on new order item creation
-			add_action( 'woocommerce_new_order_item', array( $this, 'create_suborders_call_on_new_order_item' ), 999, 3 );
-
 			// Create suborders call automatically on new order creation
 			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 999 );
 			add_filter( 'woocommerce_payment_successful_result', array( $this, 'set_main_order_initial_status' ),10,2 );
-
-			// Updates suborder when the main order item gets updated
-			add_action( 'woocommerce_update_order_item', array( $this, 'update_suborder_on_main_order_update' ), 10, 3 );
-
-			// Updates main order item when the suborder gets updated
-			add_action( 'woocommerce_update_order_item', array( $this, 'update_main_order_item_on_suborder_update' ), 10, 3 );
 
 			// Config Emails
 			add_action( 'woocommerce_email', array( $this, 'setup_emails' ) );
@@ -104,106 +83,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			}
 
 			return $recipient;
-		}
-
-		/**
-		 * Generates main order payment status
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $order_id
-		 */
-		public function set_main_order_payment_status( $order_id ) {
-			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-			if ( empty( $suborders ) || ! is_array( $suborders ) || count( $suborders ) == 0 ) {
-				return;
-			}
-
-			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
-
-			$suborders_payment_status_arr = array();
-			foreach ( $suborders as $suborder_id ) {
-				$terms = wp_get_post_terms( $suborder_id, $payment_status_tax->id );
-				foreach ( $terms as $term ) {
-					$suborders_payment_status_arr[] = $term->slug;
-				}
-			}
-
-			$term_slug = 'partial-paid';
-			if (
-				in_array( 'paid', $suborders_payment_status_arr ) &&
-				! in_array( 'unpaid', $suborders_payment_status_arr )
-			) {
-				$term_slug = 'paid';
-			} else if (
-				! in_array( 'paid', $suborders_payment_status_arr ) &&
-				in_array( 'unpaid', $suborders_payment_status_arr )
-			) {
-				$term_slug = 'unpaid';
-			}
-
-			// Set payment status
-			$term = get_term_by( 'slug', $term_slug, $payment_status_tax->id );
-			wp_set_post_terms( $order_id, $term->term_id, $payment_status_tax->id, false );
-		}
-
-		/**
-		 * Sets order payment status
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $order_id
-		 * @param $transition_from
-		 * @param $transition_to
-		 */
-		public function set_order_payment_status( $order_id, $transition_from, $transition_to ) {
-			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-			if ( ! empty( $suborders ) || is_array( $suborders ) && count( $suborders ) > 0 ) {
-				return;
-			}
-
-			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
-			$payment_status_cmb = new Alg_MOWC_Payment_Status_CMB();
-
-			// Gets payment status filtered by the new order status
-			$terms              = get_terms( array(
-				'taxonomy'   => $payment_status_tax->id,
-				'hide_empty' => false,
-				'fields'=>'ids',
-				'meta_query' => array(
-					array(
-						'key'     => $payment_status_cmb->meta_status,
-						'value'   => 'wc-' . $transition_to,
-						'compare' => 'LIKE',
-					),
-				),
-			) );
-
-			if (
-				empty( $terms ) ||
-				is_wp_error( $terms ) ||
-				( is_array( $terms ) && count( $terms ) == 0 )
-			) {
-				// If not finds payment status, gets the default set on admin
-				$default_payment_status = sanitize_text_field( get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_PAYMENT_STATUS ) );
-				$term                   = get_term_by( 'slug', $default_payment_status, $payment_status_tax->id );
-
-				// Set payment status
-				wp_set_post_terms( $order_id, $term->term_id, $payment_status_tax->id, false );
-			}else{
-
-				// Set payment status
-				wp_set_post_terms( $order_id, $terms, $payment_status_tax->id, false );
-			}
-
-			// Calculates main order payment status
-			$main_order = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-			if ( ! empty( $main_order ) ) {
-				wp_clear_scheduled_hook( 'set_main_order_payment_status_event', array( $main_order ) );
-				wp_schedule_single_event( time() + 1, 'set_main_order_payment_status_event', array( $main_order ) );
-			}
 		}
 
 		/**
@@ -429,89 +308,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		}
 
 		/**
-		 * Deducts suborder from main order
-		 *
-		 * @version  1.0.0
-		 * @since    1.0.0
-		 *
-		 * @param          $order_id
-		 * @param          $transition_from
-		 * @param          $transition_to
-		 *
-		 * @internal param $order_id
-		 * @internal param WC_Order $order
-		 */
-		public function deduct_order( $order_id, $transition_from, $transition_to ) {
-			$order = wc_get_order( $order_id );
-			$main_order = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-
-			/* @var WC_Order_Item_Product $order_item */
-			foreach ( $order->get_items() as $item_id => $order_item ) {
-				wc_update_order_item_meta( $item_id, '_line_total', 0 );
-				wc_update_order_item_meta( $item_id, '_line_tax', 0 );
-
-				$line_tax_data = wc_get_order_item_meta( $item_id, '_line_tax_data', true );
-				if ( is_string( $line_tax_data ) ) {
-					$line_tax_data = unserialize( $line_tax_data );
-				}
-				if ( isset( $line_tax_data['total'] ) ) {
-					foreach ( $line_tax_data['total'] as $data_key => $data_value ) {
-						$line_tax_data['total'][ $data_key ] = 0;
-					}
-					wc_update_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
-				}
-
-				if ( ! empty( $main_order ) ) {
-					$this->update_main_order_price_based_on_suborder( $order, $item_id );
-				}
-			}
-			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $order_id ) );
-			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $order_id ) );
-		}
-
-		/**
-		 * UnDeducts suborder from main order
-		 *
-		 * @version  1.0.0
-		 * @since    1.0.0
-		 *
-		 * @param          $order_id
-		 * @param          $transition_from
-		 * @param          $transition_to
-		 *
-		 * @internal param $order_id
-		 * @internal param WC_Order $order
-		 */
-		public function undeduct_order( $order_id, $transition_from, $transition_to ) {
-			$order = wc_get_order( $order_id );
-			$main_order = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-
-			/* @var WC_Order_Item_Product $order_item */
-			foreach ( $order->get_items() as $item_id => $order_item ) {
-				$line_subtotal = wc_get_order_item_meta( $item_id, '_line_subtotal', true );
-				wc_update_order_item_meta( $item_id, '_line_total', $line_subtotal );
-				$line_tax_data  = wc_get_order_item_meta( $item_id, '_line_tax_data', true );
-				$line_tax_count = 0;
-				if ( is_string( $line_tax_data ) ) {
-					$line_tax_data = unserialize( $line_tax_data );
-				}
-				if ( isset( $line_tax_data['subtotal'] ) ) {
-					foreach ( $line_tax_data['subtotal'] as $data_key => $data_value ) {
-						$line_tax_count                      += $data_value;
-						$line_tax_data['total'][ $data_key ] = $data_value;
-					}
-					wc_update_order_item_meta( $item_id, '_line_tax', $line_tax_count );
-					wc_update_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
-				}
-				if ( ! empty( $main_order ) ) {
-					$this->update_main_order_price_based_on_suborder( $order, $item_id );
-				}
-			}
-			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $order_id ) );
-			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $order_id ) );
-		}
-
-		/**
 		 * Update main order price based on suborder
 		 *
 		 * @version  1.0.0
@@ -526,137 +322,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			$this->clone_order_itemmetas( $suborder_item_id, $parent_order_item_id, array( Alg_MOWC_Order_Item_Metas::SUB_ORDER ), 'update' );
 			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $main_order_id ) );
 			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $main_order_id ) );
-		}
-
-		/**
-		 * Deducts suborder from main order
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param          $order_id
-		 * @param          $transition_from
-		 * @param          $transition_to
-		 * @param WC_Order $order
-		 */
-		/*public function deduct_suborder_from_order( $order_id, $transition_from, $transition_to ) {
-			// Get parent order item id
-			$parent_order_item = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER_ITEM, true );
-
-			// Remove price from main order
-			wc_update_order_item_meta( $parent_order_item, '_line_total', 0 );
-			wc_update_order_item_meta( $parent_order_item, '_line_tax', 0 );
-
-			// Update _line_tax_data
-			$line_tax_data = wc_get_order_item_meta( $parent_order_item, '_line_tax_data', true );
-			foreach ( $line_tax_data['total'] as $data_key => $data_value ) {
-				$line_tax_data['total'][ $data_key ] = 0;
-			}
-			wc_update_order_item_meta( $parent_order_item, '_line_tax_data', $line_tax_data );
-
-			// Create event to recalculate main order
-			$main_order_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-			wp_clear_scheduled_hook( 'recalculate_order_price_event', array( $main_order_id ) );
-			wp_schedule_single_event( time() + 1, 'recalculate_order_price_event', array( $main_order_id ) );
-		}*/
-
-		/**
-		 * Call the function that deducts suborder from main order
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param          $order_id
-		 * @param          $transition_from
-		 * @param          $transition_to
-		 * @param WC_Order $order
-		 */
-		public function deduct_undeduct_suborder_on_status_change( $order_id, $transition_from, $transition_to ) {
-			/*if ( ! filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
-				return;
-			}*/
-			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-			if ( ! empty( $suborders ) || is_array( $suborders ) && count( $suborders ) > 0 ) {
-				return;
-			}
-
-			// Check deduct status
-			$deduct_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_SUBTRACTION_STATUS, true );
-			if ( in_array( 'wc-' . $transition_to, $deduct_status ) ) {
-				$this->deduct_order( $order_id, $transition_from, $transition_to );
-			}
-
-			// Check undeduct status
-			if ( ! self::$is_creating_suborder ) {
-				$undeduct_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_UNDEDUCT_STATUS, true );
-				if ( in_array( 'wc-' . $transition_to, $undeduct_status ) ) {
-					$this->undeduct_order( $order_id, $transition_from, $transition_to );
-				}
-			}
-		}
-
-		/**
-		 * Changes suborder status when parent order changes status
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 */
-		public function sync_suborders_status_from_parent_call( $order_id, $transition_from, $transition_to ) {
-			$copy_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS );
-			if ( ! is_array( $copy_main_order_status ) ) {
-				return;
-			}
-
-			if ( is_admin() ) {
-				if ( in_array( 'admin', $copy_main_order_status ) === false ) {
-					return;
-				}
-			} else {
-				if ( in_array( 'frontend', $copy_main_order_status ) === false ) {
-					return;
-				}
-			}
-
-			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
-				return;
-			}
-
-			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
-
-			if ( ! is_array( $suborders ) || count( $suborders ) < 1 ) {
-				return;
-			}
-
-			$this->sync_suborders_status_from_parent( $order_id, $suborders, $transition_from, $transition_to );
-		}
-
-		/**
-		 * Saves suborders status from parent order
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $parent_order_id
-		 */
-		public function sync_suborders_status_from_parent( $parent_order_id, $suborders, $transition_from, $transition_to ) {
-			$payment_status_exception_slugs = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_EXCEPTION_COPY_STATUS, true );
-			foreach ( $suborders as $suborder_id ) {
-
-				$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
-				$terms              = wp_get_post_terms( $suborder_id, $payment_status_tax->id );
-				foreach ( $terms as $term ) {
-					if ( in_array( $term->slug, $payment_status_exception_slugs ) ) {
-						continue 2;
-					}
-				}
-
-				wp_update_post( array(
-					'ID'          => $suborder_id,
-					'post_status' => 'wc-' . $transition_to,
-				) );
-
-				do_action( 'woocommerce_order_status_changed', $suborder_id, $transition_from, $transition_to );
-			}
 		}
 
 		/**

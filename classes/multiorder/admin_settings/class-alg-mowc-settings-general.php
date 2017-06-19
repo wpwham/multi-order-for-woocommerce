@@ -29,6 +29,9 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		const OPTION_DEFAULT_MAIN_ORDER_STATUS        = 'alg_mowc_default_main_order_status';
 		const OPTION_DEFAULT_SUB_ORDER_STATUS         = 'alg_mowc_default_sub_order_status';
 		const OPTION_PAY_BUTTON_LABEL                 = 'alg_mowc_pay_button_label';
+		const OPTION_METABOX_PRO                      = 'alg_mowc_cmb_pro';
+
+		protected $pro_version_url = 'https://wpcodefactory.com/item/multi-order-for-woocommerce/';
 
 		/**
 		 * Constructor.
@@ -41,44 +44,6 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 			$this->desc = __( 'General', 'multi-order-for-woocommerce' );
 			parent::__construct( $handle_autoload );
 		}
-
-		/**
-		 * Gets payment status
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 * @return array
-		 */
-		function get_payment_status_terms() {
-			$payment_status = new Alg_MOWC_Order_Payment_Status();
-			if ( taxonomy_exists( $payment_status->id ) ) {
-				$terms = get_terms( array(
-					'taxonomy'   => $payment_status->id,
-					'hide_empty' => false,
-				) );
-
-				return wp_list_pluck(
-					get_terms( array(
-						'taxonomy'   => $payment_status->id,
-						'hide_empty' => false,
-					) ),
-					'name',
-					'slug'
-				);
-			} else {
-				return array();
-			}
-		}
-
-		/**
-		 * Get default main order status
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 */
-		/*public function get_default_main_order_status(){
-			$status = wc_get_order_statuses();
-			return array( '' => __( 'None', 'multi-order-for-woocommerce' ) ) + $status;
-		}*/
 
 		/**
 		 * get_settings.
@@ -97,43 +62,51 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'id'    => 'alg_mowc_opt',
 				),
 				array(
+					'title'          => 'Pro version',
+					'enabled'         => !function_exists( 'alg_mowc_pro_plugin' ),
+					'type'           => 'wccso_metabox',
+					'show_in_pro'    => false,
+					'accordion' => array(
+						'title' => __( 'Take a look on some of its features:', 'multi-order-for-woocommerce' ),
+						'items' => array(
+							array(
+								'trigger'     => __( 'Sync your orders', 'multi-order-for-woocommerce' ),
+								'description' => __( 'Whenever you change a suborder item price or tax, the correspondent item on main order gets updated, and vice-versa.', 'multi-order-for-woocommerce' ),
+								//'img_src'     => plugins_url( '../../assets/images/icons.gif', __FILE__ ),
+							),
+							array(
+								'trigger'     => __( 'Display more intuitive numbers to your suborders', 'multi-order-for-woocommerce' ),
+								'description' => __( 'E.g If your main order is 100, your suborders numbers will be 100-1, 100-2, and so on.', 'multi-order-for-woocommerce' ),
+								//'img_src'     => plugins_url( '../../assets/images/icons.gif', __FILE__ ),
+							),
+							array(
+								'trigger'     => __( 'Deduct suborders from main orders', 'multi-order-for-woocommerce' ),
+								'description' => __( 'If you get your suborder paid, subtract its value from main order automatically.', 'multi-order-for-woocommerce' ).' '.__('You also have the option to undo this depending on the suborder status.','multi-order-for-woocommerce'),
+								//'img_src'     => plugins_url( '../../assets/images/icons.gif', __FILE__ ),
+							),
+							array(
+								'trigger'     => __( 'Present your orders with custom payment status', 'multi-order-for-woocommerce' ),
+								'description' => __( 'Besides your orders status, use at least 3 more order payment status (paid, unpaid, partial) to make it more intuive to your customers.', 'multi-order-for-woocommerce' ),
+								//'img_src'     => plugins_url( '../../assets/images/icons.gif', __FILE__ ),
+							),
+							array(
+								'trigger' => __( 'Support', 'multi-order-for-woocommerce' ),
+							),
+						),
+					),
+					'call_to_action' => array(
+						'href'   => $this->pro_version_url,
+						'label'  => 'Upgrade to Pro version now',
+					),
+					'description'    => __( 'Do you like the free version of this plugin? Imagine what the Pro version can do for you!', 'multi-order-for-woocommerce' ) . '<br />' . sprintf( __( 'Check it out <a target="_blank" href="%1$s">here</a> or on this link: <a target="_blank" href="%1$s">%1$s</a>', 'multi-order-for-woocommerce' ), esc_url( $this->pro_version_url ) ),
+					'id'             => self::OPTION_METABOX_PRO,
+				),
+				array(
 					'title'   => __( 'Enable Multi Order', 'multi-order-for-woocommerce' ),
 					'desc'    => sprintf( __( 'Enables <strong>"%s"</strong> plugin', 'multi-order-for-woocommerce' ), __( 'Multi order for WooCommerce' ) ),
 					'id'      => self::OPTION_ENABLE_PLUGIN,
 					'default' => 'yes',
 					'type'    => 'checkbox',
-				),
-				array(
-					'title'   => __( 'Disable cancel button', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Disables the cancel button on frontend ', 'multi-order-for-woocommerce' ). ' <strong>' . __( '(My Account > orders)', 'multi-order-for-woocommerce' ) . '</strong>',
-					'id'      => self::OPTION_DISABLE_CANCEL_BUTTON,
-					'default' => 'no',
-					'type'    => 'checkbox',
-				),
-				array(
-					'title'   => __( 'Hide quantity', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Hides order item quantity on some places ', 'multi-order-for-woocommerce' ),
-					'desc_tip'=> __( 'E.g order received page / order pay page / Emails ', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_DISABLE_ORDER_ITEM_QTY,
-					'default' => 'no',
-					'type'    => 'checkbox',
-				),
-				array(
-					'title'   => __( 'Pay button label', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Pay button label for the main order', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_PAY_BUTTON_LABEL,
-					'default' => __( 'Collectively Pay', 'multi-order-for-woocommerce' ),
-					'type'    => 'text',
-				),
-				array(
-					'title'   => __( 'Default payment status', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Default payment status', 'multi-order-for-woocommerce' ),
-					'desc_tip'=> __( 'New orders will have this default payment status', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_DEFAULT_PAYMENT_STATUS,
-					'default' => 'unpaid',
-					'type'    => 'select',
-					'class'   => 'chosen_select',
-					'options'=> $this->get_payment_status_terms()
 				),
 				array(
 					'title'   => __( 'Default main order status', 'multi-order-for-woocommerce' ),
@@ -188,46 +161,6 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 					'id'      => self::OPTION_SUBORDERS_FRONTEND_SHOW,
 					'default' => 'no',
 					'type'    => 'checkbox',
-				),
-				array(
-					'title'   => __( 'Deduct status', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Status that will make suborders values be deducted from main order.', 'multi-order-for-woocommerce' ),
-					//'desc'    => __( 'Status that will make suborders values be deducted from main order.', 'multi-order-for-woocommerce' ).'<br />'.sprintf(__( '<strong>NOTE:</strong> It will override other <a href="%s">payment status</a>', 'multi-order-for-woocommerce' ),admin_url("edit-tags.php?taxonomy={$payment_status_tax->id}")),
-					'id'      => self::OPTION_SUBORDERS_SUBTRACTION_STATUS,
-					'type'    => 'multiselect',
-					'class'   => 'chosen_select',
-					'options' => wc_get_order_statuses(),
-					'default' => array('wc-completed','wc-processing')
-				),
-				array(
-					'title'   => __( 'Undeduct status', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Status that will make suborders values be undeducted from main order. I.e Back to their original value.', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_SUBORDERS_UNDEDUCT_STATUS,
-					'type'    => 'multiselect',
-					'class'   => 'chosen_select',
-					'options' => wc_get_order_statuses(),
-					'default' => array('wc-cancelled','wc-failed','wc-refunded')
-				),
-				array(
-					'title'   => __( 'Copy main order status', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Suborders get the same status of main order when it changes', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_SUBORDERS_COPY_MAIN_ORDER_STATUS,
-					'type'    => 'multiselect',
-					'class'   => 'chosen_select',
-					'options' => array(
-						'frontend' => __( 'If customer takes an action' ),
-						'admin'    => __( 'If admin takes an action' ),
-					),
-					'default' => array( 'frontend', 'admin' ),
-				),
-				array(
-					'title'   => __( 'Suborders status exception', 'multi-order-for-woocommerce' ),
-					'desc'    => __( 'Suborders with these payment status will not be changed by <strong>Copy main order status</strong> option', 'multi-order-for-woocommerce' ),
-					'id'      => self::OPTION_SUBORDERS_EXCEPTION_COPY_STATUS,
-					'type'    => 'multiselect',
-					'class'   => 'chosen_select',
-					'options' => $this->get_payment_status_terms(),
-					'default' => array( 'paid' ),
 				),
 				array(
 					'type' => 'sectionend',

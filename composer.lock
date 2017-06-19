@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d67fe363e996c9560abda93d96877c7d",
-    "content-hash": "4b3cdf94664821dd9aacc86bb68cb858",
+    "hash": "024f81dd8ffe0c729d4982c32eedc415",
+    "content-hash": "8f93b1d7a4db1eee98accdf712521750",
     "packages": [
         {
             "name": "composer/installers",
@@ -158,17 +158,61 @@
             "time": "2016-08-25 15:52:11"
         },
         {
+            "name": "pablo-pacheco/wc-custom-settings-options",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pablo-pacheco/wc-custom-settings-options.git",
+                "reference": "1f8c1a2a3bfb7a443649dd950362d039ceb1b50f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pablo-pacheco/wc-custom-settings-options/zipball/1f8c1a2a3bfb7a443649dd950362d039ceb1b50f",
+                "reference": "1f8c1a2a3bfb7a443649dd950362d039ceb1b50f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Pablo S G Pacheco",
+                    "email": "pablo.sg.pacheco@gmail.com",
+                    "role": "Web Developer"
+                }
+            ],
+            "description": "Custom settings options for WooCommerce",
+            "homepage": "https://github.com/pablo-pacheco/wc-custom-settings-options",
+            "keywords": [
+                "settings-api",
+                "woocommerce",
+                "wordpress",
+                "wp"
+            ],
+            "time": "2017-04-13 21:11:46"
+        },
+        {
             "name": "webdevstudios/cmb2",
             "version": "dev-trunk",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CMB2/CMB2.git",
-                "reference": "5280af2cf0e43c24966b0a37522cdb3a0bcf4109"
+                "reference": "229213a241a1c049c5ba1c47aa176823ea6a9b21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/5280af2cf0e43c24966b0a37522cdb3a0bcf4109",
-                "reference": "5280af2cf0e43c24966b0a37522cdb3a0bcf4109",
+                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/229213a241a1c049c5ba1c47aa176823ea6a9b21",
+                "reference": "229213a241a1c049c5ba1c47aa176823ea6a9b21",
                 "shasum": ""
             },
             "require": {
@@ -212,13 +256,14 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2017-06-08 15:58:59"
+            "time": "2017-06-13 14:54:38"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "pablo-pacheco/wc-custom-settings-options": 20,
         "webdevstudios/cmb2": 20,
         "mustardbees/cmb-field-select2": 20
     },

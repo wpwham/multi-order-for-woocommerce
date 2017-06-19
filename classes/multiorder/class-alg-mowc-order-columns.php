@@ -36,7 +36,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			add_filter( "woocommerce_account_orders_columns", array( $this, 'change_frontend_order_columns' ) );
 			add_action( "woocommerce_my_account_my_orders_column_{$this->column_suborders_id}", array( $this, 'setup_frontend_suborders_column') );
 			add_action( "woocommerce_my_account_my_orders_column_{$this->column_order_total_id}", array( $this, 'setup_frontend_total_column') );
-			add_action( "woocommerce_my_account_my_orders_column_{$this->column_order_payment_status}", array( $this, 'setup_frontend_payment_column') );
 			add_action( "woocommerce_my_account_my_orders_column_order-total", array( $this, 'setup_frontend_remaining_column') );
 			add_action( "woocommerce_my_account_my_orders_column_order-number", array( $this, 'setup_frontend_order_number_column' ) );
 		}
@@ -74,18 +73,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
                 </a>
 				<?php
 			}
-		}
-
-		/**
-		 * Setups frontend payment status column
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param WC_Order $order
-		 */
-		public function setup_frontend_payment_column( WC_Order $order ) {
-			echo $this->html_payment_status_column( $order->get_id() );
 		}
 
 		/**
@@ -148,7 +135,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 
 				if ( $key == 'order-status' ) {
 					$new[ $this->column_order_total_id ]       = __( 'Total', 'woocommerce' );
-					$new[ $this->column_order_payment_status ] = __( 'Payment', 'woocommerce' );
 				}
 				$new[ $key ] = $title;
 			}
@@ -177,26 +163,10 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 
 				if ( $key == 'order_date' ) {
 					$new[ $this->column_order_total_id ]       = __( 'Total', 'multi-order-for-woocommerce' );
-					$new[ $this->column_order_payment_status ] = __( 'Payment', 'multi-order-for-woocommerce' );
 				}
 				$new[ $key ] = $title;
 			}
 			return $new;
-		}
-
-		/**
-		 * Displays payment status column
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $order_id
-		 *
-		 * @return string
-		 */
-		public function html_payment_status_column( $order_id ) {
-			$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
-			return implode( ",", wp_get_post_terms( $order_id, $payment_status_tax->id, array( "fields" => "names" ) ) );
 		}
 
 		/**
@@ -224,10 +194,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 	                $order_total = $order->get_subtotal() + WC_Tax::round( WC_Tax::round( $order->get_total_tax() ) + WC_Tax::round( $order->get_discount_tax() ) );
 	                echo wc_price($order_total);
                 break;
-
-			    case $this->column_order_payment_status:
-				    echo $this->html_payment_status_column($post_id);
-			    break;
 
                 case $this->column_suborders_id:
 	                $suborders = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDERS );

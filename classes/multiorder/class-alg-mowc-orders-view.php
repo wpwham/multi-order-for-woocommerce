@@ -28,46 +28,6 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 			// Manages frontend order view template on my account
 			add_action( 'woocommerce_view_order', array( $this, 'woocommerce_frontend_suborder_view' ), 1 );
 			add_action( 'woocommerce_view_order', array( $this, 'woocommerce_frontend_parent_order_view' ), 1 );
-
-			// Changes the suborder number
-			add_filter( 'woocommerce_order_number', array( $this, 'woocommerce_suborder_number' ), PHP_INT_MAX, 2 );
-
-
-
-			// Todo: Try to change order url
-			/*add_filter('woocommerce_get_view_order_url',function($url, WC_Order $order){
-				return wc_get_endpoint_url( 'view-order', apply_filters('woocommerce_order_number',$order->get_id(),$order), wc_get_page_permalink( 'myaccount' ) );
-				//return apply_filters('woocommerce_order_number',$order->get_id(),$order);
-			},10,2);*/
-
-		}
-
-
-
-		/**
-		 * Setups the suborder number view
-		 *
-		 * @version  1.0.0
-		 * @since    1.0.0
-		 *
-		 * @param          $order_number
-		 * @param WC_Order $order
-		 *
-		 * @return mixed|void
-		 * @internal param $order_id
-		 */
-		public function woocommerce_suborder_number( $order_number, WC_Order $order ) {
-			$order_id     = $order->get_id();
-			$is_sub_order = filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
-			if ( ! $is_sub_order ) {
-				return $order_number;
-			}
-
-			$parent_order_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
-			$parent_order    = wc_get_order( $parent_order_id );
-			$suborder_sub_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID, true );
-			$order_number    = apply_filters( 'woocommerce_order_number', $parent_order_id, $parent_order ) . '-' . $suborder_sub_id;
-			return $order_number;
 		}
 
 		/**

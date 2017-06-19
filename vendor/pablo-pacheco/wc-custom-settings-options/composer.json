@@ -1,0 +1,21 @@
+{
+    "name": "pablo-pacheco/wc-custom-settings-options",
+    "type": "library",
+    "description": "Custom settings options for WooCommerce",
+    "keywords": ["wp","wordpress", "settings-api", "woocommerce"],
+    "homepage": "https://github.com/pablo-pacheco/wc-custom-settings-options",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Pablo S G Pacheco",
+            "email": "pablo.sg.pacheco@gmail.com",
+            "role": "Web Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.4"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}

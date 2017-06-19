@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Alg - Multi Order for WooCommerce\n"
-"POT-Creation-Date: 2017-06-15 16:01-0300\n"
+"POT-Creation-Date: 2017-06-19 19:47-0300\n"
 "PO-Revision-Date: 2017-01-17 13:05-0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,502 +19,271 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: tasks\n"
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: alg-marketplace-for-woocommerce.php:34
-msgid "Settings"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-general.php:28
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:44
 msgid "General"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-general.php:41
-msgid "Marketplace options"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:59
+msgid "Multi Order options"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-general.php:46
-msgid "Enable Marketplace"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:61
+msgid "Multi order general options"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-general.php:47
-#, php-format
-msgid "Enable <strong>\"%s\"</strong> plugin"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:70
+msgid "Take a look on some of its features:"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-general.php:47
-msgid "Marketplace for WooCommerce"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:73
+msgid "Sync your orders"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-page.php:21
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:147
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-marketplace-tab.php:101
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-marketplace-tab.php:123
-msgid "Marketplace"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:74
+msgid ""
+"Whenever you change a suborder item price or tax, the correspondent item "
+"on main order gets updated, and vice-versa."
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:37
-msgid "Vendors"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:78
+msgid "Display more intuitive numbers to your suborders"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:67
-msgid "Vendors options"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:79
+msgid ""
+"E.g If your main order is 100, your suborders numbers will be 100-1, "
+"100-2, and so on."
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:69
-msgid "General options regarding vendors"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:83
+msgid "Deduct suborders from main orders"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:73
-msgid "Vendor label"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:84
+msgid ""
+"If you get your suborder paid, subtract its value from main order "
+"automatically."
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:74
-msgid "Vendor role label"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:84
+msgid ""
+"You also have the option to undo this depending on the suborder status."
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:76
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:77
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:465
-msgid "Marketplace vendor"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:88
+msgid "Present your orders with custom payment status"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:87
-msgid "Public page"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:89
+msgid ""
+"Besides your orders status, use at least 3 more order payment status "
+"(paid, unpaid, partial) to make it more intuive to your customers."
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:88
-msgid "The public page used to display vendor products"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:93
+msgid "Support"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:93
-msgid "Page slug"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
+msgid ""
+"Do you like the free version of this plugin? Imagine what the Pro "
+"version can do for you!"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:94
-#, php-format
-msgid "Slug for the public page of the vendor. E.g: %s"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:94
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
 #, php-format
 msgid ""
-"If it does not work on the first attempt, please go to <a href=\"%s"
-"\">Permalink Settings </a> and save changes"
+"Check it out <a target=\"_blank\" href=\"%1$s\">here</a> or on this "
+"link: <a target=\"_blank\" href=\"%1$s\">%1$s</a>"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:96
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:97
-msgid "marketplace-vendor"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:105
+msgid "Enable Multi Order"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:107
-msgid "Capabilities"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:108
-msgid "What vendors will be allowed to do"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:113
-msgid "Publish products"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:114
-msgid ""
-"Allows vendors to publish products automatically, bypassing the pending "
-"status"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:120
-msgid "Upload files"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:121
-msgid "Allows vendors to upload files"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:127
-msgid "View orders"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:128
-msgid "Allows vendors to view orders"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:140
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:247
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:249
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:256
-msgid "Commissions"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:141
-msgid "Money that need to be transferred to vendors after a sale is made"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:146
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:178
-msgid "Base"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:147
-msgid "How vendors will receive their commissions for sales"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:151
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:183
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:283
-msgid "By percentage"
-msgstr ""
-
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:152
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:184
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:284
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:106
 #, php-format
-msgid "By fixed value (in %s)"
+msgid "Enables <strong>\"%s\"</strong> plugin"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:158
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:164
-msgid "Value"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:106
+msgid "Multi order for WooCommerce"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:159
-msgid "Value that will be transfered to vendors after an order is complete"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:112
+msgid "Default main order status"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:165
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:113
+msgid "New main orders will have this default status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:118
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:140
+msgid "Set by payment gateway"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:127
+msgid "Sub Order options"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:128
+msgid "Options regarding Sub Orders"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:133
+msgid "Default suborder status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:134
+msgid "New suborders will have this default status"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:141
+msgid "Same as Main order"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:145
 msgid "Automatic creation"
 msgstr ""
 
-#: classes/marketplace/admin_settings/class-alg-mpwc-settings-vendor.php:166
-msgid "The moment commissions are created"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:146
+msgid "Creates suborders automatically when new orders are created"
 msgstr ""
 
-#: classes/marketplace/dropdowns/class-alg-mpwc-vendor-products-filter.php:64
-msgid "Select a vendor"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:152
+msgid "Show on admin"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:124
-msgid "Set selected commissions as paid"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:153
+msgid "Displays suborders as table rows on admin"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:125
-msgid "Set selected commissions as unpaid"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:153
+msgid "(WooCommerce > orders)"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:248
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:250
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-creator.php:138
-msgid "Commission"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:159
+msgid "Show on frontend"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:251
-msgid "Add New"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:160
+msgid "Displays suborders as table rows on frontend"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:252
-msgid "Add New Commission"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:160
+msgid "(My Account > orders)"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:253
-msgid "New Commission"
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-page.php:21
+msgid "Multi Order"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:254
-msgid "Edit Commission"
+#: classes/multiorder/class-alg-mowc-order-columns.php:54
+#: classes/multiorder/class-alg-mowc-order-columns.php:142
+msgid "Remaining"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:255
-msgid "View Commission"
+#: classes/multiorder/class-alg-mowc-order-columns.php:68
+#: classes/multiorder/class-alg-mowc-order-columns.php:188
+msgid "(Suborder)"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:257
-msgid "Search Commissions"
+#: classes/multiorder/class-alg-mowc-order-columns.php:132
+#: classes/multiorder/class-alg-mowc-order-item.php:68
+#: classes/multiorder/class-alg-mowc-order-item.php:114
+msgid "Suborder"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:258
-msgid "Parent Commissions:"
+#: classes/multiorder/class-alg-mowc-order-columns.php:137
+#: classes/multiorder/class-alg-mowc-order-columns.php:165
+msgid "Total"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:259
-msgid "No Commissions found."
+#: classes/multiorder/class-alg-mowc-order-columns.php:160
+msgid "Sub Orders"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:260
-msgid "No Commissions found in Trash."
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:70
+#: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:135
+msgid "Multi order"
 msgstr ""
 
-#: classes/marketplace/post_types/class-alg-mpwc-cpt-commission.php:265
-msgid "Description."
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:81
+msgid "Create suborders"
 msgstr ""
 
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:119
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:65
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:66
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:75
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:102
+msgid "Parent order"
+msgstr ""
+
+#: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:189
 msgid "Status"
 msgstr ""
 
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:147
-msgid "Details"
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:58
+#: multi-order-for-woocommerce.php:39
+msgid "Payment status"
 msgstr ""
 
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:152
-msgid "Order ID"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:153
-msgid "Commission order id"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:165
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:296
-msgid "Commission value"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:179
-msgid ""
-"The base that was commonly agreed between the vendor and the admin when "
-"the sale was made"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:192
-msgid "Base value"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:193
-msgid ""
-"The value that was commonly agreed between the vendor and the admin when "
-"the sale was made"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:206
-#: classes/marketplace/user_roles/class-alg-mpwc-vendor-user.php:58
-msgid "Vendor"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:218
-msgid "Related products"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-admin-settings.php:245
-msgid "Fixed value"
-msgstr ""
-
-#: classes/marketplace/post_types/commission/class-alg-mpwc-cpt-comission-creator.php:139
-#, php-format
-msgid "Order %s"
-msgstr ""
-
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:37
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:104
 msgid "Paid"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:47
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:124
 msgid "Unpaid"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:67
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:147
+msgid "Partial paid"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:171
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:172
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:181
+msgid "Payment Status"
+msgstr ""
+
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:173
 msgid "Search Status"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:68
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:174
 msgid "All Status"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:69
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:175
 msgid "Parent Status"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:70
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:176
 msgid "Parent Status:"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:71
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:177
 msgid "Edit Status"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:72
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:178
 msgid "Update Status"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:73
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:179
 msgid "Add New Status"
 msgstr ""
 
-#: classes/marketplace/taxonomies/class-alg-mpwc-commission-status-tax.php:74
+#: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:180
 msgid "New Status Name"
 msgstr ""
 
-#: classes/marketplace/user_roles/class-alg-mpwc-shop-manager-user.php:77
-msgid "Author"
+#: multi-order-for-woocommerce.php:35
+msgid "Settings"
 msgstr ""
 
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:139
-msgid "Vendor admin fields"
+#: templates/multiorder-view-parent-order.php:20
+msgid "Suborders"
 msgstr ""
 
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:148
-msgid "Fields regarding the Marketplace"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:155
-msgid "Block vendor"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:156
-msgid "Blocks vendor products and its public page"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:165
-msgid "Logo"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:175
-msgid "Store's name"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:182
-msgid "Description"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:194
-msgid "Address"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:201
-msgid "City"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:208
-msgid "State"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:215
-msgid "Phone"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:222
-msgid "Payment details"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:230
-msgid "Bank account name"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:237
-msgid "Bank name"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:244
-msgid "Bank address"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:251
-msgid "ABA routing number"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:258
-msgid "IBAN"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:265
-msgid "Account holder name"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:272
-msgid "Paypal email"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-admin-fields.php:279
-msgid "Commission base"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-registry.php:65
-msgid "Apply for becoming a vendor"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:365
-msgid "All"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:366
-msgid "Published"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:367
-msgid "Private"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:368
-msgid "Pending Review"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:369
-msgid "Scheduled"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:370
-msgid "Draft"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:371
-msgid "Trash"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:383
-msgid "Processing"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:384
-msgid "On hold"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:385
-msgid "Completed"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:494
-msgid "pending"
-msgstr ""
-
-#: classes/marketplace/user_roles/vendor_user/class-alg-mpwc-vendor-role.php:495
-msgid "rejected"
-msgstr ""
-
-#: classes/marketplace/widgets/dashboard/class-alg-mpwc-dashboard-widgets.php:54
-msgid "Hello"
-msgstr ""
-
-#: classes/marketplace/widgets/dashboard/class-alg-mpwc-dashboard-widgets.php:56
-#, php-format
-msgid ""
-"Create/edit products by clicking on your left menu <strong><a "
-"href='%s'>Products</a></strong>"
-msgstr ""
-
-#: classes/marketplace/widgets/dashboard/class-alg-mpwc-dashboard-widgets.php:57
-#, php-format
-msgid ""
-"Edit your profile by clicking on your left menu <strong><a "
-"href='%s'>Profile</a></strong>"
-msgstr ""
-
-#: classes/marketplace/widgets/dashboard/class-alg-mpwc-dashboard-widgets.php:58
-#, php-format
-msgid ""
-"View your commissions through your left menu <strong><a "
-"href='%s'>Commissions</a></strong>"
-msgstr ""
-
-#: classes/marketplace/widgets/dashboard/class-alg-mpwc-dashboard-widgets.php:59
-#, php-format
-msgid ""
-"Go to <strong><a href='%s'>My Account</a></strong> page on frontend "
-"<strong><a href='%1$s'>clicking here</a></strong>"
-msgstr ""
-
-#: classes/marketplace/widgets/dashboard/class-alg-mpwc-dashboard-widgets.php:60
-#, php-format
-msgid "See your <strong><a href='%s'>Public page</a></strong> on frontend"
+#: templates/multiorder-view-suborder.php:22
+msgid "Parent Order ID"
 msgstr ""

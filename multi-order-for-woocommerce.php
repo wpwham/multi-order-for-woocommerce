@@ -2,7 +2,7 @@
 /*
 Plugin Name: Multi Order for WooCommerce
 Description: Split your orders in suborders
-Version: 1.0.0
+Version: 1.0.1
 Author: Algoritmika Ltd
 Author URI: http://algoritmika.com
 Copyright: © 2017 Algoritmika Ltd.
@@ -34,10 +34,10 @@ if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 					'url'  => admin_url( 'admin.php?page=wc-settings&tab=alg_mowc' ),
 					'text' => __( 'Settings', 'woocommerce' ),
 				),
-				array(
+				/*array(
 					'url'  => admin_url( "edit-tags.php?taxonomy={$payment_status_tax->id}" ),
 					'text' => __( 'Payment status', 'multi-order-for-woocommerce' ),
-				),
+				),*/
 			),
 			'translation'      => array(
 				'text_domain' => 'multi-order-for-woocommerce',
@@ -87,7 +87,3 @@ if ( ! function_exists( 'alg_mowc_register_hooks' ) ) {
 
 // Handles activation, installation and uninstall hooks
 alg_mowc_register_hooks();
-
-add_action('init',function(){
-
-});

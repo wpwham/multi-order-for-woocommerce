@@ -5,9 +5,6 @@
  * @see    https://github.com/CMB2/CMB2
  */
 
- // TODO: fix this.
- // JQMIGRATE: jQuery.fn.attr('value') no longer gets properties
-
 /**
  * Custom jQuery for Custom Metaboxes and Fields
  */
@@ -92,12 +89,12 @@ window.CMB2 = window.CMB2 || {};
 
 		if ( $repeatGroup.length ) {
 			$repeatGroup
+				.on( 'cmb2_add_row', cmb.emptyValue )
 				.filter('.sortable').each( function() {
 					// Add sorting arrows
 					$( this ).find( '.cmb-remove-group-row-button' ).before( '<a class="button-secondary cmb-shift-rows move-up alignleft" href="#"><span class="'+ l10n.up_arrow_class +'"></span></a> <a class="button-secondary cmb-shift-rows move-down alignleft" href="#"><span class="'+ l10n.down_arrow_class +'"></span></a>' );
 				})
-				.on( 'click', '.cmb-shift-rows', cmb.shiftRows )
-				.on( 'cmb2_add_row', cmb.emptyValue );
+				.on( 'click', '.cmb-shift-rows', cmb.shiftRows );
 		}
 
 		// on pageload
@@ -393,8 +390,8 @@ window.CMB2 = window.CMB2 || {};
 
 		cmb.media.field = $this.attr('rel');
 
-		cmb.metabox().find( 'input#' + cmb.media.field ).val('');
-		cmb.metabox().find( 'input#' + cmb.media.field + '_id' ).val('');
+		cmb.metabox().find( document.getElementById( cmb.media.field ) ).val('');
+		cmb.metabox().find( document.getElementById( cmb.media.field + '_id' ) ).val('');
 		$this.parents('.cmb2-media-status').html('');
 
 		return false;
@@ -426,8 +423,10 @@ window.CMB2 = window.CMB2 || {};
 			}
 		}
 
-		$elements.filter(':checked').prop( 'checked', false );
-		$elements.filter(':selected').prop( 'selected', false );
+		$elements.filter( ':checked' ).removeAttr( 'checked' );
+		$elements.find( ':checked' ).removeAttr( 'checked' );
+		$elements.filter( ':selected' ).removeAttr( 'selected' );
+		$elements.find( ':selected' ).removeAttr( 'selected', false );
 
 		if ( $row.find('h3.cmb-group-title').length ) {
 			$row.find( 'h3.cmb-group-title' ).text( $row.data( 'title' ).replace( '{#}', ( cmb.idNumber + 1 ) ) );
@@ -459,15 +458,9 @@ window.CMB2 = window.CMB2 || {};
 			attrs       = {
 				id: newID,
 				name: newName,
-				// value: '',
 				'data-iterator': cmb.idNumber,
 			};
 
-		}
-
-		// Clear out old values
-		if ( undefined !== typeof( oldVal ) && oldVal || checkable ) {
-			attrs.value = checkable ? checkable : '';
 		}
 
 		// Clear out textarea values
@@ -562,12 +555,6 @@ window.CMB2 = window.CMB2 || {};
 
 		cmb.afterRowInsert( $newRow );
 
-		if ( $table.find('.cmb-repeatable-grouping').length <= 1 ) {
-			$table.find('.cmb-remove-group-row').prop( 'disabled', true );
-		} else {
-			$table.find('.cmb-remove-group-row').prop( 'disabled', false );
-		}
-
 		cmb.triggerElement( $table, { type: 'cmb2_add_row', group: true }, $newRow );
 
 	};
@@ -591,8 +578,6 @@ window.CMB2 = window.CMB2 || {};
 
 		cmb.triggerElement( $table, { type: 'cmb2_add_row', group: false }, $row );
 
-		$table.find( '.cmb-remove-row-button' ).removeClass( 'button-disabled' );
-
 	};
 
 	cmb.removeGroupRow = function( evt ) {
@@ -603,9 +588,8 @@ window.CMB2 = window.CMB2 || {};
 		var $parent = $this.parents('.cmb-repeatable-grouping');
 		var number  = $table.find('.cmb-repeatable-grouping').length;
 
-		// Needs to always be at least one group.
 		if ( number < 2 ) {
-			return;
+			return cmb.resetRow( $parent.parents('.cmb-repeatable-group').find( '.cmb-add-group-row' ), $this );
 		}
 
 		cmb.triggerElement( $table, 'cmb2_remove_group_row_start', $this );
@@ -614,12 +598,6 @@ window.CMB2 = window.CMB2 || {};
 		$parent.nextAll( '.cmb-repeatable-grouping' ).find( cmb.repeatEls ).each( cmb.updateNameAttr );
 
 		$parent.remove();
-
-		if ( number <= 2 ) {
-			$table.find('.cmb-remove-group-row').prop( 'disabled', true );
-		} else {
-			$table.find('.cmb-remove-group-row').prop( 'disabled', false );
-		}
 
 		cmb.triggerElement( $table, { type: 'cmb2_remove_row', group: true } );
 
@@ -639,20 +617,25 @@ window.CMB2 = window.CMB2 || {};
 		var $table  = $this.parents('.cmb-repeat-table');
 		var number  = $table.find('.cmb-row').length;
 
-		if ( number > 2 ) {
-			if ( $parent.hasClass('empty-row') ) {
-				$parent.prev().addClass( 'empty-row' ).removeClass('cmb-repeat-row');
-			}
-			$this.parents('.cmb-repeat-table .cmb-row').remove();
-			if ( number === 3 ) {
-				$table.find( '.cmb-remove-row-button' ).addClass( 'button-disabled' );
-			}
-
-			cmb.triggerElement( $table, { type: 'cmb2_remove_row', group: false } );
-
-		} else {
-			$this.addClass( 'button-disabled' );
+		if ( number <= 2 ) {
+			return cmb.resetRow( $parent.find( '.cmb-add-row-button' ), $this );
 		}
+
+		if ( $parent.hasClass('empty-row') ) {
+			$parent.prev().addClass( 'empty-row' ).removeClass('cmb-repeat-row');
+		}
+
+		$this.parents('.cmb-repeat-table .cmb-row').remove();
+
+
+		cmb.triggerElement( $table, { type: 'cmb2_remove_row', group: false } );
+	};
+
+	cmb.resetRow = function( $addNewBtn, $removeBtn ) {
+		// Click the "add new" button followed by the "remove this" button
+		// in order to reset the repeat row to empty values.
+		$addNewBtn.trigger( 'click' );
+		$removeBtn.trigger( 'click' );
 	};
 
 	cmb.shiftRows = function( evt ) {
@@ -808,7 +791,11 @@ window.CMB2 = window.CMB2 || {};
 
 		options.onClose = function( dateText, inst ) {
 			// Remove the class when we're done with it (and hide to remove FOUC).
-			$id( 'ui-datepicker-div' ).removeClass( 'cmb2-element' ).hide();
+			var $picker = $id( 'ui-datepicker-div' ).removeClass( 'cmb2-element' ).hide();
+			if ( 'timepicker' === method && ! $( inst.input ).val() ) {
+				// Set the timepicker field value if it's empty.
+				inst.input.val( $picker.find( '.ui_tpicker_time' ).text() );
+			}
 
 			// Let's be sure to call onClose if it was added
 			if ( 'function' === typeof existing.onClose ) {

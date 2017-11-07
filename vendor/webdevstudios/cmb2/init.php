@@ -21,7 +21,7 @@
  *               Bill Erickson (@billerickson / billerickson.net)
  *               Andrew Norcross (@norcross / andrewnorcross.com)
  *
- * Version:      2.2.4
+ * Version:      2.2.5.3
  *
  * Text Domain:  cmb2
  * Domain Path:  languages
@@ -54,7 +54,7 @@
  * ***********************************************************************
  */
 
-if ( ! class_exists( 'CMB2_Bootstrap_225_Trunk', false ) ) {
+if ( ! class_exists( 'CMB2_Bootstrap_226_Trunk', false ) ) {
 
 	/**
 	 * Handles checking for and loading the newest version of CMB2
@@ -67,7 +67,7 @@ if ( ! class_exists( 'CMB2_Bootstrap_225_Trunk', false ) ) {
 	 * @license   GPL-2.0+
 	 * @link      https://cmb2.io
 	 */
-	class CMB2_Bootstrap_225_Trunk {
+	class CMB2_Bootstrap_226_Trunk {
 
 		/**
 		 * Current version number
@@ -75,7 +75,7 @@ if ( ! class_exists( 'CMB2_Bootstrap_225_Trunk', false ) ) {
 		 * @var   string
 		 * @since 1.0.0
 		 */
-		const VERSION = '2.2.4';
+		const VERSION = '2.2.5.3';
 
 		/**
 		 * Current version hook priority.
@@ -84,20 +84,20 @@ if ( ! class_exists( 'CMB2_Bootstrap_225_Trunk', false ) ) {
 		 * @var   int
 		 * @since 2.0.0
 		 */
-		const PRIORITY = 9977;
+		const PRIORITY = 9973;
 
 		/**
-		 * Single instance of the CMB2_Bootstrap_225_Trunk object
+		 * Single instance of the CMB2_Bootstrap_226_Trunk object
 		 *
-		 * @var CMB2_Bootstrap_225_Trunk
+		 * @var CMB2_Bootstrap_226_Trunk
 		 */
 		public static $single_instance = null;
 
 		/**
-		 * Creates/returns the single instance CMB2_Bootstrap_225_Trunk object
+		 * Creates/returns the single instance CMB2_Bootstrap_226_Trunk object
 		 *
 		 * @since  2.0.0
-		 * @return CMB2_Bootstrap_225_Trunk Single instance object
+		 * @return CMB2_Bootstrap_226_Trunk Single instance object
 		 */
 		public static function initiate() {
 			if ( null === self::$single_instance ) {
@@ -149,9 +149,9 @@ if ( ! class_exists( 'CMB2_Bootstrap_225_Trunk', false ) ) {
 			$this->l10ni18n();
 
 			// Include helper functions.
-			require_once 'includes/CMB2_Base.php';
-			require_once 'includes/CMB2.php';
-			require_once 'includes/helper-functions.php';
+			require_once CMB2_DIR . 'includes/CMB2_Base.php';
+			require_once CMB2_DIR . 'includes/CMB2.php';
+			require_once CMB2_DIR . 'includes/helper-functions.php';
 
 			// Now kick off the class autoloader.
 			spl_autoload_register( 'cmb2_autoload_classes' );
@@ -189,6 +189,6 @@ if ( ! class_exists( 'CMB2_Bootstrap_225_Trunk', false ) ) {
 	}
 
 	// Make it so...
-	CMB2_Bootstrap_225_Trunk::initiate();
+	CMB2_Bootstrap_226_Trunk::initiate();
 
 }// End if().

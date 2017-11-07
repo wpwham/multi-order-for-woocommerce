@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "composer/installers",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045"
+                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/79ad876c7498c0bbfe7eed065b8651c93bfd6045",
-                "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045",
+                "url": "https://api.github.com/repos/composer/installers/zipball/9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
+                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
                 "shasum": ""
             },
             "require": {
@@ -64,6 +64,7 @@
                 "Hurad",
                 "ImageCMS",
                 "Kanboard",
+                "Lan Management System",
                 "MODX Evo",
                 "Mautic",
                 "Maya",
@@ -87,6 +88,7 @@
                 "croogo",
                 "dokuwiki",
                 "drupal",
+                "eZ Platform",
                 "elgg",
                 "expressionengine",
                 "fuelphp",
@@ -103,6 +105,7 @@
                 "mediawiki",
                 "modulework",
                 "moodle",
+                "osclass",
                 "phpbb",
                 "piwik",
                 "ppi",
@@ -119,7 +122,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-04-24 06:37:16"
+            "time": "2017-08-09 07:53:48"
         },
         {
             "name": "mustardBees/cmb-field-select2",
@@ -207,12 +210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/CMB2/CMB2.git",
-                "reference": "229213a241a1c049c5ba1c47aa176823ea6a9b21"
+                "reference": "c7ea63b718214c7b3b2d64bea4063f0be4584dde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/229213a241a1c049c5ba1c47aa176823ea6a9b21",
-                "reference": "229213a241a1c049c5ba1c47aa176823ea6a9b21",
+                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/c7ea63b718214c7b3b2d64bea4063f0be4584dde",
+                "reference": "c7ea63b718214c7b3b2d64bea4063f0be4584dde",
                 "shasum": ""
             },
             "require": {
@@ -256,7 +259,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2017-06-13 14:54:38"
+            "time": "2017-11-06 17:00:13"
         }
     ],
     "packages-dev": [],

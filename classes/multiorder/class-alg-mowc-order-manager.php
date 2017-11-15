@@ -4,7 +4,7 @@
  *
  * Creates, deletes suborders and sync them with their parent orders
  *
- * @version 1.0.0
+ * @version 1.0.2
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -389,7 +389,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		/**
 		 * Clones order item metas
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.2
 		 * @since   1.0.0
 		 *
 		 * @param        $order_item_id
@@ -402,9 +402,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 				foreach ( $meta_value as $value ) {
 					if ( ! in_array( $index, $exclude ) ) {
 						if ( $method == 'add' ) {
-							wc_add_order_item_meta( $target_order_id, $index, $value );
+							wc_add_order_item_meta( $target_order_id, $index, maybe_unserialize( $value ) );
 						} else if ( $method == 'update' ) {
-							wc_update_order_item_meta( $target_order_id, $index, $value );
+							wc_update_order_item_meta( $target_order_id, $index, maybe_unserialize( $value ) );
 						}
 					}
 				}

@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order searching and sorting
  *
- * @version 1.0.0
+ * @version 1.0.2
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -44,22 +44,27 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		/**
 		 * Sort orders on frontend
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.2
 		 * @since   1.0.0
 		 *
 		 * @param $query
 		 */
 		public function sort_frontend_orders( $query ) {
-
 			$query['meta_query'][] =
 				array(
-					'custom_sort' => array(
-						'key'     => Alg_MOWC_Order_Metas::SORT_ID,
+					'relation'            => 'OR',
+					'custom_sort_exists'  => array(
+						'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
 						'compare' => 'EXISTS',
+					),
+					'custom_sort_nexists' => array(
+						'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
+						'compare' => 'NOT EXISTS',
 					),
 				);
 			$query['orderby']      = array(
-				'custom_sort' => 'DESC',
+				'custom_sort_exists'  => 'DESC',
+				'custom_sort_nexists' => 'ASC',
 			);
 			return $query;
 		}
@@ -67,7 +72,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		/**
 		 * Sort orders
 		 *
-		 * @version  1.0.0
+		 * @version  1.0.2
 		 * @since    1.0.0
 		 *
 		 * @param $query
@@ -82,14 +87,20 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 			}
 
 			$query->set( 'meta_query', array(
-				'custom_sort' => array(
-					'key'     => Alg_MOWC_Order_Metas::SORT_ID,
+				'relation'            => 'OR',
+				'custom_sort_exists'  => array(
+					'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
 					'compare' => 'EXISTS',
+				),
+				'custom_sort_nexists' => array(
+					'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
+					'compare' => 'NOT EXISTS',
 				),
 			) );
 
 			$query->set( 'orderby', array(
-				'custom_sort' => 'DESC',
+				'custom_sort_exists'  => 'DESC',
+				'custom_sort_nexists' => 'ASC',
 			) );
 		}
 

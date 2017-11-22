@@ -2,8 +2,8 @@
 Contributors: algoritmika,karzin,anbinder
 Tags: woocommerce,multiple,suborder,order,split,orders,algoritmika
 Requires at least: 4.4
-Tested up to: 4.7
-Stable tag: 1.0.2
+Tested up to: 4.9
+Stable tag: 1.0.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -47,6 +47,11 @@ You can do it through [tranlslate.wordpress](https://translate.wordpress.org/pro
 
 == Changelog ==
 
+= 1.0.3 - 22/11/2017 =
+* Hide multi order metabox on single item orders
+* Tested up to WordPress version 4.9
+* Tested up to WooCommerce version 3.2.5
+
 = 1.0.2 - 14/11/2017 =
 * Fix orders that get invisible
 * Fix nested serialization of order item meta
@@ -59,6 +64,7 @@ You can do it through [tranlslate.wordpress](https://translate.wordpress.org/pro
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-* Fix orders that get invisible
-* Fix nested serialization of order item meta
+= 1.0.3 =
+* Hide multi order metabox on single item orders
+* Tested up to WordPress version 4.9
+* Tested up to WooCommerce version 3.2.5

@@ -54,11 +54,11 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 				array(
 					'relation'            => 'OR',
 					'custom_sort_exists'  => array(
-						'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
+						'key'     => Alg_MOWC_Order_Metas::SORT_ID,
 						'compare' => 'EXISTS',
 					),
 					'custom_sort_nexists' => array(
-						'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
+						'key'     => Alg_MOWC_Order_Metas::SORT_ID,
 						'compare' => 'NOT EXISTS',
 					),
 				);
@@ -89,11 +89,11 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 			$query->set( 'meta_query', array(
 				'relation'            => 'OR',
 				'custom_sort_exists'  => array(
-					'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
+					'key'     => Alg_MOWC_Order_Metas::SORT_ID,
 					'compare' => 'EXISTS',
 				),
 				'custom_sort_nexists' => array(
-					'key'     => Alg_MOWC_Pro_Order_Metas::SORT_ID,
+					'key'     => Alg_MOWC_Order_Metas::SORT_ID,
 					'compare' => 'NOT EXISTS',
 				),
 			) );

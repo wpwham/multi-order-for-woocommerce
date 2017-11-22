@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order custom meta box
  *
- * @version 1.0.0
+ * @version 1.0.3
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -59,9 +59,26 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 		}
 
 		/**
+		 * Hides multi order metabox on single item orders
+		 *
+		 * @version 1.0.3
+		 * @since   1.0.3
+		 */
+		public function hide_cmb2_on_single_items_orders( CMB2 $cmb ) {
+			$order_id = $cmb->object_id;
+			$order    = new WC_Order( $order_id );
+			$items    = $order->get_items();
+			if ( count( $items ) < 2 ) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		/**
 		 * Adds the Custom meta box
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.3
 		 * @since   1.0.0
 		 */
 		public function add_cmb() {
@@ -69,6 +86,7 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 				'id'           => $this->cmb_id,
 				'title'        => __( 'Multi order', 'multi-order-for-woocommerce' ),
 				'object_types' => array( 'shop_order' ), // Post type
+				'show_on_cb'   => array($this,'hide_cmb2_on_single_items_orders'),
 				'context'      => 'side',
 			) );
 
@@ -87,16 +105,6 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 					'name'  => 'alg_mpwc_cmb_create_suborders',
 				),
 			) );
-
-			/*$cmb_demo->add_field( array(
-				'name'          => __( 'Sub orders', 'multi-order-for-woocommerce' ),
-				//'desc'       => esc_html__( 'field description (optional)', 'cmb2' ),
-				'id'            => Alg_MOWC_Order_Metas::SUB_ORDERS,
-				'type'          => 'text',
-				'save_field'    => false,
-				'render_row_cb' => array( $this, 'render_field_as_list' ),
-
-			) );*/
 
 			$cmb_demo->add_field( array(
 				'name'          => __( 'Parent order', 'multi-order-for-woocommerce' ),

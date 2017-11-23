@@ -65,9 +65,14 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 		 * @since   1.0.3
 		 */
 		public function hide_cmb2_on_single_items_orders( CMB2 $cmb ) {
-			$order_id = $cmb->object_id;
-			$order    = new WC_Order( $order_id );
-			$items    = $order->get_items();
+			$order_id  = $cmb->object_id;
+			$post_type = get_post_type( $order_id );
+			if ( $post_type != 'shop_order' ) {
+				return false;
+			}
+			$order = new WC_Order( $order_id );
+
+			$items = $order->get_items();
 			if ( count( $items ) < 2 ) {
 				return false;
 			} else {

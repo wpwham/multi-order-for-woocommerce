@@ -42,6 +42,7 @@ class ComposerStaticInit344e3e6fe8e72c0e58fb4f56d4cec3ba
         'Alg_MOWC_Settings_General' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php',
         'Alg_MOWC_Settings_Page' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-page.php',
         'Alg_MOWC_Settings_Section' => __DIR__ . '/../..' . '/classes/multiorder/admin_settings/class-alg-mowc-settings-section.php',
+        'Alg_MOWC_WC_Report' => __DIR__ . '/../..' . '/classes/multiorder/class-alg-mowc-wc-report.php',
         'Alg_MOWC_WP_Plugin' => __DIR__ . '/../..' . '/classes/wordpress/class-alg-mowc-wp-plugin.php',
         'Composer\\Installers\\AglInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AglInstaller.php',
         'Composer\\Installers\\AimeosInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AimeosInstaller.php',

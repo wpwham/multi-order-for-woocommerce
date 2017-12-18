@@ -58,6 +58,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 			new Alg_MOWC_Orders_Search();
 			new Alg_MOWC_Order_Item();
 			new Alg_MOWC_Order_Actions();
+			new Alg_MOWC_WC_Report();
 		}
 
 		/**

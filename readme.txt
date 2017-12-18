@@ -67,7 +67,5 @@ You can do it through [tranlslate.wordpress](https://translate.wordpress.org/pro
 
 == Upgrade Notice ==
 
-= 1.0.3 =
-* Hide multi order metabox on single item orders
-* Tested up to WordPress version 4.9
-* Tested up to WooCommerce version 3.2.5
+= 1.0.4 - 18/12/2017 =
+* Fix WooCommerce reports

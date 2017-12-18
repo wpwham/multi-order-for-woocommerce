@@ -32,21 +32,6 @@ if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
 		 * @since   1.0.4
 		 */
 		public function add_multiorder_infs_to_report_data_args( $args ) {
-			/*if (
-				! isset( $args['order_types'] )
-				|| array_search( 'shop_order', $args['order_types'] ) === false
-				|| ! isset( $args['data']['_order_total'] )
-				|| $args['data']['_order_total']['name'] != 'total_sales'
-			) {
-				return $args;
-			}*/
-
-			/*$args['data']['ID'] = array(
-				'type'     => 'post_data',
-				'function' => '',
-				'name'     => 'ID',
-			);*/
-
 			$args['data']['_cart_discount'] = array(
 				'type'     => 'meta',
 				'function' => '',
@@ -68,12 +53,6 @@ if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
 				if($order->total_sales==0){
 					$data->orders[ $key ]->total_sales = $order->cart_discount;
 				}
-
-				/*$suborders = get_post_meta( $order->ID, Alg_MOWC_Order_Metas::SUB_ORDERS );
-				if ( is_array( $suborders ) && count( $suborders ) > 0 ) {
-					$cart_discount                     = get_post_meta( $order->ID, '_cart_discount', true );
-					$data->orders[ $key ]->total_sales = $cart_discount;
-				}*/
 			}
 
 			$data->total_sales = wc_format_decimal( array_sum( wp_list_pluck( $data->orders, 'total_sales' ) ) - $data->total_refunds, 2 );

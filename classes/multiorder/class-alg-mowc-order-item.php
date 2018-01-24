@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order Item meta
  *
- * @version 1.0.0
+ * @version 1.0.5
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -14,7 +14,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.5
 		 * @since   1.0.0
 		 */
 		function __construct() {
@@ -26,8 +26,38 @@ if ( ! class_exists( 'Alg_MOWC_Order_Item' ) ) {
 			add_filter( 'woocommerce_order_item_quantity_html', array( $this, 'hides_order_item_quantity' ) );
 			add_filter( 'woocommerce_email_order_item_quantity', array( $this, 'woocommerce_email_order_item_quantity' ) );
 
+			// Email
+			add_filter( 'woocommerce_get_order_item_totals', array($this, 'replace_totals_labels' ),10,3 );
+
 			// Displays suborders on order received / order pay page
 			add_action( 'woocommerce_order_item_meta_start', array( $this, 'woocommerce_display_item_meta' ), 1, 3 );
+		}
+
+		/**
+		 * Replaces totals labels.
+		 *
+		 * Replaces "total" by "remaining"
+		 *
+		 * @version  1.0.5
+		 * @since    1.0.5
+		 *
+		 * @param $total_rows
+		 * @param WC_Order $order
+		 * @param $tax_display
+		 *
+		 * @return string
+		 */
+		public function replace_totals_labels( $total_rows, \WC_Order $order, $tax_display ) {
+			$suborders = $order->get_meta( '_alg_mowc_suborder', false );
+			if (
+				empty( array_filter( $suborders ) )
+				|| empty( $total_rows['order_total']['label'] )
+			) {
+				return $total_rows;
+			}
+
+			$total_rows['order_total']['label'] = __( 'Remaining', 'multi-order-for-woocommerce' );
+			return $total_rows;
 		}
 
 		/**

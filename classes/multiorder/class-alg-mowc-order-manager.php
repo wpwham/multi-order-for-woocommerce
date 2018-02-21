@@ -204,6 +204,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}
+			if ( ! filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_CREATE_AUTOMATICALLY ), FILTER_VALIDATE_BOOLEAN ) ) {
+				return;
+			}			
 			$this->create_suborders( $order_id );
 		}
 

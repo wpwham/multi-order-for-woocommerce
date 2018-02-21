@@ -4,7 +4,7 @@
  *
  * Creates, deletes suborders and sync them with their parent orders
  *
- * @version 1.0.2
+ * @version 1.0.6
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -190,7 +190,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		/**
 		 * Creates suborders automatically on new order item creation
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.6
 		 * @since   1.0.0
 		 *
 		 * @param $item_id

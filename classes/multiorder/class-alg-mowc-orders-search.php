@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order searching and sorting
  *
- * @version 1.0.2
+ * @version 1.0.7
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -72,7 +72,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		/**
 		 * Sort orders
 		 *
-		 * @version  1.0.2
+		 * @version  1.0.7
 		 * @since    1.0.0
 		 *
 		 * @param $query
@@ -86,7 +86,9 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 				return;
 			}
 
-			$query->set( 'meta_query', array(
+			$meta_query   = $query->get( 'meta_query' );
+			$meta_query   = empty( $meta_query ) ? array() : $meta_query;
+			$meta_query[] = array(
 				'relation'            => 'OR',
 				'custom_sort_exists'  => array(
 					'key'     => Alg_MOWC_Order_Metas::SORT_ID,
@@ -96,7 +98,8 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 					'key'     => Alg_MOWC_Order_Metas::SORT_ID,
 					'compare' => 'NOT EXISTS',
 				),
-			) );
+			);
+			$query->set( 'meta_query', $meta_query );
 
 			$query->set( 'orderby', array(
 				'custom_sort_exists'  => 'DESC',

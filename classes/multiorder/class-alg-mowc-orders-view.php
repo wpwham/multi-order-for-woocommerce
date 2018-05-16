@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Setups suborders view
  *
- * @version 1.0.0
+ * @version 1.0.7
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -109,7 +109,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 		/**
 		 * Setups admin suborders display
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.7
 		 * @since   1.0.0
 		 *
 		 * @param $query
@@ -142,7 +142,9 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 				return;
 			}
 
-			$query->set( 'meta_query', array(
+			$meta_query   = $query->get( 'meta_query' );
+			$meta_query   = empty( $meta_query ) ? array() : $meta_query;
+			$meta_query[] = array(
 				'relation' => 'OR',
 				array(
 					'key'     => Alg_MOWC_Order_Metas::IS_SUB_ORDER,
@@ -153,7 +155,8 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 					'key'     => Alg_MOWC_Order_Metas::IS_SUB_ORDER,
 					'compare' => 'NOT EXISTS',
 				),
-			) );
+			);
+			$query->set( 'meta_query', $meta_query );
 		}
 	}
 }

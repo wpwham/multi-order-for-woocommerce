@@ -553,6 +553,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 				// Suborder default status from admin settings
 				$suborder_status_from_admin_settings = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_SUB_ORDER_STATUS );
+				error_log(print_r($suborder_status_from_admin_settings,true));
 				if ( empty( $suborder_status_from_admin_settings ) ) {
 					$suborder_status = $original_main_order_status;
 				} else {
@@ -562,6 +563,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 						$suborder_status = $suborder_status_from_admin_settings == 'main_order' ? $default_main_order_status : $suborder_status_from_admin_settings;
 					}
 				}
+				error_log(print_r($suborder_status,true));
 
 				$order_data = array(
 					'post_type'     => 'shop_order',

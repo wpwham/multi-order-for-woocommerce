@@ -20,5 +20,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Metas' ) ) {
 		const DEDUCTED             = '_alg_mowc_suborder_deducted';
 		const LAST_SUBORDER_SUB_ID = '_alg_mowc_last_suborder_sub_id';
 		const SORT_ID              = '_alg_mowc_sort_id';
+		const REMAINING            = '_alg_mowc_remaining';
 	}
 }

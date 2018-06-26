@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order custom meta box
  *
- * @version 1.0.3
+ * @version 1.0.8
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -61,7 +61,7 @@ if ( ! class_exists( 'Alg_MOWC_Multiorder_CMB' ) ) {
 		/**
 		 * Hides multi order metabox on single item orders
 		 *
-		 * @version 1.0.3
+		 * @version 1.0.4
 		 * @since   1.0.3
 		 */
 		public function hide_cmb2_on_single_items_orders( CMB2 $cmb ) {

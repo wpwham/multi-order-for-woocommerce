@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Payment status meta box
  *
- * @version 1.0.0
+ * @version 1.0.8
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -10,7 +10,7 @@
 if ( ! class_exists( 'Alg_MOWC_Payment_Status_CMB' ) ) {
 
 	class Alg_MOWC_Payment_Status_CMB {
-		public $cmb_id = 'alg_mowc_payment_status_cmb';
+		public $cmb_id = 'Alg_MOWC_Payment_Status_CMB';
 		public $meta_deduct_from_main_order = 'alg_mowc_ps_dfmo';
 		public $meta_change_main_order = 'alg_mowc_ps_mo';
 		public $meta_change_sub_order = 'alg_mowc_ps_so';

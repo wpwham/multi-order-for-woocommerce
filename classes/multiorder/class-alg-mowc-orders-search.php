@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order searching and sorting
  *
- * @version 1.0.7
+ * @version 1.0.8
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -36,7 +36,6 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		}
 
 		/*public function disable_jetpack_order_tracking_search($value){
-			error_log($value);
 			$value='no';
 			return $value;
 		}*/
@@ -62,6 +61,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 						'compare' => 'NOT EXISTS',
 					),
 				);
+
 			$query['orderby']      = array(
 				'custom_sort_exists'  => 'DESC',
 				'custom_sort_nexists' => 'ASC',
@@ -72,7 +72,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		/**
 		 * Sort orders
 		 *
-		 * @version  1.0.7
+		 * @version  1.0.8
 		 * @since    1.0.0
 		 *
 		 * @param $query

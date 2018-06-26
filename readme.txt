@@ -3,7 +3,7 @@ Contributors: algoritmika,karzin,anbinder
 Tags: woocommerce,multiple,suborder,order,split,orders,algoritmika
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -11,7 +11,28 @@ Split your orders in suborders
 
 == Description ==
 
-**Multi Order for WooCommerce** creates a sub-order for each item in a order
+**Multi Order for WooCommerce** creates a sub-order for each item in a order.
+
+**Free version**
+The *free version* of this plugin only allows to:
+* Create suborders for each different order item
+* Setup the main order and the suborder status when orders are placed
+* Display a new column on admin/frontend regarding Suborder IDs
+* Display intuitive numbers to your suborders. E.g If your main order ID is 100, your suborders numbers will be 100-1, 100-2, and so on.
+
+**[Premium Version](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")**
+Besides free version features, the **premium version** of this plugin allows to:
+* Setup if order item quantity is considered as suborder or not
+* Deduct / Undeduct suborders from main order, i.e If you get your suborder paid, subtract its value from main order automatically
+* Choose what order status will deduct/undeduct suborders from main order
+* Sync orders. i.e Whenever you change a suborder item price or tax, the correspondent item on main order gets updated, and vice-versa
+* Display a remaining column on both frontend and admin order screens, showing how much is left to pay
+* Setup if emails will be sent to main order / suborders
+* Organize orders with a new taxonomy called Payment Status. e.g Orders will be considered as Payed / Not paid / Partial
+
+== Screenshots ==
+
+1. Plugin's settings (WooCommerce > Settings > Multi Order)
 
 == Frequently Asked Questions ==
 
@@ -21,21 +42,8 @@ Visit WooCommerce > Settings > Multi Order.
 = Is there a Pro version? =
 Yes, it's located [here](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")
 
-= What can I do in the Pro version? =
-
-**Take a look on some of its features:**
-
-* Support
-* **Sync your orders** - Whenever you change a suborder item price or tax, the correspondent item on main order gets updated, and vice-versa
-* **Display more intuitive numbers to your suborders** - E.g If your main order is 100, your suborders numbers will be 100-1, 100-2, and so on.
-* **Deduct suborders from main orders** - If you get your suborder paid, subtract its value from main order automatically
-* Present your orders with custom payment status (paid, unpaid, partial)
-
 = How can I contribute? Is there a github repository? =
 If you are interested in contributing - head over to the [Multi order for WooCommerce plugin GitHub Repository](https://github.com/algoritmika/multi-order-for-woocommerce) to find out how you can pitch in.
-
-= How can I help translating it? =
-You can do it through [tranlslate.wordpress](https://translate.wordpress.org/projects/wp-plugins/multi-order-for-woocommerce)
 
 == Installation ==
 
@@ -46,6 +54,10 @@ You can do it through [tranlslate.wordpress](https://translate.wordpress.org/pro
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.8 - 26/06/2018 =
+* Recreate free version
+* Add screenshot
 
 = 1.0.7 - 16/05/2018 =
 * Improve pre_get_posts hook functions

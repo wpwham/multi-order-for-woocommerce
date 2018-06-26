@@ -88,5 +88,6 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Upgrade Notice ==
 
-= 1.0.7 =
-* Improve pre_get_posts hook functions
+= 1.0.8 =
+* Recreate free version
+* Add screenshot

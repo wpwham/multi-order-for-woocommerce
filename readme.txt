@@ -15,6 +15,7 @@ Split your orders in suborders
 
 **Free version**
 The *free version* of this plugin only allows to:
+
 * Create suborders for each different order item
 * Setup the main order and the suborder status when orders are placed
 * Display a new column on admin/frontend regarding Suborder IDs
@@ -22,6 +23,7 @@ The *free version* of this plugin only allows to:
 
 **[Premium Version](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")**
 Besides free version features, the **premium version** of this plugin allows to:
+
 * Setup if order item quantity is considered as suborder or not
 * Deduct / Undeduct suborders from main order, i.e If you get your suborder paid, subtract its value from main order automatically
 * Choose what order status will deduct/undeduct suborders from main order

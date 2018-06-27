@@ -2,7 +2,7 @@
 /*
 Plugin Name: Multi Order for WooCommerce
 Description: Split your orders in suborders
-Version: 1.0.7
+Version: 1.0.8
 Author: Algoritmika Ltd
 Author URI: http://algoritmika.com
 Copyright: © 2017 Algoritmika Ltd.

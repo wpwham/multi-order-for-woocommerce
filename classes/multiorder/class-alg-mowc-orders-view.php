@@ -89,7 +89,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 				return;
 			}
 
-			$multiorder_plugin = alg_multiorder_for_wc_pro();
+			$multiorder_plugin = alg_multiorder_for_wc();
 			$template_args     = array(
 				'suborders' => $suborders,
 				'order_id' => $order_id,
@@ -113,7 +113,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 
 			$fake_suborder_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, true );
 
-			$multiorder_plugin = alg_multiorder_for_wc_pro();
+			$multiorder_plugin = alg_multiorder_for_wc();
 			$template_args     = array(
 				'fake_suborder_id' => $fake_suborder_id,
 				'parent_order_id'  => get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true ),

@@ -3,7 +3,7 @@ Contributors: algoritmika,karzin,anbinder
 Tags: woocommerce,multiple,suborder,order,split,orders,algoritmika
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,6 +57,10 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Changelog ==
 
+= 1.0.9 - 29/06/2018 =
+* Fix function call (alg_multiorder_for_wc_pro to alg_multiorder_for_wc)
+* Update WC tested up to
+
 = 1.0.8 - 26/06/2018 =
 * Recreate free version
 * Add screenshot
@@ -90,6 +94,6 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Upgrade Notice ==
 
-= 1.0.8 =
-* Recreate free version
-* Add screenshot
+= 1.0.9 =
+* Fix function call (alg_multiorder_for_wc_pro to alg_multiorder_for_wc)
+* Update WC tested up to

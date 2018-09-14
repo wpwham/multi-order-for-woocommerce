@@ -4,7 +4,7 @@
  *
  * Creates, deletes suborders and sync them with their parent orders
  *
- * @version 1.0.8
+ * @version 1.0.10
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -17,7 +17,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @version 1.1.0
+		 * @version 1.0.10
 		 * @since   1.0.0
 		 */
 		function __construct() {
@@ -49,7 +49,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 			// Create suborders call automatically on new order creation
 			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 999 );
-			add_filter( 'woocommerce_payment_successful_result', array( $this, 'set_main_order_initial_status' ),10,2 );
+			//add_filter( 'woocommerce_payment_successful_result', array( $this, 'set_main_order_initial_status' ),10,2 );
+			add_action( 'woocommerce_thankyou', array( $this, 'set_main_order_initial_status' ) );
 
 			// Updates suborder when the main order item gets updated
 			//add_action( 'woocommerce_update_order_item', array( $this, 'update_suborder_on_main_order_update' ), 10, 3 );
@@ -133,7 +134,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		/**
 		 * Set main order initial status
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.10
 		 * @since   1.0.0
 		 *
 		 * @param $result
@@ -141,7 +142,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		 *
 		 * @return mixed
 		 */
-		public function set_main_order_initial_status( $result, $order_id ) {
+		public function set_main_order_initial_status( $order_id ) {
 			$default_main_order_status = get_option( Alg_MOWC_Settings_General::OPTION_DEFAULT_MAIN_ORDER_STATUS );
 			if ( ! empty( $default_main_order_status ) ) {
 				$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
@@ -152,7 +153,6 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 					) );
 				}
 			}
-			return $result;
 		}
 
 		/**

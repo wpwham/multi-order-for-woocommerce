@@ -3,7 +3,7 @@ Contributors: algoritmika,karzin,anbinder
 Tags: woocommerce,multiple,suborder,order,split,orders,algoritmika
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 1.0.10
+Stable tag: 1.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,6 +57,9 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Changelog ==
 
+= 1.1.0 - 02/10/2018 =
+* Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'
+
 = 1.0.10 - 14/09/2018 =
 * Improve the way of setting the main order status
 
@@ -97,5 +100,5 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Upgrade Notice ==
 
-= 1.0.10 =
-* Improve the way of setting the main order status
+= 1.1.0 =
+* Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'

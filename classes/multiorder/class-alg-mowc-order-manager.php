@@ -48,8 +48,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			add_action( 'woocommerce_new_order_item', array( $this, 'create_suborders_call_on_new_order_item' ), 999, 3 );
 
 			// Create suborders call automatically on new order creation
-			add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_suborders_call_on_new_order' ), 999 );
-			//add_filter( 'woocommerce_payment_successful_result', array( $this, 'set_main_order_initial_status' ),10,2 );
+			add_action( 'woocommerce_thankyou', array( $this, 'create_suborders_call_on_new_order' ), 1 );
 			add_action( 'woocommerce_thankyou', array( $this, 'set_main_order_initial_status' ) );
 
 			// Updates suborder when the main order item gets updated

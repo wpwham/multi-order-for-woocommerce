@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Order searching and sorting
  *
- * @version 1.0.8
+ * @version 1.1.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @version 1.0.0
+		 * @version 1.1.0
 		 * @since   1.0.0
 		 */
 		function __construct() {
@@ -28,9 +28,9 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'allow_suborders_to_be_tracked' ), PHP_INT_MAX );
 
 			// Sort orders
-			add_action( 'pre_get_posts', array( $this, 'sort_admin_orders' ), 11 );
-			add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'sort_frontend_orders' ) );
-			add_filter( 'woocommerce_my_account_my_orders_query', array( $this, 'sort_frontend_orders' ) );
+			//add_action( 'pre_get_posts', array( $this, 'sort_admin_orders' ), 11 );
+			//add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'sort_frontend_orders' ) );
+			//add_filter( 'woocommerce_my_account_my_orders_query', array( $this, 'sort_frontend_orders' ) );
 
 			//add_filter("option_{$option}",array($this,'disable_jetpack_order_tracking_search'));
 		}

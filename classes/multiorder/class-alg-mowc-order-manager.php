@@ -4,7 +4,7 @@
  *
  * Creates, deletes suborders and sync them with their parent orders
  *
- * @version 1.0.10
+ * @version 1.1.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -17,7 +17,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @version 1.0.10
+		 * @version 1.1.0
 		 * @since   1.0.0
 		 */
 		function __construct() {
@@ -183,7 +183,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		/**
 		 * Creates suborders automatically on new order item creation
 		 *
-		 * @version 1.0.7
+		 * @version 1.1.0
 		 * @since   1.0.0
 		 *
 		 * @param $item_id
@@ -194,6 +194,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			if ( ! is_admin() ) {
 				return;
 			}
+
+			update_post_meta( $order_id, Alg_MOWC_Order_Metas::SORT_ID, $order_id . '9999' );
+
 			if ( filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN ) ) {
 				return;
 			}

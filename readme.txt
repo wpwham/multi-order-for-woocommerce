@@ -59,6 +59,8 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 = 1.1.0 - 02/10/2018 =
 * Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'
+* Save sort id for new orders, regardless of suborders
+* Stop sorting orders
 
 = 1.0.10 - 14/09/2018 =
 * Improve the way of setting the main order status
@@ -102,3 +104,5 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 = 1.1.0 =
 * Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'
+* Save sort id for new orders, regardless of suborders
+* Stop sorting orders

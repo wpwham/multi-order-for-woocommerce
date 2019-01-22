@@ -2,8 +2,8 @@
 Contributors: algoritmika,karzin,anbinder
 Tags: woocommerce,multiple,suborder,order,split,orders,algoritmika
 Requires at least: 4.4
-Tested up to: 4.9
-Stable tag: 1.1.0
+Tested up to: 5.0
+Stable tag: 1.1.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,6 +57,11 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Changelog ==
 
+= 1.1.1 - 22/01/2019 =
+* Improve show_or_hide_admin_suborders_list_view() function
+* Tested up to: 5.0
+* WC tested up to: 3.5
+
 = 1.1.0 - 02/10/2018 =
 * Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'
 * Save sort id for new orders, regardless of suborders
@@ -102,7 +107,7 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Upgrade Notice ==
 
-= 1.1.0 =
-* Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'
-* Save sort id for new orders, regardless of suborders
-* Stop sorting orders
+= 1.1.1 =
+* Improve show_or_hide_admin_suborders_list_view() function
+* Tested up to: 5.0
+* WC tested up to: 3.5

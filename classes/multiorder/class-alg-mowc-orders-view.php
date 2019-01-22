@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Setups suborders view
  *
- * @version 1.0.8
+ * @version 1.1.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -154,21 +154,17 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 		/**
 		 * Setups admin suborders display
 		 *
-		 * @version 1.0.8
+		 * @version 1.1.1
 		 * @since   1.0.0
 		 *
 		 * @param $query
 		 */
 		public function show_or_hide_admin_suborders_list_view( $query ) {
-			if ( ! is_admin() ) {
-				return;
-			}
-
-			if ( ! isset( $query->query['post_type'] ) ) {
-				return;
-			}
-
-			if ( $query->query['post_type'] != 'shop_order' ) {
+			if (
+				! is_admin() ||
+				! isset( $query->query['post_type'] ) ||
+				'shop_order' != $query->query['post_type']
+			) {
 				return;
 			}
 
@@ -190,12 +186,6 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 			$meta_query   = $query->get( 'meta_query' );
 			$meta_query   = empty( $meta_query ) ? array() : $meta_query;
 			$meta_query[] = array(
-				'relation' => 'OR',
-				array(
-					'key'     => Alg_MOWC_Order_Metas::IS_SUB_ORDER,
-					'value'   => array( 1, 'on' ),
-					'compare' => 'NOT IN',
-				),
 				array(
 					'key'     => Alg_MOWC_Order_Metas::IS_SUB_ORDER,
 					'compare' => 'NOT EXISTS',

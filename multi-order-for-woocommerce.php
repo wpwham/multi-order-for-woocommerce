@@ -2,7 +2,7 @@
 /*
 Plugin Name: Multi Order for WooCommerce
 Description: Split your orders in suborders
-Version: 1.1.2-dev
+Version: 1.1.2
 Author: WP Wham
 Author URI: https://wpfactory.com/author/wpwham/
 Copyright: © 2019 WP Wham

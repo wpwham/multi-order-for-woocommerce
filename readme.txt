@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,7 +45,7 @@ Visit WooCommerce > Settings > Multi Order.
 Yes, it's located [here](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")
 
 = How can I contribute? Is there a GitHub repository? =
-If you are interested in contributing - head over to the [Multi order for WooCommerce plugin GitHub Repository](https://github.com/algoritmika/multi-order-for-woocommerce) to find out how you can pitch in.
+If you are interested in contributing - head over to the [Multi order for WooCommerce plugin GitHub Repository](https://github.com/grantalltodavid/multi-order-for-woocommerce) to find out how you can pitch in.
 
 == Installation ==
 

@@ -1,5 +1,5 @@
 === Multi Order for WooCommerce ===
-Contributors: algoritmika,karzin,anbinder
+Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
 Tested up to: 5.2
@@ -44,7 +44,7 @@ Visit WooCommerce > Settings > Multi Order.
 = Is there a Pro version? =
 Yes, it's located [here](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")
 
-= How can I contribute? Is there a github repository? =
+= How can I contribute? Is there a GitHub repository? =
 If you are interested in contributing - head over to the [Multi order for WooCommerce plugin GitHub Repository](https://github.com/algoritmika/multi-order-for-woocommerce) to find out how you can pitch in.
 
 == Installation ==
@@ -56,6 +56,9 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 == Screenshots ==
 
 == Changelog ==
+
+= 1.1.2 - 11/06/2019 =
+* Plugin author changed.
 
 = 1.1.1 - 29/05/2019 =
 * Improve `show_or_hide_admin_suborders_list_view()` function.

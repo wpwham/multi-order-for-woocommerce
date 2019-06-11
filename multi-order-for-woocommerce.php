@@ -2,10 +2,10 @@
 /*
 Plugin Name: Multi Order for WooCommerce
 Description: Split your orders in suborders
-Version: 1.1.1
-Author: Algoritmika Ltd
-Author URI: http://algoritmika.com
-Copyright: © 2019 Algoritmika Ltd.
+Version: 1.1.2-dev
+Author: WP Wham
+Author URI: https://wpfactory.com/author/wpwham/
+Copyright: © 2019 WP Wham
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: multi-order-for-woocommerce

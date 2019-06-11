@@ -21,7 +21,7 @@ The *free version* of this plugin only allows to:
 * Display a new column on admin/frontend regarding Suborder IDs
 * Display intuitive numbers to your suborders. E.g If your main order ID is 100, your suborders numbers will be 100-1, 100-2, and so on.
 
-**[Premium Version](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")**
+**[Premium Version](https://wpfactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")**
 Besides free version features, the **premium version** of this plugin allows to:
 
 * Setup if order item quantity is considered as suborder or not
@@ -42,7 +42,7 @@ Besides free version features, the **premium version** of this plugin allows to:
 Visit WooCommerce > Settings > Multi Order.
 
 = Is there a Pro version? =
-Yes, it's located [here](https://wpcodefactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")
+Yes, it's located [here](https://wpfactory.com/item/multi-order-for-woocommerce/ "Multi Order for WooCommerce Pro")
 
 = How can I contribute? Is there a GitHub repository? =
 If you are interested in contributing - head over to the [Multi order for WooCommerce plugin GitHub Repository](https://github.com/grantalltodavid/multi-order-for-woocommerce) to find out how you can pitch in.

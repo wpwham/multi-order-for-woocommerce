@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,60 +57,56 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Changelog ==
 
-= 1.1.2 - 11/06/2019 =
+= 1.1.3 - 2019-09-12 =
+* UPDATE: updated .pot file for translations
+
+= 1.1.2 - 2019-06-11 =
 * Plugin author changed.
 
-= 1.1.1 - 29/05/2019 =
+= 1.1.1 - 2019-05-29 =
 * Improve `show_or_hide_admin_suborders_list_view()` function.
 * Tested up to: 5.2.
 * WC tested up to: 3.6.
 
-= 1.1.0 - 02/10/2018 =
+= 1.1.0 - 2018-10-02 =
 * Replace 'woocommerce_checkout_order_processed' by 'woocommerce_thankyou'
 * Save sort id for new orders, regardless of suborders
 * Stop sorting orders
 
-= 1.0.10 - 14/09/2018 =
+= 1.0.10 - 2018-09-14 =
 * Improve the way of setting the main order status
 
-= 1.0.9 - 29/06/2018 =
+= 1.0.9 - 2018-06-29 =
 * Fix function call (alg_multiorder_for_wc_pro to alg_multiorder_for_wc)
 * Update WC tested up to
 
-= 1.0.8 - 26/06/2018 =
+= 1.0.8 - 2018-06-26 =
 * Recreate free version
 * Add screenshot
 
-= 1.0.7 - 16/05/2018 =
+= 1.0.7 - 2018-05-16 =
 * Improve pre_get_posts hook functions
 
-= 1.0.6 - 21/02/2018 =
+= 1.0.6 - 2018-02-21 =
 * Fix "Automatic suborders creation" when new items are created inside an order
 
-= 1.0.5 - 24/01/2018 =
+= 1.0.5 - 2018-01-24 =
 * Replace "totals" label by "remaining" on parent orders
 
-= 1.0.4 - 18/12/2017 =
+= 1.0.4 - 2017-12-18 =
 * Fix WooCommerce reports
 
-= 1.0.3 - 22/11/2017 =
+= 1.0.3 - 2017-11-22 =
 * Hide multi order metabox on single item orders
 * Tested up to WordPress version 4.9
 * Tested up to WooCommerce version 3.2.5
 
-= 1.0.2 - 14/11/2017 =
+= 1.0.2 - 2017-11-14 =
 * Fix orders that get invisible
 * Fix nested serialization of order item meta
 
-= 1.0.1 - 07/09/2017 =
+= 1.0.1 - 2017-09-07 =
 * Remove Payment status link
 
-= 1.0.0 - 19/06/2017 =
+= 1.0.0 - 2017-06-19 =
 * Initial Release.
-
-== Upgrade Notice ==
-
-= 1.1.1 =
-* Improve show_or_hide_admin_suborders_list_view() function
-* Tested up to: 5.0
-* WC tested up to: 3.5

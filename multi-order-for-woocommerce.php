@@ -19,6 +19,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
 
+// Check if WooCommerce is active
+$plugin = 'woocommerce/woocommerce.php';
+if (
+	! in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) &&
+	! ( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
+) {
+	return;
+}
+
+if ( 'multi-order-for-woocommerce.php' === basename( __FILE__ ) ) {
+	// Check if Pro is active, if so then return
+	$plugin = 'multi-order-for-woocommerce-pro/multi-order-for-woocommerce-pro.php';
+	if (
+		in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
+		( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
+	) {
+		return;
+	}
+}
+
 if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 	/**
 	 * Returns the main instance of Alg_MOWC_Core to prevent the need to use globals.

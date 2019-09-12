@@ -1,177 +1,128 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Alg - Multi Order for WooCommerce\n"
-"POT-Creation-Date: 2017-06-19 19:47-0300\n"
-"PO-Revision-Date: 2017-01-17 13:05-0200\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Multi Order for WooCommerce\n"
+"POT-Creation-Date: 2019-09-12 03:36-0700\n"
+"PO-Revision-Date: 2019-09-12 03:35-0700\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: en\n"
+"Language-Team: WP Wham <support@wpwham.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-WPHeader: multi-order-for-woocommerce.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: assets\n"
-"X-Poedit-SearchPathExcluded-1: tasks\n"
-"X-Poedit-SearchPathExcluded-2: vendor\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:44
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:48
 msgid "General"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:59
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
 msgid "Multi Order options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:61
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:103
 msgid "Multi order general options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:70
-msgid "Take a look on some of its features:"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:73
-msgid "Sync your orders"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:74
-msgid ""
-"Whenever you change a suborder item price or tax, the correspondent item "
-"on main order gets updated, and vice-versa."
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:78
-msgid "Display more intuitive numbers to your suborders"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:79
-msgid ""
-"E.g If your main order is 100, your suborders numbers will be 100-1, "
-"100-2, and so on."
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:83
-msgid "Deduct suborders from main orders"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:84
-msgid ""
-"If you get your suborder paid, subtract its value from main order "
-"automatically."
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:84
-msgid ""
-"You also have the option to undo this depending on the suborder status."
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:88
-msgid "Present your orders with custom payment status"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:89
-msgid ""
-"Besides your orders status, use at least 3 more order payment status "
-"(paid, unpaid, partial) to make it more intuive to your customers."
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:93
-msgid "Support"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
-msgid ""
-"Do you like the free version of this plugin? Imagine what the Pro "
-"version can do for you!"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
-#, php-format
-msgid ""
-"Check it out <a target=\"_blank\" href=\"%1$s\">here</a> or on this "
-"link: <a target=\"_blank\" href=\"%1$s\">%1$s</a>"
-msgstr ""
-
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:105
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:107
 msgid "Enable Multi Order"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:106
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
 #, php-format
 msgid "Enables <strong>\"%s\"</strong> plugin"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:106
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
 msgid "Multi order for WooCommerce"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:112
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:146
 msgid "Default main order status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:113
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:147
 msgid "New main orders will have this default status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:118
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:140
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:152
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:232
 msgid "Set by payment gateway"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:127
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:177
+msgid "Email options"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:178
+msgid "Options regarding emails"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:184
+msgid "Send to main order"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:185
+msgid "Send email to main order"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:204
 msgid "Sub Order options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:128
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:205
 msgid "Options regarding Sub Orders"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:133
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:225
 msgid "Default suborder status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:134
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:226
 msgid "New suborders will have this default status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:141
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:233
 msgid "Same as Main order"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:145
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:237
 msgid "Automatic creation"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:146
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:238
 msgid "Creates suborders automatically when new orders are created"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:152
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:244
 msgid "Show on admin"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:153
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:245
 msgid "Displays suborders as table rows on admin"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:153
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:245
 msgid "(WooCommerce > orders)"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:159
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:251
 msgid "Show on frontend"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:160
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:252
 msgid "Displays suborders as table rows on frontend"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:160
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:252
 msgid "(My Account > orders)"
 msgstr ""
 
@@ -179,50 +130,50 @@ msgstr ""
 msgid "Multi Order"
 msgstr ""
 
-#: classes/multiorder/class-alg-mowc-order-columns.php:54
-#: classes/multiorder/class-alg-mowc-order-columns.php:142
-msgid "Remaining"
-msgstr ""
-
-#: classes/multiorder/class-alg-mowc-order-columns.php:68
-#: classes/multiorder/class-alg-mowc-order-columns.php:188
+#: classes/multiorder/class-alg-mowc-order-columns.php:72
+#: classes/multiorder/class-alg-mowc-order-columns.php:258
 msgid "(Suborder)"
 msgstr ""
 
-#: classes/multiorder/class-alg-mowc-order-columns.php:132
-#: classes/multiorder/class-alg-mowc-order-item.php:68
-#: classes/multiorder/class-alg-mowc-order-item.php:114
+#: classes/multiorder/class-alg-mowc-order-columns.php:76
+msgctxt "hash before order number"
+msgid "#"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-order-columns.php:176
+#: classes/multiorder/class-alg-mowc-order-item.php:99
+#: classes/multiorder/class-alg-mowc-order-item.php:145
 msgid "Suborder"
 msgstr ""
 
-#: classes/multiorder/class-alg-mowc-order-columns.php:137
-#: classes/multiorder/class-alg-mowc-order-columns.php:165
-msgid "Total"
+#: classes/multiorder/class-alg-mowc-order-columns.php:180
+#: classes/multiorder/class-alg-mowc-order-columns.php:214
+msgid "Remaining"
 msgstr ""
 
-#: classes/multiorder/class-alg-mowc-order-columns.php:160
+#: classes/multiorder/class-alg-mowc-order-columns.php:210
 msgid "Sub Orders"
 msgstr ""
 
-#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:70
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:92
 #: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:135
 msgid "Multi order"
 msgstr ""
 
-#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:81
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:104
 msgid "Create suborders"
 msgstr ""
 
-#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:102
+#: classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php:115
 msgid "Parent order"
 msgstr ""
 
+#: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:178
 #: classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php:189
 msgid "Status"
 msgstr ""
 
 #: classes/multiorder/taxonomies/class-alg-mowc-payment-status.php:58
-#: multi-order-for-woocommerce.php:39
 msgid "Payment status"
 msgstr ""
 
@@ -276,7 +227,7 @@ msgstr ""
 msgid "New Status Name"
 msgstr ""
 
-#: multi-order-for-woocommerce.php:35
+#: multi-order-for-woocommerce.php:38
 msgid "Settings"
 msgstr ""
 
@@ -286,4 +237,740 @@ msgstr ""
 
 #: templates/multiorder-view-suborder.php:22
 msgid "Parent Order ID"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:117
+msgid "Test Metabox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:130
+#: vendor/webdevstudios/cmb2/example-functions.php:456
+msgid "Test Text"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:131
+#: vendor/webdevstudios/cmb2/example-functions.php:144
+#: vendor/webdevstudios/cmb2/example-functions.php:157
+#: vendor/webdevstudios/cmb2/example-functions.php:164
+#: vendor/webdevstudios/cmb2/example-functions.php:177
+#: vendor/webdevstudios/cmb2/example-functions.php:185
+#: vendor/webdevstudios/cmb2/example-functions.php:194
+#: vendor/webdevstudios/cmb2/example-functions.php:202
+#: vendor/webdevstudios/cmb2/example-functions.php:217
+#: vendor/webdevstudios/cmb2/example-functions.php:225
+#: vendor/webdevstudios/cmb2/example-functions.php:233
+#: vendor/webdevstudios/cmb2/example-functions.php:250
+#: vendor/webdevstudios/cmb2/example-functions.php:259
+#: vendor/webdevstudios/cmb2/example-functions.php:272
+#: vendor/webdevstudios/cmb2/example-functions.php:279
+#: vendor/webdevstudios/cmb2/example-functions.php:286
+#: vendor/webdevstudios/cmb2/example-functions.php:300
+#: vendor/webdevstudios/cmb2/example-functions.php:313
+#: vendor/webdevstudios/cmb2/example-functions.php:326
+#: vendor/webdevstudios/cmb2/example-functions.php:338
+#: vendor/webdevstudios/cmb2/example-functions.php:347
+#: vendor/webdevstudios/cmb2/example-functions.php:355
+#: vendor/webdevstudios/cmb2/example-functions.php:364
+#: vendor/webdevstudios/cmb2/example-functions.php:371
+#: vendor/webdevstudios/cmb2/example-functions.php:385
+#: vendor/webdevstudios/cmb2/example-functions.php:457
+#: vendor/webdevstudios/cmb2/example-functions.php:548
+#: vendor/webdevstudios/cmb2/example-functions.php:556
+#: vendor/webdevstudios/cmb2/example-functions.php:563
+#: vendor/webdevstudios/cmb2/example-functions.php:570
+#: vendor/webdevstudios/cmb2/example-functions.php:577
+#: vendor/webdevstudios/cmb2/example-functions.php:584
+#: vendor/webdevstudios/cmb2/example-functions.php:591
+#: vendor/webdevstudios/cmb2/example-functions.php:618
+#: vendor/webdevstudios/cmb2/example-functions.php:626
+#: vendor/webdevstudios/cmb2/example-functions.php:633
+#: vendor/webdevstudios/cmb2/example-functions.php:678
+msgid "field description (optional)"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:143
+msgid "Test Text Small"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:156
+msgid "Test Text Medium"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:163
+msgid "Read-only Disabled Field"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:167
+msgid "Hey there, I'm a read-only field"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:176
+msgid "Custom Rendered Field"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:184
+msgid "Website URL"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:193
+msgid "Test Text Email"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:201
+msgid "Test Time"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:209
+#: vendor/webdevstudios/cmb2/example-functions.php:210
+msgid "Time zone"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:216
+msgid "Test Date Picker"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:224
+msgid "Test Date Picker (UNIX timestamp)"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:232
+msgid "Test Date/Time Picker Combo (UNIX timestamp)"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:249
+msgid "Test Money"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:258
+msgid "Test Color Picker"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:271
+msgid "Test Text Area"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:278
+msgid "Test Text Area Small"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:285
+msgid "Test Text Area for Code"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:292
+msgid "Test Title Weeeee"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:293
+msgid "This is a title description"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:299
+msgid "Test Select"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:305
+#: vendor/webdevstudios/cmb2/example-functions.php:318
+#: vendor/webdevstudios/cmb2/example-functions.php:330
+msgid "Option One"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:306
+#: vendor/webdevstudios/cmb2/example-functions.php:319
+#: vendor/webdevstudios/cmb2/example-functions.php:331
+msgid "Option Two"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:307
+#: vendor/webdevstudios/cmb2/example-functions.php:320
+#: vendor/webdevstudios/cmb2/example-functions.php:332
+msgid "Option Three"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:312
+msgid "Test Radio inline"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:325
+msgid "Test Radio"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:337
+msgid "Test Taxonomy Radio"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:346
+msgid "Test Taxonomy Select"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:354
+msgid "Test Taxonomy Multi Checkbox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:363
+msgid "Test Checkbox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:370
+msgid "Test Multi Checkbox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:376
+msgid "Check One"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:377
+msgid "Check Two"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:378
+msgid "Check Three"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:384
+msgid "Test wysiwyg"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:394
+msgid "Test Image"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:395
+msgid "Upload an image or enter a URL."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:401
+msgid "Multiple Files"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:402
+msgid "Upload or add multiple images/attachments."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:409
+msgid "oEmbed"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:412
+#, php-format
+msgid ""
+"Enter a youtube, twitter, or instagram URL. Supports services listed at %s."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:445
+msgid "About Page Metabox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:476
+msgid "Repeating Field Group"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:484
+msgid "Generates reusable form entries"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:486
+msgid "Entry {#}"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:487
+msgid "Add Another Entry"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:488
+msgid "Remove Entry"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:501
+msgid "Entry Title"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:508
+msgid "Description"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:509
+msgid "Write a short description for this entry"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:515
+msgid "Entry Image"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:521
+msgid "Image Caption"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:540
+msgid "User Profile Metabox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:547
+#: vendor/webdevstudios/cmb2/example-functions.php:617
+msgid "Extra Info"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:555
+msgid "Avatar"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:562
+msgid "Facebook URL"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:569
+msgid "Twitter URL"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:576
+msgid "Google+ URL"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:583
+msgid "Linkedin URL"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:590
+msgid "User Field"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:610
+msgid "Category Metabox"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:625
+msgid "Term Image"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:632
+msgid "Arbitrary Term Field"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:651
+msgid "Theme Options"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:677
+msgid "Site Background Color"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:713
+msgid "REST Test Box"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:722
+msgid "REST Test Text"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:723
+msgid "Will show in the REST API for this box and for pages."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:729
+msgid "REST Editable Test Text"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/example-functions.php:730
+msgid "Will show in REST API \"editable\" contexts only (`POST` requests)."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2.php:175
+msgid "Metabox configuration is required to have an ID parameter."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2.php:577
+msgid "Click to toggle"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Ajax.php:75
+msgid "Please Try Again"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Ajax.php:181
+msgid "Remove Embed"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Ajax.php:189
+#: vendor/webdevstudios/cmb2/includes/helper-functions.php:105
+#, php-format
+msgid "No oEmbed Results Found for %1$s. View more info at %2$s."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Base.php:421
+#, php-format
+msgid ""
+"The \"%1$s\" field parameter has been deprecated in favor of the \"%1$s\" "
+"parameter."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Base.php:425
+#, php-format
+msgid ""
+"Using the \"%1$s\" field parameter as a callback has been deprecated in "
+"favor of the \"%1$s\" parameter."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Base.php:455
+#, php-format
+msgid ""
+"%1$s was called with a parameter that is <strong>deprecated</strong> since "
+"version %2$s! %3$s"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Base.php:457
+#, php-format
+msgid ""
+"%1$s was called with a parameter that is <strong>deprecated</strong> since "
+"version %2$s with no alternative available."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Base.php:490
+#: vendor/webdevstudios/cmb2/includes/CMB2_Hookup_Base.php:100
+#: vendor/webdevstudios/cmb2/includes/CMB2_Options_Hookup.php:233
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_Base.php:149
+#, php-format
+msgid "Invalid %1$s property: %2$s"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Base.php:505
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_Base.php:133
+#, php-format
+msgid "Invalid %1$s method: %2$s"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Field.php:1211
+msgid "Add Group"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Field.php:1212
+msgid "Remove Group"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Field.php:1243
+#: vendor/webdevstudios/cmb2/includes/CMB2_Field.php:1247
+msgid "None"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Field.php:1358
+msgid "Sorry, this field does not have a cmb_id specified."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Field_Display.php:432
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:168
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_File_Base.php:78
+msgid "File:"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Hookup_Base.php:42
+#, php-format
+msgid "%1$s should be implemented by the extended class."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:107
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:148
+msgid "Clear"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:108
+msgid "Default"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:109
+msgid "Select Color"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:110
+msgid "Current Color"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:138
+msgctxt "Valid formatDate string for jquery-ui datepicker"
+msgid "mm/dd/yy"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:139
+msgid "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:140
+msgid "Su, Mo, Tu, We, Th, Fr, Sa"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:141
+msgid "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:142
+msgid ""
+"January, February, March, April, May, June, July, August, September, "
+"October, November, December"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:143
+msgid "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:144
+msgid "Next"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:145
+msgid "Prev"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:146
+msgid "Today"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:147
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:157
+msgid "Done"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:151
+msgid "Choose Time"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:152
+msgid "Time"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:153
+msgid "Hour"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:154
+msgid "Minute"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:155
+msgid "Second"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:156
+msgid "Now"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:158
+msgctxt ""
+"Valid formatting string, as per http://trentrichardson.com/examples/"
+"timepicker/"
+msgid "hh:mm TT"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:164
+msgid "Use this file"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:165
+msgid "Use these files"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:166
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_File_Base.php:63
+msgid "Remove Image"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:167
+#: vendor/webdevstudios/cmb2/includes/CMB2_Types.php:412
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_File_Base.php:83
+msgid "Remove"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:169
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_File_Base.php:81
+msgid "Download"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_JS.php:170
+msgid "Select / Deselect All"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Options_Hookup.php:111
+msgid "Settings updated."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Options_Hookup.php:113
+msgid "Nothing to update."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Types.php:231
+msgid "Custom CMB2 field type classes must extend CMB2_Type_Base."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Types.php:349
+msgid "Add Row"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_Types.php:412
+msgid "Remove Row"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_hookup.php:181
+msgid ""
+"Term Metadata is a WordPress 4.4+ feature. Please upgrade your WordPress "
+"install."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_hookup.php:185
+msgid "Term metaboxes configuration requires a \"taxonomies\" parameter."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/CMB2_hookup.php:458
+#, php-format
+msgid "Toggle panel: %s"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/helper-functions.php:303
+msgid "Save"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller.php:257
+msgid "This box does not have read permissions."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller.php:277
+msgid "This box does not have write permissions."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller.php:300
+msgid ""
+"No box found by that id. A box needs to be registered with the \"show_in_rest"
+"\" parameter configured."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller.php:378
+msgid "A human-readable description of the object."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller.php:385
+msgid "The id for the object."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller.php:392
+msgid "The title for the object."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Boxes.php:51
+msgid "Includes the registered fields for the box in the response."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Boxes.php:72
+msgid ""
+"Includes the fully rendered attributes, 'form_open', 'form_close', as well "
+"as the enqueued 'js_dependencies' script handles, and 'css_dependencies' "
+"stylesheet handles."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Boxes.php:122
+msgid "No boxes found."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:27
+msgid ""
+"Includes the box object which the fields are registered to in the response."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:30
+msgid ""
+"When the '_rendered' argument is passed, the renderable field attributes "
+"will be returned fully rendered. By default, the names of the callback "
+"handers for the renderable attributes will be returned."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:33
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:36
+msgid ""
+"To view or modify the field's value, the 'object_id' and 'object_type' "
+"arguments are required."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:236
+msgid ""
+"CMB2 Field value cannot be updated without the value parameter specified."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:297
+msgid ""
+"CMB2 Field value cannot be modified without the object_id and object_type "
+"parameters specified."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:312
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:341
+msgid "No field found by that id."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/rest-api/CMB2_REST_Controller_Fields.php:415
+#, php-format
+msgid "Value Error for %s"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:24
+msgid "The register_routes() method must be overridden"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:34
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:46
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:58
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:70
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:82
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:94
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:106
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:118
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:130
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:142
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:154
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:167
+#, php-format
+msgid "Method '%s' not implemented. Must be overridden in subclass."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:272
+msgid "Current page of the collection."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:280
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:289
+msgid "Limit results to those matching a string."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/shim/WP_REST_Controller.php:307
+msgid ""
+"Scope under which the request is made; determines fields present in response."
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_File.php:76
+msgid "Add or Upload File"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_File_List.php:41
+msgid "Add or Upload Files"
+msgstr ""
+
+#: vendor/webdevstudios/cmb2/includes/types/CMB2_Type_Taxonomy_Base.php:99
+msgid "No terms"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Multi Order for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://wpwham.com/products/multi-order-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Split your orders in suborders"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "WP Wham"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://wpwham.com/"
 msgstr ""

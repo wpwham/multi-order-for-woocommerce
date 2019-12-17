@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 1.1.4
+Stable tag: 1.3.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,8 +57,10 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Changelog ==
 
-= 1.1.4 - 2019-11-15 =
-* UPDATE: bump tested versions
+= 1.3.1 - 2019-12-16 =
+* FIX: issue with suborder tax calculation when tax type is "inclusive"
+* FIX: issues with manual order creation
+* UPDATE: updated version number to be in sync with Pro version
 
 = 1.1.3 - 2019-09-12 =
 * UPDATE: updated .pot file for translations

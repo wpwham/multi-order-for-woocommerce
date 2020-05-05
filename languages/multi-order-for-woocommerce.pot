@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Multi Order for WooCommerce\n"
-"POT-Creation-Date: 2019-09-12 03:36-0700\n"
+"POT-Creation-Date: 2020-05-05 04:54-0700\n"
 "PO-Revision-Date: 2019-09-12 03:35-0700\n"
 "Last-Translator: \n"
 "Language-Team: WP Wham <support@wpwham.com>\n"
@@ -227,8 +227,13 @@ msgstr ""
 msgid "New Status Name"
 msgstr ""
 
-#: multi-order-for-woocommerce.php:38
+#: multi-order-for-woocommerce.php:58
 msgid "Settings"
+msgstr ""
+
+#: templates/multiorder-view-parent-order.php:16
+#: templates/multiorder-view-suborder.php:18
+msgid "Sub Order details"
 msgstr ""
 
 #: templates/multiorder-view-parent-order.php:20

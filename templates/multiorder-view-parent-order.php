@@ -13,11 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <section class="alg-mowc-suborder-details">
-    <h2>Sub Order details</h2>
+    <h2><?php _e( 'Sub Order details', 'multi-order-for-woocommerce' ); ?></h2>
     <table>
         <thead>
         <tr>
-            <th><?php echo __( 'Suborders', 'multi-order-for-woocommerce' ) ?></th>
+            <th><?php _e( 'Suborders', 'multi-order-for-woocommerce' ); ?></th>
         </tr>
         </thead>
         <tbody>

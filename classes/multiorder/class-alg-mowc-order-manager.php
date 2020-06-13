@@ -4,9 +4,10 @@
  *
  * Creates, deletes suborders and sync them with their parent orders
  *
- * @version 1.1.0
+ * @version 1.4.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {

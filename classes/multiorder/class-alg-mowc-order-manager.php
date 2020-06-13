@@ -612,6 +612,36 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 		}
 
 		/**
+		 * Adds shipping in suborder
+		 *
+		 * @version 1.4.0
+		 * @since   1.4.0
+		 *
+		 * @param $shippings
+		 * @param $suborder_id
+		 * @param $main_order
+		 *
+		 * @return float|int
+		 */
+		function add_shipping_in_suborder( $shippings, $suborder_id, $main_order ) {
+			$shipping_value_count = 0;
+			/* @var WC_Order_Item_Shipping $shippings */
+			foreach ( $shippings as $shipping ) {
+				$item_name           = $shipping->get_name();
+				$item_type           = $shipping->get_type();
+				$suborder_new_shipping_id = wc_add_order_item( $suborder_id, array(
+					'order_item_name' => $item_name,
+					'order_item_type' => $item_type,
+				) );
+				$this->clone_order_itemmetas( $shipping->get_id(), $suborder_new_shipping_id );
+				$shipping_value       = $shipping->get_total() / $main_order->get_item_count();
+				$shipping_value_count += $shipping_value;
+				wc_update_order_item_meta( $suborder_new_shipping_id, 'cost', $shipping_value );
+			}
+			return $shipping_value_count;
+		}
+
+		/**
 		 * Adds taxes in suborder
 		 *
 		 * @version 1.0.0
@@ -707,6 +737,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 			// Gets fees and taxes
 			$fees  = $main_order->get_fees();
 			$taxes = $main_order->get_taxes();
+			$shipping = $main_order->get_items( 'shipping' );
 
 			// Counter for creating fake suborders ids
 			$last_suborder_id      = get_post_meta( $main_order_id, Alg_MOWC_Order_Metas::LAST_SUBORDER_SUB_ID, true );
@@ -805,6 +836,9 @@ if ( ! class_exists( 'Alg_MOWC_Order_Manager' ) ) {
 
 					// Adds fees in suborder
 					$fee_value = $this->add_fees_in_suborder( $fees, $suborder_id, $main_order );
+
+					// Adds shipping in suborder
+					$this->add_shipping_in_suborder( $shipping, $suborder_id, $main_order );
 
 					// Adds taxes in suborder
 					$this->add_taxes_in_suborder( $taxes, $suborder_id, $main_order_item );

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Multi Order for WooCommerce\n"
-"POT-Creation-Date: 2020-05-05 04:54-0700\n"
+"POT-Creation-Date: 2020-08-25 23:51-0700\n"
 "PO-Revision-Date: 2019-09-12 03:35-0700\n"
 "Last-Translator: \n"
 "Language-Team: WP Wham <support@wpwham.com>\n"
@@ -128,6 +128,10 @@ msgstr ""
 
 #: classes/multiorder/admin_settings/class-alg-mowc-settings-page.php:21
 msgid "Multi Order"
+msgstr ""
+
+#: classes/multiorder/class-alg-mowc-core.php:138
+msgid "Multi Order Settings"
 msgstr ""
 
 #: classes/multiorder/class-alg-mowc-order-columns.php:72

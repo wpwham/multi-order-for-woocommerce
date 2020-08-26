@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
-Tested up to: 5.4
-Stable tag: 1.4.0
+Tested up to: 5.5
+Stable tag: 1.4.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -56,6 +56,10 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 == Screenshots ==
 
 == Changelog ==
+
+= 1.4.1 - 2020-08-25 =
+* UPDATE: display our settings in WC status report.
+* UPDATE: updated .pot file for translations.
 
 = 1.4.0 - 2020-06-13 =
 * FIX: add shipping into suborders. (Previously shipping was ignored in the suborders... now it will be added and the cost divided evenly, same as is done with taxes & fees).

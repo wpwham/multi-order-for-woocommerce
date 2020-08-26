@@ -2,9 +2,10 @@
 /**
  * Multi order for WooCommerce - Core Class
  *
- * @version 1.0.8
+ * @version 1.4.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
@@ -37,7 +38,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		 *
 		 * Should be called after the set_args() method
 		 *
-		 * @version 1.0.1
+		 * @version 1.4.1
 		 * @since   1.0.0
 		 *
 		 * @param array $args

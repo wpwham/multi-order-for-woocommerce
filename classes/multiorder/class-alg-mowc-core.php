@@ -54,6 +54,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 			// Init admin part
 			if ( is_admin() ) {
 				$this->init_admin_settings();
+				add_action( 'woocommerce_system_status_report', array( $this, 'add_settings_to_status_report' ) );
 			}
 
 			if ( filter_var( get_option( Alg_MOWC_Settings_General::OPTION_ENABLE_PLUGIN ), FILTER_VALIDATE_BOOLEAN ) ) {
@@ -112,6 +113,58 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 			$payment_status->set_args();
 			$payment_status->register();
 			$payment_status->create_initial_status();*/
+		}
+
+		/**
+		 * add settings to WC status report
+		 *
+		 * @version 1.4.1
+		 * @since   1.4.1
+		 * @author  WP Wham
+		 */
+		public static function add_settings_to_status_report() {
+			#region add_settings_to_status_report
+			$protected_settings = array( 'wpwham_multi_order_license', 'alg_mowc_admin_email' );
+			$settings_general   = new Alg_MOWC_Settings_General( false );
+			$settings_general   = $settings_general->get_settings( array() );
+			$settings = array_merge(
+				$settings_general
+			);
+			?>
+			<table class="wc_status_table widefat" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="3" data-export-label="Multi Order Settings"><h2><?php esc_html_e( 'Multi Order Settings', 'multi-order-for-woocommerce' ); ?></h2></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ( $settings as $setting ): ?>
+					<?php 
+					if ( in_array( $setting['type'], array( 'title', 'sectionend' ) ) ) { 
+						continue;
+					}
+					if ( isset( $setting['title'] ) ) {
+						$title = $setting['title'];
+					} elseif ( isset( $setting['desc'] ) ) {
+						$title = $setting['desc'];
+					} else {
+						$title = $setting['id'];
+					}
+					$value = get_option( $setting['id'] ); 
+					if ( in_array( $setting['id'], $protected_settings ) ) {
+						$value = $value > '' ? '(set)' : 'not set';
+					}
+					?>
+					<tr>
+						<td data-export-label="<?php echo esc_attr( $title ); ?>"><?php esc_html_e( $title, 'multi-order-for-woocommerce' ); ?>:</td>
+						<td class="help">&nbsp;</td>
+						<td><?php echo is_array( $value ) ? print_r( $value, true ) : $value; ?></td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<?php
+			#endregion add_settings_to_status_report
 		}
 
 	}

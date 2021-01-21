@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
-Tested up to: 5.5
-Stable tag: 1.4.2
+Tested up to: 5.6
+Stable tag: 1.4.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,8 +57,11 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 
 == Changelog ==
 
+= 1.4.3 - 2021-01-21 =
+* UPDATE: bump tested versions.
+
 = 1.4.2 - 2020-09-17 =
-* UPDATE: bump tested versions
+* UPDATE: bump tested versions.
 
 = 1.4.1 - 2020-08-25 =
 * UPDATE: display our settings in WC status report.

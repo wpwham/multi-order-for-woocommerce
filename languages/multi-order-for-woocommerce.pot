@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Multi Order for WooCommerce\n"
-"POT-Creation-Date: 2020-08-25 23:51-0700\n"
+"POT-Creation-Date: 2021-04-23 07:34-0700\n"
 "PO-Revision-Date: 2019-09-12 03:35-0700\n"
 "Last-Translator: \n"
 "Language-Team: WP Wham <support@wpwham.com>\n"
@@ -20,109 +20,113 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:48
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:49
 msgid "General"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:101
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:102
 msgid "Multi Order options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:103
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:104
 msgid "Multi order general options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:107
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
 msgid "Enable Multi Order"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:109
 #, php-format
 msgid "Enables <strong>\"%s\"</strong> plugin"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:108
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:109
 msgid "Multi order for WooCommerce"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:146
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:111
+msgid "Documentation"
+msgstr ""
+
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:149
 msgid "Default main order status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:147
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:150
 msgid "New main orders will have this default status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:152
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:232
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:155
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:235
 msgid "Set by payment gateway"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:177
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:180
 msgid "Email options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:178
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:181
 msgid "Options regarding emails"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:184
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:187
 msgid "Send to main order"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:185
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:188
 msgid "Send email to main order"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:204
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:207
 msgid "Sub Order options"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:205
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:208
 msgid "Options regarding Sub Orders"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:225
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:228
 msgid "Default suborder status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:226
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:229
 msgid "New suborders will have this default status"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:233
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:236
 msgid "Same as Main order"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:237
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:240
 msgid "Automatic creation"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:238
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:241
 msgid "Creates suborders automatically when new orders are created"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:244
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:247
 msgid "Show on admin"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:245
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:248
 msgid "Displays suborders as table rows on admin"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:245
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:248
 msgid "(WooCommerce > orders)"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:251
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:254
 msgid "Show on frontend"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:252
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:255
 msgid "Displays suborders as table rows on frontend"
 msgstr ""
 
-#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:252
+#: classes/multiorder/admin_settings/class-alg-mowc-settings-general.php:255
 msgid "(My Account > orders)"
 msgstr ""
 

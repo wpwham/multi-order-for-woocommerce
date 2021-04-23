@@ -2,9 +2,10 @@
 /**
  * Multi order for WooCommerce - WooCommerce Report
  *
- * @version 1.0.8
+ * @version 1.4.4
  * @since   1.0.5
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
@@ -14,13 +15,24 @@ if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @version 1.0.9
+		 * @version 1.4.4
 		 * @since   1.0.5
 		 */
 		function __construct() {
+			
+			// reports
 			/*add_filter( 'woocommerce_admin_report_data', array( $this, 'fix_report_data' ) );
 			add_filter( 'woocommerce_reports_get_order_report_data_args', array( $this, 'add_multiorder_infs_to_report_data_args' ) );*/
 			add_filter( 'woocommerce_reports_get_order_report_query', array( $this, 'ignore_main_orders' ) );
+			
+			// analytics
+			add_filter(
+				'woocommerce_analytics_clauses_where',
+				array( $this, 'filter_clauses_where' ),
+				PHP_INT_MAX,
+				2
+			);
+			
 		}
 
 		/**
@@ -91,9 +103,26 @@ if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
 			return $data;
 		}
 
+		/**
+		 * Ignore main orders from analytics
+		 *
+		 * @version 1.4.4
+		 * @since   1.4.4
+		 */
+		public function filter_clauses_where( $clauses, $context ) {
+			global $wpdb;
+			$clauses[] = "
+				AND {$wpdb->prefix}wc_order_stats.order_id NOT IN
+				(
+				SELECT mowc_pm.post_id
+				FROM {$wpdb->posts} AS mowc_p
+				JOIN {$wpdb->postmeta} AS mowc_pm ON mowc_pm.post_id = mowc_p.ID
+				WHERE mowc_p.post_type = 'shop_order' and mowc_pm.meta_key = '_alg_mowc_suborder'
+				GROUP BY mowc_pm.post_id
+				)
+			";
+			return $clauses;
+		}
 
 	}
 }
-
-
-

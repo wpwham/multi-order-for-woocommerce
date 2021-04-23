@@ -2,9 +2,10 @@
 /**
  * Multi order for WooCommerce - General section
  *
- * @version 1.0.8
+ * @version 1.4.4
  * @since   1.0.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -90,7 +91,7 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		/**
 		 * get_settings.
 		 *
-		 * @version 1.0.8
+		 * @version 1.4.4
 		 * @since   1.0.0
 		 */
 		function get_settings( $settings = null ) {
@@ -106,6 +107,8 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 				array(
 					'title'   => __( 'Enable Multi Order', 'multi-order-for-woocommerce' ),
 					'desc'    => sprintf( __( 'Enables <strong>"%s"</strong> plugin', 'multi-order-for-woocommerce' ), __( 'Multi order for WooCommerce' ) ),
+					'desc_tip' => '<a href="https://wpwham.com/documentation/multi-order-for-woocommerce/?utm_source=documentation_link&utm_campaign=free&utm_medium=multi_order" target="_blank" class="button">' .
+					__( 'Documentation', 'multi-order-for-woocommerce' ) . '</a>',
 					'id'      => self::OPTION_ENABLE_PLUGIN,
 					'default' => 'yes',
 					'type'    => 'checkbox',

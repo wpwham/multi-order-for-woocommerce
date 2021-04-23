@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, multiple, suborder, order, split, orders
 Requires at least: 4.4
-Tested up to: 5.6
-Stable tag: 1.4.3
+Tested up to: 5.7
+Stable tag: 1.4.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -56,6 +56,10 @@ If you are interested in contributing - head over to the [Multi order for WooCom
 == Screenshots ==
 
 == Changelog ==
+
+= 1.4.4 - 2021-04-23 =
+* FIX: order amounts doubled in new WC Analytics.
+* UPDATE: updated .pot file for translations.
 
 = 1.4.3 - 2021-01-21 =
 * UPDATE: bump tested versions.

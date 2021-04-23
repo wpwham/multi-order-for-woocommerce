@@ -3,13 +3,13 @@
 Plugin Name: Multi Order for WooCommerce
 Plugin URI: https://wpwham.com/products/multi-order-for-woocommerce/
 Description: Split your orders in suborders
-Version: 1.4.3
+Version: 1.4.4
 Author: WP Wham
 Author URI: https://wpwham.com/
 Text Domain: multi-order-for-woocommerce
 Domain Path: /languages
 WC requires at least: 3.0
-WC tested up to: 4.9
+WC tested up to: 5.2
 Copyright: © 2018-2021 WP Wham. All rights reserved.
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html

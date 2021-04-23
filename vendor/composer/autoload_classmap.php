@@ -111,6 +111,4 @@ return array(
     'Composer\\Installers\\YawikInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/YawikInstaller.php',
     'Composer\\Installers\\ZendInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/ZendInstaller.php',
     'Composer\\Installers\\ZikulaInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/ZikulaInstaller.php',
-    'WCCSO_Metabox' => $vendorDir . '/pablo-pacheco/wc-custom-settings-options/src/class-wccso-metabox.php',
-    'WCCSO_Singleton' => $vendorDir . '/pablo-pacheco/wc-custom-settings-options/src/class-wccso-singleton.php',
 );

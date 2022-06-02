@@ -1,13 +1,12 @@
 <?php
 /*
 Plugin Name: CMB2 Field Type: Select2
-Plugin URI: https://github.com/mustardBees/cmb-field-select2
-GitHub Plugin URI: https://github.com/mustardBees/cmb-field-select2
+Plugin URI: https://github.com/wpwham/cmb-field-select2
+Forked from: https://github.com/mustardBees/cmb-field-select2
 Description: Select2 field type for CMB2.
-Version: 3.0.3
-Author: Phil Wylie
-Author URI: https://www.philwylie.co.uk/
-License: GPLv2+
+Version: 3.0.4
+Author: WP Wham
+Author URI: https://wpwham.com/
 */
 
 /**
@@ -19,7 +18,7 @@ if ( ! class_exists( 'PW_CMB2_Field_Select2' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '3.0.3';
+		const VERSION = '3.0.4';
 
 		/**
 		 * Initialize the plugin by hooking into CMB2
@@ -81,7 +80,7 @@ if ( ! class_exists( 'PW_CMB2_Field_Select2' ) ) {
 		 * Return the list of options, with selected options at the top preserving their order. This also handles the
 		 * removal of selected options which no longer exist in the options array.
 		 */
-		public function get_pw_multiselect_options( $field_escaped_value = array(), $field_type_object ) {
+		public function get_pw_multiselect_options( $field_escaped_value = array(), $field_type_object = null ) {
 			$options = (array) $field_type_object->field->options();
 
 			// If we have selected items, we need to preserve their order

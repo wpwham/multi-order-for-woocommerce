@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Core Class
  *
- * @version 1.4.1
+ * @version 1.5.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -76,20 +76,10 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		/**
 		 * Setups the plugin
 		 *
-		 * @version 1.0.5
+		 * @version 1.5.0
 		 * @since   1.0.0
 		 */
 		public function setup_plugin() {
-			// Payment status taxonomy
-			/*$payment_status = new Alg_MOWC_Order_Payment_Status();
-			$payment_status->create_taxonomy();
-			$payment_status->setup_menu();
-			*/
-
-			// Payment status CMB
-			/*$status_cmb = new Alg_MOWC_Payment_Status_CMB();
-			$status_cmb->init();*/
-
 			new Alg_MOWC_Multiorder_CMB();
 			new Alg_MOWC_Order_Manager();
 			new Alg_MOWC_Order_Columns();
@@ -103,17 +93,13 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		/**
 		 * Called when plugin is enabled
 		 *
-		 * @version 1.0.0
+		 * @version 1.5.0
 		 * @since   1.0.0
 		 *
 		 */
 		public static function on_plugin_activation() {
 			parent::on_plugin_activation();
 			Alg_MOWC_Order_Manager::set_sort_order_meta();
-			/*$payment_status = new Alg_MOWC_Order_Payment_Status();
-			$payment_status->set_args();
-			$payment_status->register();
-			$payment_status->create_initial_status();*/
 		}
 
 		/**

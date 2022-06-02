@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - Core Class
  *
- * @version 1.4.1
+ * @version 1.5.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		/**
 		 * Setups the plugin
 		 *
-		 * @version 1.0.5
+		 * @version 1.5.0
 		 * @since   1.0.0
 		 */
 		public function setup_plugin() {
@@ -93,7 +93,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		/**
 		 * Called when plugin is enabled
 		 *
-		 * @version 1.0.0
+		 * @version 1.5.0
 		 * @since   1.0.0
 		 *
 		 */

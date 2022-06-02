@@ -2,9 +2,10 @@
 /**
  * Multi order for WooCommerce - Admin settings
  *
- * @version 1.0.0
+ * @version 1.5.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,7 +31,7 @@ if ( ! class_exists( 'Alg_MOWC_Admin_Settings' ) ) {
 		/**
 		 * Add settings tab to WooCommerce settings.
 		 *
-		 * @version 1.0.0
+		 * @version 1.5.0
 		 * @since   1.0.0
 		 */
 		function add_woocommerce_settings_tab( $settings ) {

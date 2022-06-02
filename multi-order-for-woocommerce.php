@@ -39,6 +39,28 @@ if ( 'multi-order-for-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
+require_once( __DIR__ . '/classes/wordpress/class-alg-mowc-wp-plugin.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-core.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-manager.php' );
+require_once( __DIR__ . '/classes/multiorder/admin_settings/class-alg-mowc-admin-settings.php' );
+require_once( __DIR__ . '/classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-actions.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-columns.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-item.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-item-metas.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-metas.php' );
+require_once( __DIR__ . '/classes/multiorder/taxonomies/class-alg-mowc-payment-status.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-orders-search.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-orders-view.php' );
+require_once( __DIR__ . '/classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php' );
+require_once( __DIR__ . '/classes/multiorder/admin_settings/class-alg-mowc-settings-section.php' );
+require_once( __DIR__ . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php' );
+require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-wc-report.php' );
+require_once( __DIR__ . '/vendor/webdevstudios/cmb2/init.php' );
+require_once( __DIR__ . '/vendor/mustardBees/cmb-field-select2/cmb-field-select2.php' );
+
+register_activation_hook( __FILE__, array( 'Alg_MOWC_Core', 'on_plugin_activation' ) );
+
 if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 	/**
 	 * Returns the main instance of Alg_MOWC_Core to prevent the need to use globals.
@@ -48,6 +70,10 @@ if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 	 * @return  Alg_MOWC_Core
 	 */
 	function alg_multiorder_for_wc() {
+		
+		require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-bkg-process.php' );
+		require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-pay-status-bkg-process.php' );
+		
 		$multiorder         = Alg_MOWC_Core::get_instance();
 		$payment_status_tax = new Alg_MOWC_Order_Payment_Status();
 		$multiorder->set_args( array(
@@ -81,32 +107,8 @@ if ( ! function_exists( 'alg_mowc_start_plugin' ) ) {
 	 * @since   1.0.0
 	 */
 	function alg_mowc_start_plugin() {
-
-		// Includes composer dependencies and autoloads classes
-		require __DIR__ . '/vendor/autoload.php';
-
 		// Initializes the plugin
 		$multiorder = alg_multiorder_for_wc();
 		$multiorder->init();
 	}
 }
-
-if ( ! function_exists( 'alg_mowc_register_hooks' ) ) {
-	/**
-	 * Handles activation, installation and uninstall hooks
-	 *
-	 * @version 1.0.0
-	 * @since   1.0.0
-	 */
-	function alg_mowc_register_hooks() {
-
-		// Includes composer dependencies and autoloads classes
-		require __DIR__ . '/vendor/autoload.php';
-
-		// When plugin is enabled
-		register_activation_hook( __FILE__, array( 'Alg_MOWC_Core', 'on_plugin_activation' ) );
-	}
-}
-
-// Handles activation, installation and uninstall hooks
-alg_mowc_register_hooks();

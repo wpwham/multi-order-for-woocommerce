@@ -34,8 +34,8 @@ if ( ! class_exists( 'Alg_MOWC_Admin_Settings' ) ) {
 		 * @since   1.0.0
 		 */
 		function add_woocommerce_settings_tab( $settings ) {
+			require_once( __DIR__ . '/../../../classes/multiorder/admin_settings/class-alg-mowc-settings-page.php' );
 			$settings[] = new Alg_MOWC_Settings_Page();
-
 			return $settings;
 		}
 

@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - General section
  *
- * @version 1.4.4
+ * @version 1.5.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham

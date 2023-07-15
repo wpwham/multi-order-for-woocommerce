@@ -2,7 +2,7 @@
 /**
  * Multi order for WooCommerce - General section
  *
- * @version 1.4.4
+ * @version 1.5.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -15,7 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 
 	class Alg_MOWC_Settings_General extends Alg_MOWC_Settings_Section {
-
+		
+		public $id   = '';
+		public $desc = '';
+		
 		const OPTION_ENABLE_PLUGIN                      = 'alg_mowc_opt_enable';
 		//const OPTION_DISABLE_CANCEL_BUTTON              = 'alg_mowc_disable_cancel_btn';
 		//const OPTION_DISABLE_ORDER_ITEM_QTY             = 'alg_mowc_disable_order_item_qty';

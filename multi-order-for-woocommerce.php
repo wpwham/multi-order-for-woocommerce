@@ -61,6 +61,12 @@ require_once( __DIR__ . '/vendor/wpwham/cmb-field-select2/cmb-field-select2.php'
 
 register_activation_hook( __FILE__, array( 'Alg_MOWC_Core', 'on_plugin_activation' ) );
 
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
+
 if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 	/**
 	 * Returns the main instance of Alg_MOWC_Core to prevent the need to use globals.

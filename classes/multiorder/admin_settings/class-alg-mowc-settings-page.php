@@ -18,7 +18,10 @@ if ( ! class_exists( 'Alg_MOWC_Settings_Page' ) ) {
 		 */
 		function __construct() {
 			$this->id    = 'alg_mowc';
-			$this->label = __( 'Multi Order', 'multi-order-for-woocommerce' );
+			$this->label = 'Multi Order';
+			add_action( 'init', function() {
+				$this->label = __( 'Multi Order', 'multi-order-for-woocommerce' );
+			} );
 			parent::__construct();
 		}
 

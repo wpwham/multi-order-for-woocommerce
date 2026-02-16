@@ -49,7 +49,10 @@ if ( ! class_exists( 'Alg_MOWC_Settings_General' ) ) {
 		 */
 		function __construct( $handle_autoload = true ) {
 			$this->id   = '';
-			$this->desc = __( 'General', 'multi-order-for-woocommerce' );
+			$this->desc = 'General';
+			add_action( 'init', function() {
+				$this->desc = __( 'General', 'multi-order-for-woocommerce' );
+			} );
 			parent::__construct( $handle_autoload );
 		}
 

@@ -27,8 +27,10 @@ if ( ! class_exists( 'Alg_MOWC_Settings_Section' ) ) :
 		function __construct( $handle_autoload = true ) {
 			$this->handle_autoload = $handle_autoload;
 			if ( $this->handle_autoload ) {
-				$this->get_settings( array() );
-				$this->handle_autoload();
+				add_action( 'init', function() {
+					$this->get_settings( array() );
+					$this->handle_autoload();
+				} );
 			}
 			add_filter( 'woocommerce_get_sections_alg_mowc', array( $this, 'settings_section' ) );
 			add_filter( 'woocommerce_get_settings_alg_mowc_' . $this->id, array(

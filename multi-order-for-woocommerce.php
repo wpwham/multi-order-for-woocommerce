@@ -98,7 +98,7 @@ if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 }
 
 // Starts the plugin
-add_action( 'plugins_loaded', 'alg_mowc_start_plugin' );
+add_action( 'init', 'alg_mowc_start_plugin' );
 if ( ! function_exists( 'alg_mowc_start_plugin' ) ) {
 	/**
 	 * Starts the plugin

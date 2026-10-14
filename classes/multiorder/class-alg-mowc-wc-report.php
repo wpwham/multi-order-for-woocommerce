@@ -43,17 +43,30 @@ if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
 		 */
 		public function ignore_main_orders( $query ) {
 			global $wpdb;
-			$query['where'] .=
-				"
-				AND posts.ID NOT IN
-				(
-				SELECT mowc_pm.post_id
-				FROM $wpdb->posts AS mowc_p
-				JOIN $wpdb->postmeta AS mowc_pm ON mowc_pm.post_id = mowc_p.ID
-				WHERE mowc_p.post_type = 'shop_order' and mowc_pm.meta_key = '_alg_mowc_suborder'
-				GROUP BY mowc_pm.post_id
-				)
-				";
+			if ( Alg_MOWC_Core::is_hpos_enabled() ) {
+				$query['where'] .=
+					"
+					AND posts.ID NOT IN
+					(
+					SELECT mowc_om.order_id
+					FROM {$wpdb->prefix}wc_orders_meta AS mowc_om
+					WHERE mowc_om.meta_key = '_alg_mowc_suborder'
+					GROUP BY mowc_om.order_id
+					)
+					";
+			} else {
+				$query['where'] .=
+					"
+					AND posts.ID NOT IN
+					(
+					SELECT mowc_pm.post_id
+					FROM $wpdb->posts AS mowc_p
+					JOIN $wpdb->postmeta AS mowc_pm ON mowc_pm.post_id = mowc_p.ID
+					WHERE mowc_p.post_type = 'shop_order' and mowc_pm.meta_key = '_alg_mowc_suborder'
+					GROUP BY mowc_pm.post_id
+					)
+					";
+			}
 
 			return $query;
 		}
@@ -111,16 +124,28 @@ if ( ! class_exists( 'Alg_MOWC_WC_Report' ) ) {
 		 */
 		public function filter_clauses_where( $clauses, $context ) {
 			global $wpdb;
-			$clauses[] = "
-				AND {$wpdb->prefix}wc_order_stats.order_id NOT IN
-				(
-				SELECT mowc_pm.post_id
-				FROM {$wpdb->posts} AS mowc_p
-				JOIN {$wpdb->postmeta} AS mowc_pm ON mowc_pm.post_id = mowc_p.ID
-				WHERE mowc_p.post_type = 'shop_order' and mowc_pm.meta_key = '_alg_mowc_suborder'
-				GROUP BY mowc_pm.post_id
-				)
-			";
+			if ( Alg_MOWC_Core::is_hpos_enabled() ) {
+				$clauses[] = "
+					AND {$wpdb->prefix}wc_order_stats.order_id NOT IN
+					(
+					SELECT mowc_om.order_id
+					FROM {$wpdb->prefix}wc_orders_meta AS mowc_om
+					WHERE mowc_om.meta_key = '_alg_mowc_suborder'
+					GROUP BY mowc_om.order_id
+					)
+				";
+			} else {
+				$clauses[] = "
+					AND {$wpdb->prefix}wc_order_stats.order_id NOT IN
+					(
+					SELECT mowc_pm.post_id
+					FROM {$wpdb->posts} AS mowc_p
+					JOIN {$wpdb->postmeta} AS mowc_pm ON mowc_pm.post_id = mowc_p.ID
+					WHERE mowc_p.post_type = 'shop_order' and mowc_pm.meta_key = '_alg_mowc_suborder'
+					GROUP BY mowc_pm.post_id
+					)
+				";
+			}
 			return $clauses;
 		}
 

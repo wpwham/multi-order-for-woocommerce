@@ -80,7 +80,7 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 		 * @since   1.0.0
 		 */
 		public function setup_plugin() {
-			new Alg_MOWC_Multiorder_CMB();
+			new WPWham_Multi_Order_Meta_Box();
 			new Alg_MOWC_Order_Manager();
 			new Alg_MOWC_Order_Columns();
 			new Alg_MOWC_Orders_View();
@@ -152,6 +152,19 @@ if ( ! class_exists( 'Alg_MOWC_Core' ) ) {
 			</table>
 			<?php
 			#endregion add_settings_to_status_report
+		}
+
+		/**
+		 * Check if HPOS is enabled.
+		 * 
+		 * @version x.x.x
+		 * @since  x.x.x
+		 */
+		public static function is_hpos_enabled() {
+			return (
+				method_exists( '\Automattic\WooCommerce\Utilities\OrderUtil', 'custom_orders_table_usage_is_enabled' )
+				&& \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()
+			);
 		}
 
 	}

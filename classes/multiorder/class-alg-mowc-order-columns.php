@@ -29,6 +29,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			// Setups admin columns
 			add_action( "manage_{$post_type}_posts_custom_column", array( $this, 'setup_admin_order_columns' ), 20, 2 );
 			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'change_admin_columns' ), 20 );
+			add_action( 'manage_woocommerce_page_wc-orders_custom_column', array( $this, 'setup_admin_order_columns' ), 20, 2 );
+			add_filter( 'manage_woocommerce_page_wc-orders_columns', array( $this, 'change_admin_columns' ), 20 );
 
 			// Change Total column label to Remaining
 			//add_filter( "manage_{$post_type}_posts_columns", array( $this, 'change_total_column_to_remaining_on_admin' ), 20 );
@@ -68,7 +70,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @param WC_Order $order
 		 */
 		public function setup_frontend_order_number_column( WC_Order $order ) {
-			$is_suborder  = filter_var( get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+			$is_suborder  = filter_var( $order->get_meta( Alg_MOWC_Order_Metas::IS_SUB_ORDER ), FILTER_VALIDATE_BOOLEAN );
 			$suborder_str = $is_suborder ? __( '(Suborder)', 'multi-order-for-woocommerce' ) : '';
 			if ( ! $is_suborder ) {
 				?>
@@ -121,8 +123,8 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		}
 
 		private function display_remaining_column( $post_id ) {
-			$is_suborder   = filter_var( get_post_meta( $post_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
 			$order         = wc_get_order( $post_id );
+			$is_suborder   = filter_var( $order->get_meta( Alg_MOWC_Order_Metas::IS_SUB_ORDER ), FILTER_VALIDATE_BOOLEAN );
 			$remaining     = $order->get_total();
 			$deduct_status = get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_SUBTRACTION_STATUS, true );
 			if ( $is_suborder ) {
@@ -130,9 +132,12 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 					$remaining = 0;
 				}
 			} else {
-				$suborders = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+				$suborders = wp_list_pluck( $order->get_meta( Alg_MOWC_Order_Metas::SUB_ORDERS, false ), 'value' );
 				foreach ( $suborders as $suborder_id ) {
 					$suborder = wc_get_order( $suborder_id );
+					if ( ! $suborder ) {
+						continue;
+					}
 					if ( in_array( 'wc-' . $suborder->get_status(), $deduct_status ) ) {
 						$remaining -= $suborder->get_total();
 					}
@@ -151,7 +156,7 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @param WC_Order $order
 		 */
 		public function setup_frontend_suborders_column( WC_Order $order ) {
-			$is_suborder = filter_var( get_post_meta( $order->get_id(), Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+			$is_suborder = filter_var( $order->get_meta( Alg_MOWC_Order_Metas::IS_SUB_ORDER ), FILTER_VALIDATE_BOOLEAN );
 			if ( $is_suborder ) {
 				echo '<a href="' . $order->get_view_order_url() . '">#' . $order->get_order_number() . '</a>';
 			}
@@ -251,10 +256,17 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 		 * @return mixed
 		 */
 		public function setup_admin_order_columns( $column, $post_id ) {
+			if ( is_a( $post_id, 'WC_Order' ) ) {
+				$order = $post_id;
+			} else {
+				$order = wc_get_order( $post_id );
+			}
+			$post_id = $order->get_id();
 
 		    switch($column){
                 case 'order_title':
-	                $is_suborder  = filter_var( get_post_meta( $post_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+                case 'order_number':
+	                $is_suborder  = filter_var( $order->get_meta( Alg_MOWC_Order_Metas::IS_SUB_ORDER ), FILTER_VALIDATE_BOOLEAN );
 	                $suborder_str = $is_suborder ? '<strong>'.__( '(Suborder)', 'multi-order-for-woocommerce' ) .'</strong>' : '';
 	                echo $suborder_str;
                 break;
@@ -274,14 +286,14 @@ if ( ! class_exists( 'Alg_MOWC_Order_Columns' ) ) {
 			    break;*/
 
                 case $this->column_suborders_id:
-	                $suborders = get_post_meta( $post_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+	                $suborders = wp_list_pluck( $order->get_meta( Alg_MOWC_Order_Metas::SUB_ORDERS, false ), 'value' );
 	                $counter   = 1;
 	                if ( is_array( $suborders ) && count( $suborders ) > 0 ) {
 		                echo '<ul style="margin:0;padding:0;list-style:none">';
 		                foreach ( $suborders as $suborder_id ) {
 			                $suborder = wc_get_order($suborder_id);
 			                if($suborder){
-				                echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . admin_url( 'post.php?post=' . absint( $suborder_id ) . '&action=edit' ) . '" class="row-title"><strong>#' . $suborder->get_order_number() . '</strong></a></li>';
+				                echo '<li style="margin-bottom:1px;color:#DDD;"><a style="font-size:12px !important;" href="' . $suborder->get_edit_order_url() . '" class="row-title"><strong>#' . $suborder->get_order_number() . '</strong></a></li>';
 				                $counter ++;
 			                }
 

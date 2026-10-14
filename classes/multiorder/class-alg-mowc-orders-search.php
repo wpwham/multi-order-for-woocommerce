@@ -23,6 +23,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 
 			// Finds suborders
 			add_action( 'pre_get_posts', array( $this, 'find_suborder_by_custom_number' ), 11 );
+			add_filter( 'woocommerce_shop_order_list_table_prepare_items_query_args', array( $this, 'find_suborder_by_custom_number_hpos' ) );
 
 			// Find suborders using [woocommerce_order_tracking]
 			add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'allow_suborders_to_be_tracked' ), PHP_INT_MAX );
@@ -148,9 +149,15 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 		 */
 		public function find_post_id_by_postmeta( $meta_key, $meta_value ) {
 			global $wpdb;
-			$query = $wpdb->prepare( "SELECT post_id
-				FROM $wpdb->postmeta
-				WHERE meta_key = %s AND meta_value = %s", $meta_key, $meta_value );
+			if ( Alg_MOWC_Core::is_hpos_enabled() ) {
+				$query = $wpdb->prepare( "SELECT order_id
+					FROM {$wpdb->prefix}wc_orders_meta
+					WHERE meta_key = %s AND meta_value = %s", $meta_key, $meta_value );
+			} else {
+				$query = $wpdb->prepare( "SELECT post_id
+					FROM $wpdb->postmeta
+					WHERE meta_key = %s AND meta_value = %s", $meta_key, $meta_value );
+			}
 			$var   = $wpdb->get_var( $query );
 			return $var;
 		}
@@ -202,6 +209,41 @@ if ( ! class_exists( 'Alg_MOWC_Orders_Search' ) ) {
 			$query->query_vars['meta_value']    = $custom_order_id;
 
 			add_filter( 'get_search_query', array( $this, 'change_search_query' ) );
+		}
+
+		/**
+		 * Finds suborders by their custom ids
+		 *
+		 * @version  x.x.x
+		 * @since    x.x.x
+		 *
+		 * @param $query_args
+		 */
+		public function find_suborder_by_custom_number_hpos( $query_args ) {
+			if (
+				! is_admin() ||
+				! isset( $query_args ) ||
+				! isset( $query_args['s'] ) ||
+				1 !== preg_match( '/^\d.*\-\d.*$/', $query_args['s'] ) ||
+				true === is_numeric( $query_args['s'] ) ||
+				0 == $query_args['s']
+			) {
+				return $query_args;
+			}
+
+			$custom_order_id                    = $query_args['s'];
+			$this->current_suborder_id_searched = $custom_order_id;
+			unset( $query_args['s'] );
+			if ( empty( $query_args['meta_query'] ) ) {
+				$query_args['meta_query'] = array();
+			}
+			$query_args['meta_query'][] = array(
+				'key'   => Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID,
+				'value' => $custom_order_id,
+			);
+
+			add_filter( 'get_search_query', array( $this, 'change_search_query' ) );
+			return $query_args;
 		}
 	}
 }

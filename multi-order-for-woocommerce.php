@@ -43,7 +43,7 @@ require_once( __DIR__ . '/classes/wordpress/class-alg-mowc-wp-plugin.php' );
 require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-core.php' );
 require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-manager.php' );
 require_once( __DIR__ . '/classes/multiorder/admin_settings/class-alg-mowc-admin-settings.php' );
-require_once( __DIR__ . '/classes/multiorder/meta_boxes/class-alg-mowc-multiorder-cmb.php' );
+require_once( __DIR__ . '/classes/multiorder/meta_boxes/class-wpwham-multi-order-meta-box.php' );
 require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-actions.php' );
 require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-columns.php' );
 require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-order-item.php' );
@@ -60,6 +60,12 @@ require_once( __DIR__ . '/vendor/CMB2/CMB2/init.php' );
 require_once( __DIR__ . '/vendor/wpwham/cmb-field-select2/cmb-field-select2.php' );
 
 register_activation_hook( __FILE__, array( 'Alg_MOWC_Core', 'on_plugin_activation' ) );
+
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
 
 if ( ! function_exists( 'alg_multiorder_for_wc' ) ) {
 	/**

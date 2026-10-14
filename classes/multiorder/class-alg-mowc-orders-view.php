@@ -20,6 +20,7 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 		function __construct() {
 			// Show | Hides admin suborder list view
 			add_action( 'pre_get_posts', array( $this, 'show_or_hide_admin_suborders_list_view' ) );
+			add_filter( 'woocommerce_shop_order_list_table_prepare_items_query_args', array( $this, 'show_or_hide_admin_suborders_list_view_hpos' ) );
 
 			// Show | Hides frontend suborder list view
 			add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'show_or_hide_frontend_suborders_list_view' ) );
@@ -57,20 +58,21 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 		 * @internal param $order_id
 		 */
 		public function woocommerce_suborder_number( $order_number, $order ) {
-			if ( is_a( $order, 'WC_Order' ) ) {
-				$order_id = $order->get_id();
-			} else {
-				$order_id = $order;
+			if ( ! is_a( $order, 'WC_Order' ) ) {
+				$order = wc_get_order( $order );
+			}
+			if ( ! $order ) {
+				return $order_number;
 			}
 
-			$is_sub_order = filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+			$is_sub_order = filter_var( $order->get_meta( Alg_MOWC_Order_Metas::IS_SUB_ORDER ), FILTER_VALIDATE_BOOLEAN );
 			if ( ! $is_sub_order ) {
 				return $order_number;
 			}
 
-			$parent_order_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true );
+			$parent_order_id = $order->get_meta( Alg_MOWC_Order_Metas::PARENT_ORDER );
 			$parent_order    = wc_get_order( $parent_order_id );
-			$suborder_sub_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID, true );
+			$suborder_sub_id = $order->get_meta( Alg_MOWC_Order_Metas::SUB_ORDER_SUB_ID );
 			$order_number    = apply_filters( 'woocommerce_order_number', $parent_order_id, $parent_order ) . '-' . $suborder_sub_id;
 			return $order_number;
 		}
@@ -84,7 +86,8 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 		 * @param $order_id
 		 */
 		public function woocommerce_frontend_parent_order_view( $order_id ) {
-			$suborders = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDERS );
+			$order     = wc_get_order( $order_id );
+			$suborders = $order ? wp_list_pluck( $order->get_meta( Alg_MOWC_Order_Metas::SUB_ORDERS, false ), 'value' ) : array();
 			if ( ! is_array( $suborders ) || count( $suborders ) == 0 ) {
 				return;
 			}
@@ -106,17 +109,18 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 		 * @param $order_id
 		 */
 		public function woocommerce_frontend_suborder_view( $order_id ) {
-			$is_sub_order = filter_var( get_post_meta( $order_id, Alg_MOWC_Order_Metas::IS_SUB_ORDER, true ), FILTER_VALIDATE_BOOLEAN );
+			$order        = wc_get_order( $order_id );
+			$is_sub_order = $order && filter_var( $order->get_meta( Alg_MOWC_Order_Metas::IS_SUB_ORDER ), FILTER_VALIDATE_BOOLEAN );
 			if ( ! $is_sub_order ) {
 				return;
 			}
 
-			$fake_suborder_id = get_post_meta( $order_id, Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID, true );
+			$fake_suborder_id = $order->get_meta( Alg_MOWC_Order_Metas::SUB_ORDER_FAKE_ID );
 
 			$multiorder_plugin = alg_multiorder_for_wc();
 			$template_args     = array(
 				'fake_suborder_id' => $fake_suborder_id,
-				'parent_order_id'  => get_post_meta( $order_id, Alg_MOWC_Order_Metas::PARENT_ORDER, true ),
+				'parent_order_id'  => $order->get_meta( Alg_MOWC_Order_Metas::PARENT_ORDER ),
 			);
 			wc_get_template( 'multiorder-view-suborder.php', $template_args, 'woocommerce/multiorder/', $multiorder_plugin->dir . 'templates' . DIRECTORY_SEPARATOR );
 		}
@@ -192,6 +196,49 @@ if ( ! class_exists( 'Alg_MOWC_Orders_View' ) ) {
 				),
 			);
 			$query->set( 'meta_query', $meta_query );
+		}
+
+		/**
+		 * Setups admin suborders display
+		 *
+		 * @version x.x.x
+		 * @since   x.x.x
+		 *
+		 * @param $query_args
+		 */
+		public function show_or_hide_admin_suborders_list_view_hpos( $query_args ) {
+			if (
+				! is_admin() ||
+				! isset( $query_args )
+			) {
+				return $query_args;
+			}
+
+			// Check if it is searching for a suborder
+			$searching_a_suborder=false;
+			if (
+				isset( $query_args['s'] ) &&
+				1 === preg_match( '/^\d.*\-\d.*$/', $query_args['s'] ) &&
+				0 != $query_args['s']
+			) {
+				$searching_a_suborder=true;
+			}
+
+			$show_suborders = filter_var( get_option( Alg_MOWC_Settings_General::OPTION_SUBORDERS_ADMIN_SHOW ), FILTER_VALIDATE_BOOLEAN );
+			if ( $show_suborders || $searching_a_suborder ) {
+				return $query_args;
+			}
+
+			if ( empty( $query_args['meta_query'] ) ) {
+				$query_args['meta_query'] = array();
+			}
+			$query_args['meta_query'][] = array(
+				array(
+					'key'     => Alg_MOWC_Order_Metas::IS_SUB_ORDER,
+					'compare' => 'NOT EXISTS',
+				),
+			);
+			return $query_args;
 		}
 	}
 }

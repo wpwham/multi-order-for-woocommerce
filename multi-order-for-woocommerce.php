@@ -55,6 +55,7 @@ require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-orders-view.php' );
 require_once( __DIR__ . '/classes/multiorder/meta_boxes/class-alg-mowc-payment-status-cmb.php' );
 require_once( __DIR__ . '/classes/multiorder/admin_settings/class-alg-mowc-settings-section.php' );
 require_once( __DIR__ . '/classes/multiorder/admin_settings/class-alg-mowc-settings-general.php' );
+require_once( __DIR__ . '/classes/multiorder/class-wpwham-multi-order-review.php' );
 require_once( __DIR__ . '/classes/multiorder/class-alg-mowc-wc-report.php' );
 require_once( __DIR__ . '/vendor/CMB2/CMB2/init.php' );
 require_once( __DIR__ . '/vendor/wpwham/cmb-field-select2/cmb-field-select2.php' );
